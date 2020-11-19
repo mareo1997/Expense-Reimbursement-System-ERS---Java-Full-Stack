@@ -9,6 +9,11 @@ public class ERSStatus {
 		this.statusid = statusid;
 		this.status = status;
 	}
+	
+	public ERSStatus(String status) {
+		super();
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {

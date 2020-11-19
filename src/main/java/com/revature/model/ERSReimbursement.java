@@ -1,18 +1,20 @@
 package com.revature.model;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class ERSReimbursement {
-	private int ERSRid, author, resolver=0;
+	private int ersid, author, resolver;
 	private double amt;
-	private LocalDateTime submitted, resolved;
+	private Timestamp submitted;
+	private Timestamp resolved;
 	private String description;
 	private ERSStatus status;
 	private ERSType type;
 
-	public ERSReimbursement(int eRSRid, int author, String description, double amt, LocalDateTime submitted,
-							int resolver, LocalDateTime resolved, ERSStatus status, ERSType type) {
-		this.ERSRid = eRSRid;
+	public ERSReimbursement(int ersid, int author, int resolver, double amt, Timestamp submitted, Timestamp resolved,
+			String description, ERSStatus status, ERSType type) {
+		super();
+		this.ersid = ersid;
 		this.author = author;
 		this.resolver = resolver;
 		this.amt = amt;
@@ -23,33 +25,50 @@ public class ERSReimbursement {
 		this.type = type;
 	}
 
-	public ERSReimbursement(int eRSRid, int author, String description, double amt, /*LocalDateTime submitted,*/ 
-			ERSStatus status, ERSType type) {
-		this.ERSRid = eRSRid;
+	public ERSReimbursement(int author, String description, double amt, ERSStatus status, ERSType type) {
 		this.author = author;
 		this.amt = amt;
-		this.submitted = LocalDateTime.now();
 		this.description = description;
 		this.status = status;
 		this.type = type;
 	}
-	
+
+	public ERSReimbursement(int ersid, int author, String description, double amt, Timestamp submitted) {
+		this.ersid = ersid;
+		this.author = author;
+		this.amt = amt;
+		this.description = description;
+		this.submitted = submitted;
+	}
+
+	public ERSReimbursement(int ersid, int author, String description, double amt, Timestamp submitted, ERSStatus status, ERSType type) {
+		this.ersid = ersid;
+		this.author = author;
+		this.amt = amt;
+		this.description = description;
+		this.status = status;
+		this.type = type;
+		this.submitted = submitted;
+	}
+
+	public ERSReimbursement(int ersid, int author, String description, double amt, Timestamp submitted, int resolver, Timestamp resolved, ERSStatus status, ERSType type) {
+		this.ersid = ersid;
+		this.author = author;
+		this.resolver = resolver;
+		this.amt = amt;
+		this.submitted = submitted;
+		this.resolved = resolved;
+		this.description = description;
+		this.status = status;
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
-		String result = "ReimbursementID: "+ERSRid+" \tAuthor: "+author+
-						"\nDescription: "+description+
-						"\nAmount: "+amt+" \t\tSubmitted: "+submitted+
-						"\n"+status+
-						"\n"+type;
+		String result = "ReimbursementID: " + ersid + " \tAuthor: " + author + "\nDescription: " + description
+				+ "\nAmount: $" + amt + " \t\tSubmitted: " + submitted + "\nResolver: " + resolver + " \t\tResolved: "
+				+ resolved + "\n" + status + "\n" + type+"\n";
 		return result;
-	}
-
-	public int getERSRid() {
-		return ERSRid;
-	}
-
-	public void setERSRid(int eRSRid) {
-		ERSRid = eRSRid;
 	}
 
 	public int getAuthor() {
@@ -76,19 +95,11 @@ public class ERSReimbursement {
 		this.amt = amt;
 	}
 
-	public LocalDateTime getSubmitted() {
-		return submitted;
-	}
-
-	public void setSubmitted(LocalDateTime submitted) {
-		this.submitted = submitted;
-	}
-
-	public LocalDateTime getResolved() {
+	public Timestamp getResolved() {
 		return resolved;
 	}
 
-	public void setResolved(LocalDateTime resolved) {
+	public void setResolved(Timestamp resolved) {
 		this.resolved = resolved;
 	}
 
@@ -116,16 +127,32 @@ public class ERSReimbursement {
 		this.type = type;
 	}
 
+	public int getErsid() {
+		return ersid;
+	}
+
+	public void setErsid(int ersid) {
+		this.ersid = ersid;
+	}
+
+	public Timestamp getSubmitted() {
+		return submitted;
+	}
+
+	public void setSubmitted(Timestamp submitted) {
+		this.submitted = submitted;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ERSRid;
 		long temp;
 		temp = Double.doubleToLongBits(amt);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + author;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ersid;
 		result = prime * result + ((resolved == null) ? 0 : resolved.hashCode());
 		result = prime * result + resolver;
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
@@ -143,8 +170,6 @@ public class ERSReimbursement {
 		if (getClass() != obj.getClass())
 			return false;
 		ERSReimbursement other = (ERSReimbursement) obj;
-		if (ERSRid != other.ERSRid)
-			return false;
 		if (Double.doubleToLongBits(amt) != Double.doubleToLongBits(other.amt))
 			return false;
 		if (author != other.author)
@@ -153,6 +178,8 @@ public class ERSReimbursement {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
+			return false;
+		if (ersid != other.ersid)
 			return false;
 		if (resolved == null) {
 			if (other.resolved != null)

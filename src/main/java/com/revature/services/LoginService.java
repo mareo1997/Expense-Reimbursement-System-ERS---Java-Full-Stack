@@ -17,7 +17,8 @@ public class LoginService {
 	public static boolean login(String username, String password) {
 		String u = null, p = null;
 		try (Connection conn = ConnectionUtil.getConnectionFromFile("connection.properties")) {
-			sql = "select username, erspassword " + "from ersuser " + "where username=? and erspassword=?";
+			sql = "select username, erspassword from ersuser where username=? and erspassword=?";
+			
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
 			ps.setString(2, password);

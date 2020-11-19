@@ -18,8 +18,8 @@ public class Driver {
 		ERSType t = new ERSType(1, "FOOD");
 		//System.out.println(t);
 		
-		ERSReimbursement e = new ERSReimbursement(1, 1, "description", 10.5, s, t);
-		System.out.println(e);
+		//ERSReimbursement e = new ERSReimbursement(1, 1, "description", 10.5, s, t);
+		//System.out.println(e);
 
 	}
 }

@@ -1,0 +1,200 @@
+11-18-2020 12:45:39 INFO  UserDAOImpl:35 - Attempting to insert reimbursment
+
+11-18-2020 12:52:28 INFO  UserDAOImpl:35 - Attempting to insert reimbursment
+
+11-18-2020 13:58:27 INFO  UserDAOImpl:35 - Attempting to insert reimbursment
+
+11-18-2020 14:22:32 INFO  UserDAOImpl:36 - Attempting to insert reimbursment
+
+11-18-2020 14:22:32 INFO  UserDAOImpl:53 - Attempting to insert status and type
+
+11-18-2020 14:38:51 INFO  UserDAOImpl:36 - Attempting to insert reimbursment
+
+11-18-2020 14:38:51 INFO  UserDAOImpl:53 - Attempting to insert status and type
+
+11-18-2020 14:58:09 INFO  UserDAOImpl:104 - Attempting to access profile
+
+11-18-2020 16:30:52 INFO  ReimbursmentDaoImpl:93 - Attempting to get pending list
+
+11-18-2020 16:32:07 INFO  ReimbursmentDaoImpl:93 - Attempting to get pending list
+
+11-18-2020 16:33:25 INFO  ReimbursmentDaoImpl:93 - Attempting to get pending list
+
+11-18-2020 17:57:50 INFO  ReimbursmentDaoImpl:94 - Attempting to get pending list
+
+11-18-2020 17:58:22 INFO  ReimbursmentDaoImpl:94 - Attempting to get pending list
+
+11-18-2020 17:59:17 INFO  ReimbursmentDaoImpl:94 - Attempting to get pending list
+
+11-18-2020 18:03:28 INFO  ReimbursmentDaoImpl:130 - Attempting to get pending list
+
+11-18-2020 18:38:22 INFO  ReimbursmentDaoImpl:130 - Attempting to get pending list
+
+11-18-2020 18:39:53 INFO  ReimbursmentDaoImpl:36 - Attempting to insert reimbursment
+
+11-18-2020 18:39:53 INFO  ReimbursmentDaoImpl:54 - Attempting to insert status and type
+
+11-18-2020 18:45:16 INFO  ReimbursmentDaoImpl:36 - Attempting to insert reimbursment
+
+11-18-2020 18:45:16 INFO  ReimbursmentDaoImpl:54 - Attempting to insert status and type
+
+11-18-2020 18:45:48 INFO  UserDAOImpl:28 - Attempting to access profile
+
+11-18-2020 18:52:58 INFO  UserDAOImpl:28 - Attempting to access profile
+
+11-18-2020 18:53:17 INFO  UserDAOImpl:28 - Attempting to access profile
+
+11-18-2020 18:54:58 INFO  ReimbursmentDaoImpl:36 - Attempting to insert reimbursment
+
+11-18-2020 18:54:58 INFO  ReimbursmentDaoImpl:54 - Attempting to insert status and type
+
+11-18-2020 18:55:04 INFO  UserDAOImpl:30 - Attempting to access profile
+
+11-18-2020 18:56:33 INFO  ReimbursmentDaoImpl:36 - Attempting to insert reimbursment
+
+11-18-2020 18:56:34 INFO  ReimbursmentDaoImpl:54 - Attempting to insert status and type
+
+11-18-2020 18:56:47 INFO  ReimbursmentDaoImpl:94 - Attempting to get pending list
+
+11-18-2020 18:57:10 INFO  ReimbursmentDaoImpl:94 - Attempting to get pending list
+
+11-18-2020 19:16:49 INFO  ReimbursmentDaoImpl:36 - Attempting to insert reimbursment
+
+11-18-2020 19:16:49 INFO  ReimbursmentDaoImpl:55 - Attempting to insert status and type
+
+11-18-2020 19:17:24 INFO  ReimbursmentDaoImpl:169 - Attempting to resolve
+
+11-18-2020 19:17:25 INFO  ReimbursmentDaoImpl:134 - Attempting to get pending list
+
+11-18-2020 19:17:51 INFO  ReimbursmentDaoImpl:134 - Attempting to get pending list
+
+11-18-2020 19:20:54 INFO  ReimbursmentDaoImpl:134 - Attempting to get pending list
+
+11-18-2020 19:24:41 INFO  ReimbursmentDaoImpl:134 - Attempting to get resolved list
+
+11-18-2020 19:25:35 INFO  ReimbursmentDaoImpl:134 - Attempting to get resolved list
+
+11-18-2020 19:27:14 INFO  ReimbursmentDaoImpl:134 - Attempting to get resolved list
+
+11-18-2020 19:28:24 INFO  ReimbursmentDaoImpl:134 - Attempting to get resolved list
+
+11-18-2020 19:28:57 INFO  ReimbursmentDaoImpl:169 - Attempting to resolve
+
+11-18-2020 19:28:58 INFO  ReimbursmentDaoImpl:134 - Attempting to get resolved list
+
+11-18-2020 19:46:05 INFO  UserDAOImpl:74 - Attempting to get all employees
+
+11-18-2020 19:46:33 INFO  UserDAOImpl:74 - Attempting to get all employees
+
+11-18-2020 19:49:04 INFO  UserDAOImpl:31 - Attempting to access profile
+
+11-18-2020 19:50:31 INFO  UserDAOImpl:74 - Attempting to get all employees
+
+11-18-2020 19:50:47 INFO  UserDAOImpl:31 - Attempting to access profile
+
+11-18-2020 19:51:01 INFO  ReimbursmentDaoImpl:36 - Attempting to insert reimbursment
+
+11-18-2020 19:51:02 INFO  ReimbursmentDaoImpl:55 - Attempting to insert status and type
+
+11-18-2020 19:52:01 INFO  UserDAOImpl:74 - Attempting to get all employees
+
+11-18-2020 20:10:18 INFO  ReimbursmentDaoImpl:199 - Attempting to get pending list
+
+11-18-2020 20:10:32 INFO  ReimbursmentDaoImpl:199 - Attempting to get pending list
+
+11-18-2020 20:15:59 INFO  ReimbursmentDaoImpl:36 - Attempting to insert reimbursment
+
+11-18-2020 20:15:59 INFO  ReimbursmentDaoImpl:55 - Attempting to insert status and type
+
+11-18-2020 20:16:28 INFO  ReimbursmentDaoImpl:36 - Attempting to insert reimbursment
+
+11-18-2020 20:16:28 INFO  ReimbursmentDaoImpl:55 - Attempting to insert status and type
+
+11-18-2020 20:16:57 INFO  UserDAOImpl:31 - Attempting to access profile
+
+11-18-2020 20:17:08 INFO  UserDAOImpl:31 - Attempting to access profile
+
+11-18-2020 20:17:25 INFO  ReimbursmentDaoImpl:97 - Attempting to get pending list
+
+11-18-2020 20:17:49 INFO  ReimbursmentDaoImpl:97 - Attempting to get pending list
+
+11-18-2020 20:19:07 INFO  ReimbursmentDaoImpl:97 - Attempting to get resolved list
+
+11-18-2020 20:19:37 INFO  ReimbursmentDaoImpl:97 - Attempting to get resolved list
+
+11-18-2020 20:22:18 INFO  ReimbursmentDaoImpl:97 - Attempting to get resolved list
+
+11-18-2020 20:23:58 INFO  ReimbursmentDaoImpl:97 - Attempting to get mareo1997 pending list
+
+11-18-2020 20:24:35 INFO  ReimbursmentDaoImpl:134 - Attempting to get mareo1997 resolved list
+
+11-18-2020 20:25:29 INFO  ReimbursmentDaoImpl:169 - Attempting to resolve
+
+11-18-2020 20:25:44 INFO  ReimbursmentDaoImpl:169 - Attempting to resolve
+
+11-18-2020 20:25:52 INFO  ReimbursmentDaoImpl:134 - Attempting to get mareo1997 resolved list
+
+11-18-2020 20:26:10 INFO  ReimbursmentDaoImpl:134 - Attempting to get marwil resolved list
+
+11-18-2020 20:26:25 INFO  ReimbursmentDaoImpl:199 - Attempting to get pending list
+
+11-18-2020 20:27:50 INFO  ReimbursmentDaoImpl:197 - Attempting to get pending list
+
+11-18-2020 20:28:19 INFO  ReimbursmentDaoImpl:197 - Attempting to get pending list
+
+11-18-2020 20:28:40 INFO  ReimbursmentDaoImpl:197 - Attempting to get pending list
+
+11-18-2020 20:30:22 INFO  ReimbursmentDaoImpl:197 - Attempting to get pending list
+
+11-18-2020 20:30:59 INFO  ReimbursmentDaoImpl:197 - Attempting to get pending list
+
+11-18-2020 20:43:52 INFO  UserDaoImpl:76 - Attempting to get all employees
+
+11-18-2020 20:46:59 INFO  ReimbursmentDaoImpl:240 - Attempting to get all employees
+
+11-18-2020 20:47:00 INFO  ReimbursmentDaoImpl:202 - Attempting to get pending list
+
+11-18-2020 20:47:01 INFO  ReimbursmentDaoImpl:202 - Attempting to get pending list
+
+11-18-2020 20:48:35 INFO  ReimbursmentDaoImpl:240 - Attempting to get all employees
+
+11-18-2020 20:48:37 INFO  ReimbursmentDaoImpl:138 - Attempting to get mareo1997 resolved list
+
+11-18-2020 20:48:38 INFO  ReimbursmentDaoImpl:138 - Attempting to get marwil resolved list
+
+11-18-2020 20:49:54 INFO  ReimbursmentDaoImpl:172 - Attempting to resolve
+
+11-18-2020 20:50:14 INFO  ReimbursmentDaoImpl:240 - Attempting to get all resolved requests
+
+11-18-2020 20:50:15 INFO  ReimbursmentDaoImpl:138 - Attempting to get mareo1997 resolved list
+
+11-18-2020 20:50:16 INFO  ReimbursmentDaoImpl:138 - Attempting to get marwil resolved list
+
+11-18-2020 20:52:04 INFO  ReimbursmentDaoImpl:138 - Attempting to get marwil resolved list
+
+11-18-2020 20:52:52 INFO  ReimbursmentDaoImpl:138 - Attempting to get marwil resolved list
+
+11-18-2020 20:52:59 INFO  ReimbursmentDaoImpl:240 - Attempting to get all resolved requests
+
+11-18-2020 20:53:01 INFO  ReimbursmentDaoImpl:138 - Attempting to get mareo1997 resolved list
+
+11-18-2020 20:53:02 INFO  ReimbursmentDaoImpl:138 - Attempting to get marwil resolved list
+
+11-18-2020 20:53:39 INFO  ReimbursmentDaoImpl:138 - Attempting to get mareo1997 resolved list
+
+11-18-2020 20:54:25 INFO  ReimbursmentDaoImpl:138 - Attempting to get mareo1997 resolved list
+
+11-18-2020 20:54:39 INFO  ReimbursmentDaoImpl:138 - Attempting to get marwil resolved list
+
+11-18-2020 20:54:48 INFO  ReimbursmentDaoImpl:240 - Attempting to get all resolved requests
+
+11-18-2020 20:54:49 INFO  ReimbursmentDaoImpl:138 - Attempting to get mareo1997 resolved list
+
+11-18-2020 20:54:50 INFO  ReimbursmentDaoImpl:138 - Attempting to get marwil resolved list
+
+11-18-2020 21:00:30 INFO  ReimbursmentDaoImpl:275 - Attempting to get all resolved requests
+
+11-18-2020 21:00:31 INFO  ReimbursmentDaoImpl:100 - Attempting to get mareo1997 pending list
+
+11-18-2020 21:00:33 INFO  ReimbursmentDaoImpl:100 - Attempting to get marwil pending list
+

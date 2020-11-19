@@ -7,27 +7,27 @@
 * Finance managers are authorized to approve and deny requests for expense reimbursement.
 
 #### Employee User Stories 
-- An Employee can login
-- An Employee can view the Employee Homepage
-- An Employee can logout
-- An Employee can submit a reimbursement request
-- An Employee can upload an image of his/her receipt as part of the reimbursement request (extra credit)
-- An Employee can view their pending reimbursement requests
-- An Employee can view their resolved reimbursement requests
-- An Employee can view their information
-- An Employee can update their information
-- An Employee receives an email when one of their reimbursement requests is resolved (optional)
+- An Employee can login **DONE**
+- An Employee can view the Employee Homepage **LATER**
+- An Employee can logout **LATER**
+- An Employee can submit a reimbursement request **DONE**
+- An Employee can upload an image of his/her receipt as part of the reimbursement request (extra credit) **MAYBE**
+- An Employee can view their pending reimbursement requests **DONE**
+- An Employee can view their resolved reimbursement requests **DONE**
+- An Employee can view their information **DONE**
+- An Employee can update their information **LATER**
+- An Employee receives an email when one of their reimbursement requests is resolved (optional) **MAYBE**
 
 #### Manager User Stories
-- A Manager can login
-- A Manager can view the Manager Homepage
-- A Manager can logout
-- A Manager can approve/deny pending reimbursement requests
-- A Manager can view all pending requests from all employees
-- A Manager can view images of the receipts from reimbursement requests (extra credit)
-- A Manager can view all resolved requests from all employees and see which manager resolved it
-- A Manager can view all Employees
-- A Manager can view reimbursement requests from a single Employee 
+- A Manager can login **DONE**
+- A Manager can view the Manager Homepage **LATER**
+- A Manager can logout **LATER**
+- A Manager can approve/deny pending reimbursement requests **DONE**
+- A Manager can view all pending requests from all employees **DONE**
+- A Manager can view images of the receipts from reimbursement requests (extra credit) **MAYBE**
+- A Manager can view all resolved requests from all employees and see which manager resolved it **PROBABLY DONE**
+- A Manager can view all Employees **DONE**
+- A Manager can view reimbursement requests from a single Employee **DONE**
 
 
 **State-chart Diagram (Reimbursement Statuses)** 

@@ -9,6 +9,11 @@ public class ERSType {
 		this.typeid = typeid;
 		this.type = type;
 	}
+	
+	public ERSType(String type) {
+		super();
+		this.type = type;
+	}
 
 	@Override
 	public String toString() {

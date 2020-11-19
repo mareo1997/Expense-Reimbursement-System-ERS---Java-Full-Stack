@@ -6,7 +6,7 @@ public class User {
 	private String firstname, lastname, username, password, email;
 	private Role role;
 
-	public User(int userid,String firstname, String lastname, String username, String password, String email, Role role) {
+	public User(int userid, String username, String password, String firstname, String lastname, String email, Role role) {
 		this.userid = userid;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -15,8 +15,8 @@ public class User {
 		this.email = email;
 		this.role = role;
 	}
-	
-	public User(int userid, String firstname, String lastname, String username, String password, String email) {
+
+	public User(int userid, String username, String password, String firstname, String lastname, String email) {
 		super();
 		this.userid = userid;
 		this.firstname = firstname;
@@ -28,9 +28,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		String result = "UserID: "+userid+"\t\tName: "+firstname+" "+lastname+
-						"\nUser name: "+username+"\tEmail: "+email+
-						"\n"+role;
+		String result = "UserID: " + userid + "\t\tName: " + firstname + " " + lastname + "\nUser name: " + username
+				+ "\tEmail: " + email + "\n" + role + "\n";
 		return result;
 	}
 
