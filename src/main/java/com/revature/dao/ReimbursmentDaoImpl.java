@@ -27,7 +27,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 
 	@Override
 	public void submit(User u, ERSReimbursement r) { // - An Employee can submit a reimbursement request **DONE**
-
+/*
 		ERSReimbursement r2;
 		ArrayList<ERSReimbursement> reimburse = new ArrayList<>();
 		ArrayList<ERSStatus> status = new ArrayList<>();
@@ -86,7 +86,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	@Override
@@ -113,8 +113,12 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 						rs.getTimestamp(5), rs.getInt(7), rs.getTimestamp(8), status, type));
 			}
 
-			for (ERSReimbursement r : reimburse) {
-				System.out.println(r);
+			if (reimburse.size() > 0) {
+				for (ERSReimbursement r : reimburse) {
+					System.out.println(r);
+				}
+			}else {
+				System.out.println(u.getUsername()+" has no pending requests\n");
 			}
 
 		} catch (SQLException e) {
@@ -150,8 +154,13 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 						rs.getTimestamp(5), rs.getInt(7), rs.getTimestamp(8), status, type));
 			}
 
-			for (ERSReimbursement r : reimburse) {
-				System.out.println(r);
+			
+			if (reimburse.size() > 0) {
+				for (ERSReimbursement r : reimburse) {
+					System.out.println(r);
+				}
+			}else {
+				System.out.println(u.getUsername()+" has no resolved requests\n");
 			}
 
 		} catch (SQLException e) {

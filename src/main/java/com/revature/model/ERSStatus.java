@@ -1,8 +1,51 @@
 package com.revature.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Status")
 public class ERSStatus {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO) // this acts like the SERIAL datatype in SQL	
+	@Column(name="statusid")
 	private int statusid;
+	
+	@Column(name="status", nullable=false)
 	private String status; // Pending, Approved, Denied
+	
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reimbursementid")
+	private ERSReimbursement reimbursementid;
+
+	public ERSReimbursement getErsreimbursement() {
+		return reimbursementid;
+	}
+
+	public void setErsreimbursement(ERSReimbursement ersreimbursement) {
+		this.reimbursementid = ersreimbursement;
+	}
+
+	public ERSStatus(String status, ERSReimbursement ersreimbursement) {
+		super();
+		this.status = status;
+		this.reimbursementid = ersreimbursement;
+	}
+
+	public ERSStatus(int statusid, String status, ERSReimbursement ersreimbursement) {
+		super();
+		this.statusid = statusid;
+		this.status = status;
+		this.reimbursementid = ersreimbursement;
+	}
 
 	public ERSStatus(int statusid, String status) {
 		super();

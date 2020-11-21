@@ -71,11 +71,12 @@ public class DriverTest {
 
 	@Test
 	public void resolve() {
-		User u = new User(1, "mareo1997", "password", "Mareo", "Yapp", "mareo1997@gmail.com");
-		//User u = new User(2, "marwil", "william", "Marcia", "Williamson", "mother@gmail.com");
-
-		reim.resolve(2, "APPROVED", 3);
-		reim.resolved(u);
+		User u2 = new User(1, "mareo1997", "password", "Mareo", "Yapp", "mareo1997@gmail.com");
+		//User u2 = new User(2, "marwil", "william", "Marcia", "Williamson", "mother@gmail.com");
+		User u = new User(3, "king", "george", "Kingsley", "Yapp", "father@gmail.com");
+		
+		reim.resolve(2, "APPROVED", u.getUserid());
+		reim.resolved(u2);
 	}
 	
 	@Test

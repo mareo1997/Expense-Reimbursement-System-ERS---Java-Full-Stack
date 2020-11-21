@@ -25,7 +25,7 @@ CREATE table reimbursment(
 	author integer not null,
 	description varchar(250),
 	amount numeric(12,2) not null,
-	submitted timestamp,
+	submitted timestamp not null,
 	receipt bytea,
 	resolver integer,
 	resolved timestamp,--statusid integer not null,--typeid integer not null,

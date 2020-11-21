@@ -1,8 +1,51 @@
 package com.revature.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Type")
 public class ERSType {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO) // this acts like the SERIAL datatype in SQL	
+	@Column(name="typeid")
 	private int typeid;
+	
+	@Column(name="type", nullable=false)
 	private String type; // Lodging, Travel, Food, Other
+	
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reimbursementid")
+	private ERSReimbursement reimbursementid;
+
+	public ERSType(String type, ERSReimbursement ersreimbursement) {
+		super();
+		this.type = type;
+		this.reimbursementid = ersreimbursement;
+	}
+
+	public ERSType(int typeid, String type, ERSReimbursement ersreimbursement) {
+		super();
+		this.typeid = typeid;
+		this.type = type;
+		this.reimbursementid = ersreimbursement;
+	}
+
+	public ERSReimbursement getErsreimbursement() {
+		return reimbursementid;
+	}
+
+	public void setErsreimbursement(ERSReimbursement ersreimbursement) {
+		this.reimbursementid = ersreimbursement;
+	}
 
 	public ERSType(int typeid, String type) {
 		super();

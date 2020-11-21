@@ -1,13 +1,87 @@
 package com.revature.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Ersser")
 public class User {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO) // this acts like the SERIAL datatype in SQL	
+	@Column(name="userid")
 	private int userid;
-	private String firstname, lastname, username, password, email;
+	
+	@Column(name="firstname", nullable=false)
+	private String firstname; 
+	
+	@Column(name="lastname", nullable=false)
+	private String lastname;
+	
+	@Column(name="username", nullable=false)//, unique=true)
+	private String username;
+	
+	@Column(name="password", nullable=false)
+	private String password;
+	
+	@Column(name="email", nullable=false)//, unique=true)
+	private String email;
+	
+    @OneToOne(mappedBy = "userid", cascade = CascadeType.ALL)
 	private Role role;
+    
+	//@OneToMany(mappedBy="AuthorFK", fetch=FetchType.LAZY)
+	//private List<ERSReimbursement> e = new ArrayList<>();
 
+	public User(String firstname, String lastname, String username, String password, String email, Role role,
+			List<ERSReimbursement> e) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		//this.e = e;
+	}
+
+	public User(int userid, String firstname, String lastname, String username, String password, String email,
+			Role role, List<ERSReimbursement> e) {
+		super();
+		this.userid = userid;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		//this.e = e;
+	}
+
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public User(int userid, String username, String password, String firstname, String lastname, String email, Role role) {
 		this.userid = userid;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+	}
+
+	public User(String firstname, String lastname, String username, String password, String email, Role role) {
+		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
@@ -25,11 +99,20 @@ public class User {
 		this.password = password;
 		this.email = email;
 	}
-
+	
+	public User(String username, String password, String firstname, String lastname, String email) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+	}
+	
 	@Override
 	public String toString() {
 		String result = "UserID: " + userid + "\t\tName: " + firstname + " " + lastname + "\nUser name: " + username
-				+ "\tEmail: " + email + "\n" + role + "\n";
+				+ "\tEmail: " + email + "\n" + /*role +*/ "\n";
 		return result;
 	}
 
@@ -141,4 +224,6 @@ public class User {
 		return true;
 	}
 
+	
+	
 }
