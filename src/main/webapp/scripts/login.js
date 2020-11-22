@@ -19,7 +19,7 @@ function sendLogin(){
         if(this.readyState === 4 && this.status === 200){
             console.log("Success");
             sessionStorage.setItem('currentUser',this.responseText);
-            window.location = "http://localhost:8080/project-1/home.html"
+            window.location = "http://localhost:8080/project-1/Ehome.html"
             console.log(sessionStorage.getItem('currentUser'))
         }
 
@@ -32,9 +32,10 @@ function sendLogin(){
         }
         console.log("Processing")
 
-     }
-        xhr.open("POST","http://localhost:8080/project-1/login.html");
+    }
+    
+    xhr.open("POST","http://localhost:8080/project-1/login");
 
-        xhr.send(JSON.stringify(logintemplate));
+    xhr.send(JSON.stringify(logintemplate));
     
 } 

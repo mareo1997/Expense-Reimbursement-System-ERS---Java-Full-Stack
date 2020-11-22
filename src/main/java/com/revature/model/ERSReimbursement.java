@@ -141,6 +141,11 @@ public class ERSReimbursement {
 		this.type = type;
 	}
 
+	public ERSReimbursement(int ersid2, User author2, String description2, double amt2, Timestamp submitted2,
+			ERSStatus s, ERSType t) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String toString() {
 		String result = "ReimbursementID: " + ersid + " \tAuthor: " + /*author +*/ "\nDescription: " + description

@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.postgresql.util.PSQLException;
 
 import com.revature.model.ERSReimbursement;
@@ -16,6 +18,7 @@ import com.revature.model.ERSType;
 import com.revature.model.Role;
 import com.revature.model.User;
 import com.revature.util.ConnectionUtil;
+import com.revature.util.HibernateUtil;
 
 public class ReimbursmentDaoImpl implements ReimburmentDao {
 
@@ -26,8 +29,59 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 	public ResultSet rs;
 
 	@Override
+	public void submit(ERSReimbursement r, ERSStatus s, ERSType t) {
+		Session ses = HibernateUtil.getSession(); // capture the session
+
+		Transaction tx = ses.beginTransaction();
+		ses.save(r);
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+		
+		tx = ses.beginTransaction();  // perform an operation on DB
+		
+		ses.save(s); // use the save() session method to perform an insert operation
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+		
+		tx = ses.beginTransaction();  // perform an operation on DB
+		
+		ses.save(t); // use the save() session method to perform an insert operation
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+
+	}
+	
+	@Override
+	public void insert(ERSReimbursement e) {
+		//log.info("Attempting to insert user\n");
+		Session ses = HibernateUtil.getSession(); // capture the session
+		Transaction tx = ses.beginTransaction();  // perform an operation on DB
+		
+		ses.save(e); // use the save() session method to perform an insert operation
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+
+	}
+	
+	@Override
+	public void insert(ERSStatus s) {
+		//log.info("Attempting to insert user\n");
+		Session ses = HibernateUtil.getSession(); // capture the session
+		Transaction tx = ses.beginTransaction();  // perform an operation on DB
+		
+		ses.save(s); // use the save() session method to perform an insert operation
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+	}
+	
+	@Override
+	public void insert(ERSType t) {
+		//log.info("Attempting to insert user\n");
+		Session ses = HibernateUtil.getSession(); // capture the session
+		Transaction tx = ses.beginTransaction();  // perform an operation on DB
+		
+		ses.save(t); // use the save() session method to perform an insert operation
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+	}
+	
+	@Override
 	public void submit(User u, ERSReimbursement r) { // - An Employee can submit a reimbursement request **DONE**
-/*
+
 		ERSReimbursement r2;
 		ArrayList<ERSReimbursement> reimburse = new ArrayList<>();
 		ArrayList<ERSStatus> status = new ArrayList<>();
@@ -86,7 +140,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 	}
 
 	@Override

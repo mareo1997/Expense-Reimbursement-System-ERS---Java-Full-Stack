@@ -31,7 +31,7 @@
 		<property name="hibernate.connection.pool_size">10</property>
 	
 		<!-- hbm2ddl.auto is a hibernate prop that exports schema DDL to the DB when the sessionfactory is created -->
-		<property name="hibernate.hbm2ddl.auto">create</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- 
 			CREATE, VALIDATE, UPDATE, NONE
 			

@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Ersser")
+@Table(name="errser")
 public class User {
 
 	@Id
@@ -26,13 +26,13 @@ public class User {
 	@Column(name="lastname", nullable=false)
 	private String lastname;
 	
-	@Column(name="username", nullable=false)//, unique=true)
+	@Column(name="username", nullable=false, unique=true)
 	private String username;
 	
 	@Column(name="password", nullable=false)
 	private String password;
 	
-	@Column(name="email", nullable=false)//, unique=true)
+	@Column(name="email", nullable=false, unique=true)
 	private String email;
 	
     @OneToOne(mappedBy = "userid", cascade = CascadeType.ALL)
@@ -111,8 +111,8 @@ public class User {
 	
 	@Override
 	public String toString() {
-		String result = "UserID: " + userid + "\t\tName: " + firstname + " " + lastname + "\nUser name: " + username
-				+ "\tEmail: " + email + "\n" + /*role +*/ "\n";
+		String result = "\nUserID: " + userid + "\t\tName: " + firstname + " " + lastname + "\nUser name: " + username
+				+ "\tEmail: " + email + "\n" + role + "\n";
 		return result;
 	}
 
