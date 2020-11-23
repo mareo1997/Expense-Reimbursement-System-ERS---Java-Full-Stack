@@ -16,6 +16,6 @@ public interface UserServices {
 	
 	public void update();
 	
-	public List<User> allEmp();
+	public List<Role> allEmp();
 	public void allEmpl();
 }

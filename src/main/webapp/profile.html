@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Profile</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="jumbotron">
+		<script>
+			let welcome = document.getElementById('welcome');
+			let userString = sessionStorage.getItem('currentUser');
+
+			if (userString === null) {
+				window.location = "http://localhost:8080/project-1/"
+			} else {
+				let currentUser = JSON.parse(userString);
+				console.log(currentUser);
+				if (currentUser != null) {
+					welcome.innerHTML = "Welcome " + currentUser;
+				}
+			}
+		</script>
+	</div>
+</body>
+</html>

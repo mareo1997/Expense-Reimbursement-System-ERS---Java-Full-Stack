@@ -6,16 +6,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.postgresql.util.PSQLException;
 
-import com.revature.model.ERSReimbursement;
-import com.revature.model.ERSStatus;
-import com.revature.model.ERSType;
+import com.revature.model.Reimbursement;
 import com.revature.model.Role;
+import com.revature.model.Status;
+import com.revature.model.Type;
 import com.revature.model.User;
 import com.revature.util.ConnectionUtil;
 import com.revature.util.HibernateUtil;
@@ -29,7 +30,45 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 	public ResultSet rs;
 
 	@Override
-	public void submit(ERSReimbursement r, ERSStatus s, ERSType t) {
+	public List<Status> pendingHQL(User u) { // - An Employee can view their pending reimbursement requests ****
+
+		Session ses = HibernateUtil.getSession();
+		List<Status> status = ses.createQuery("FROM Status where status = 'PENDING'", Status.class).list();
+		
+		if (status.size() > 0) {
+			for (Status r : status) {
+				System.out.println(r);
+			}
+
+			return status;
+		} else {
+			System.out.println(u.getUsername() + " has no pending requests\n");
+			return null;
+		}
+
+	}
+	
+	@Override
+	public List<Status> resolvedHQL(User u) { // - An Employee can view their pending reimbursement requests ****
+
+		Session ses = HibernateUtil.getSession();
+		List<Status> status = ses.createQuery("FROM Status where not status = 'PENDING'", Status.class).list();
+		
+		if (status.size() > 0) {
+			for (Status r : status) {
+				System.out.println(r);
+			}
+
+			return status;
+		} else {
+			System.out.println(u.getUsername() + " has no resolved requests\n");
+			return null;
+		}
+
+	}
+	
+	@Override
+	public void submit(Reimbursement r, Status s, Type t) {
 		Session ses = HibernateUtil.getSession(); // capture the session
 
 		Transaction tx = ses.beginTransaction();
@@ -49,7 +88,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 	}
 	
 	@Override
-	public void insert(ERSReimbursement e) {
+	public void insert(Reimbursement e) {
 		//log.info("Attempting to insert user\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 		Transaction tx = ses.beginTransaction();  // perform an operation on DB
@@ -60,7 +99,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 	}
 	
 	@Override
-	public void insert(ERSStatus s) {
+	public void insert(Status s) {
 		//log.info("Attempting to insert user\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 		Transaction tx = ses.beginTransaction();  // perform an operation on DB
@@ -70,7 +109,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 	}
 	
 	@Override
-	public void insert(ERSType t) {
+	public void insert(Type t) {
 		//log.info("Attempting to insert user\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 		Transaction tx = ses.beginTransaction();  // perform an operation on DB
@@ -80,12 +119,12 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 	}
 	
 	@Override
-	public void submit(User u, ERSReimbursement r) { // - An Employee can submit a reimbursement request **DONE**
+	public void submit(User u, Reimbursement r) { // - An Employee can submit a reimbursement request **DONE**
 
-		ERSReimbursement r2;
-		ArrayList<ERSReimbursement> reimburse = new ArrayList<>();
-		ArrayList<ERSStatus> status = new ArrayList<>();
-		ArrayList<ERSType> type = new ArrayList<>();
+		Reimbursement r2;
+		ArrayList<Reimbursement> reimburse = new ArrayList<>();
+		ArrayList<Status> status = new ArrayList<>();
+		ArrayList<Type> type = new ArrayList<>();
 
 		try (Connection conn = ConnectionUtil.getConnectionFromFile("connection.properties")) {
 
@@ -103,8 +142,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				reimburse.add(new ERSReimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDouble(4),
-						rs.getTimestamp(5)));
+				//reimburse.add(new Reimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDouble(4),rs.getTimestamp(5)));
 			}
 			r2 = reimburse.get(reimburse.size() - 1);// Get last account
 
@@ -116,20 +154,19 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 			ps.setInt(2, r2.getErsid());
 			ps.executeUpdate();
 
-			sql = "SELECT s.statusid, s.status, t.typeid, t.erstype " + "from ersstatus s inner join erstype t "
+			sql = "SELECT s.statusid, s.status, t.typeid, t.Type " + "from Status s inner join Type t "
 					+ "on s.reimbursmentid = t.reimbursmentid";
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				status.add(new ERSStatus(rs.getInt(1), rs.getString(2)));
-				type.add(new ERSType(rs.getInt(3), rs.getString(4)));
+				status.add(new Status(rs.getInt(1), rs.getString(2)));
+				type.add(new Type(rs.getInt(3), rs.getString(4)));
 			}
-			ERSStatus s = status.get(status.size() - 1);
-			ERSType t = type.get(type.size() - 1);
+			Status s = status.get(status.size() - 1);
+			Type t = type.get(type.size() - 1);
 
-			r2 = new ERSReimbursement(r2.getErsid(), r2.getAuthor(), r2.getDescription(), r2.getAmt(),
-					r2.getSubmitted(), s, t);
+			//r2 = new Reimbursement(r2.getErsid(), r2.getAuthor(), r2.getDescription(), r2.getAmt(),r2.getSubmitted(), s, t);
 			System.out.println(r2);
 
 		} catch (PSQLException e) {
@@ -144,31 +181,30 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 	}
 
 	@Override
-	public void pending(User u) { // - An Employee can view their pending reimbursement requests **DONE**
-
-		ArrayList<ERSReimbursement> reimburse = new ArrayList<>();
-		ERSType type = null;
-		ERSStatus status = null;
+	public List<Reimbursement> pending(User u) { // - An Employee can view their pending reimbursement requests **DONE**
+		
+		ArrayList<Reimbursement> reimburse = new ArrayList<>();
+		Type type = null;
+		Status status = null;
 
 		try (Connection conn = ConnectionUtil.getConnectionFromFile("connection.properties")) {
 			log.info("Attempting to get " + u.getUsername() + " pending list\n");
 
-			sql = "select * from reimbursment r " + "inner join ersstatus s on r.reimbursmentid =s.reimbursmentid "
-					+ "inner join erstype t on s.reimbursmentid = t.reimbursmentid "
+			sql = "select * from reimbursment r " + "inner join Status s on r.reimbursmentid =s.reimbursmentid "
+					+ "inner join Type t on s.reimbursmentid = t.reimbursmentid "
 					+ "where s.status ='PENDING' and r.author =?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, u.getUserid());
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				type = new ERSType(rs.getInt(12), rs.getString(13));
-				status = new ERSStatus(rs.getInt(9), rs.getString(10));
-				reimburse.add(new ERSReimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDouble(4),
-						rs.getTimestamp(5), rs.getInt(7), rs.getTimestamp(8), status, type));
+				type = new Type(rs.getInt(12), rs.getString(13));
+				status = new Status(rs.getInt(9), rs.getString(10));
+				//reimburse.add(new Reimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDouble(4), rs.getTimestamp(5), rs.getInt(7), rs.getTimestamp(8), status, type));
 			}
 
 			if (reimburse.size() > 0) {
-				for (ERSReimbursement r : reimburse) {
+				for (Reimbursement r : reimburse) {
 					System.out.println(r);
 				}
 			}else {
@@ -182,35 +218,35 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return reimburse;
 	}
 
 	@Override
-	public void resolved(User u) { // - An Employee can view their resolved reimbursement requests **DONE**
+	public List<Reimbursement> resolved(User u) { // - An Employee can view their resolved reimbursement requests **DONE**
 
-		ArrayList<ERSReimbursement> reimburse = new ArrayList<>();
-		ERSType type = null;
-		ERSStatus status = null;
+		ArrayList<Reimbursement> reimburse = new ArrayList<>();
+		Type type = null;
+		Status status = null;
 
 		try (Connection conn = ConnectionUtil.getConnectionFromFile("connection.properties")) {
 			log.info("Attempting to get " + u.getUsername() + " resolved list\n");
 
-			sql = "select * from reimbursment r " + "inner join ersstatus s on r.reimbursmentid =s.reimbursmentid "
-					+ "inner join erstype t on s.reimbursmentid = t.reimbursmentid "
+			sql = "select * from reimbursment r " + "inner join Status s on r.reimbursmentid =s.reimbursmentid "
+					+ "inner join Type t on s.reimbursmentid = t.reimbursmentid "
 					+ "where r.author =? and not s.status ='PENDING'";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, u.getUserid());
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				type = new ERSType(rs.getInt(12), rs.getString(13));
-				status = new ERSStatus(rs.getInt(9), rs.getString(10));
-				reimburse.add(new ERSReimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDouble(4),
-						rs.getTimestamp(5), rs.getInt(7), rs.getTimestamp(8), status, type));
+				type = new Type(rs.getInt(12), rs.getString(13));
+				status = new Status(rs.getInt(9), rs.getString(10));
+				//reimburse.add(new Reimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDouble(4), rs.getTimestamp(5), rs.getInt(7), rs.getTimestamp(8), status, type));
 			}
 
 			
 			if (reimburse.size() > 0) {
-				for (ERSReimbursement r : reimburse) {
+				for (Reimbursement r : reimburse) {
 					System.out.println(r);
 				}
 			}else {
@@ -224,6 +260,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return reimburse;
 	}
 
 	@Override
@@ -257,28 +294,27 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 
 	@Override
 	public void requests(int userid) { // - A Manager can view reimbursement requests from a single Employee **DONE**
-		ArrayList<ERSReimbursement> reimburse = new ArrayList<>();
-		ERSType type = null;
-		ERSStatus status = null;
+		ArrayList<Reimbursement> reimburse = new ArrayList<>();
+		Type type = null;
+		Status status = null;
 
 		try (Connection conn = ConnectionUtil.getConnectionFromFile("connection.properties")) {
 			log.info("Attempting to get pending list\n");
 
-			sql = "select * from reimbursment r " + "inner join ersstatus s on r.reimbursmentid =s.reimbursmentid "
-					+ "inner join erstype t on s.reimbursmentid = t.reimbursmentid "
+			sql = "select * from reimbursment r " + "inner join Status s on r.reimbursmentid =s.reimbursmentid "
+					+ "inner join Type t on s.reimbursmentid = t.reimbursmentid "
 					+ "where s.status ='PENDING' and r.author =?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, userid);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				type = new ERSType(rs.getInt(12), rs.getString(13));
-				status = new ERSStatus(rs.getInt(9), rs.getString(10));
-				reimburse.add(new ERSReimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDouble(4),
-						rs.getTimestamp(5), rs.getInt(7), rs.getTimestamp(8), status, type));
+				type = new Type(rs.getInt(12), rs.getString(13));
+				status = new Status(rs.getInt(9), rs.getString(10));
+				//reimburse.add(new Reimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDouble(4), rs.getTimestamp(5), rs.getInt(7), rs.getTimestamp(8), status, type));
 			}
 
-			for (ERSReimbursement r : reimburse) {
+			for (Reimbursement r : reimburse) {
 				System.out.println(r);
 			}
 

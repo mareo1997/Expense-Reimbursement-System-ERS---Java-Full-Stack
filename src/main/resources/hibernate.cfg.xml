@@ -48,8 +48,8 @@
 		
 		<mapping class="com.revature.model.User"/>
 		<mapping class="com.revature.model.Role"/>
-		<mapping class="com.revature.model.ERSReimbursement"/>		
-		<mapping class="com.revature.model.ERSStatus"/>		
-		<mapping class="com.revature.model.ERSType"/>
+		<mapping class="com.revature.model.Reimbursement"/>		
+		<mapping class="com.revature.model.Status"/>		
+		<mapping class="com.revature.model.Type"/>
 	</session-factory>
 </hibernate-configuration>

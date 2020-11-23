@@ -41,7 +41,7 @@ public class UserServicesImpl implements UserServices {
 	}
 	
 	@Override
-	public List<User> allEmp() {
+	public List<Role> allEmp() {
 		return dao.allEmp();
 	}
 

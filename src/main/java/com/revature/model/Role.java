@@ -2,12 +2,9 @@ package com.revature.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,19 +12,12 @@ import javax.persistence.Table;
 public class Role {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO) // this acts like the SERIAL datatype in SQL	
+	@GeneratedValue(strategy=GenerationType.IDENTITY) // this acts like the SERIAL datatype in SQL	
 	@Column(name="roleid")
 	private int roleid;
 
 	@Column(name="ersroles", nullable=false)
 	private String role;
-	
-//	@Column(name="userid")
-//	private int userid;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid")
-	private User userid;
 
 	public Role() {
 		// TODO Auto-generated constructor stub
@@ -46,7 +36,7 @@ public class Role {
 
 	@Override
 	public String toString() {
-		String result = "RoleID: "+roleid+" \t\tRole: "+role;
+		String result = "RoleID: "+roleid+" \t\tRole: "+role+"\n";
 		return result;
 	}
 	
@@ -93,28 +83,6 @@ public class Role {
 			return false;
 		return true;
 	}
-
-	public User getUser() {
-		return userid;
-	}
-
-	public void setUser(User user) {
-		this.userid = user;
-	}
-
-	public Role(int roleid, String role, User user) {
-		super();
-		this.roleid = roleid;
-		this.role = role;
-		this.userid = user;
-	}
-
-	public Role(String role, User user) {
-		super();
-		this.role = role;
-		this.userid = user;
-	}
 	
 	
-
 }

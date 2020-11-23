@@ -2,12 +2,14 @@
 package com.revature;
 
 import java.sql.Timestamp;
+import java.util.List;
 
-import com.revature.model.ERSReimbursement;
-import com.revature.model.ERSStatus;
-import com.revature.model.ERSType;
+import com.revature.model.Reimbursement;
 import com.revature.model.Role;
+import com.revature.model.Status;
+import com.revature.model.Type;
 import com.revature.model.User;
+import com.revature.services.LoginService;
 import com.revature.services.ReimbursementServicesImpl;
 import com.revature.services.UserServicesImpl;
 import com.revature.util.HibernateUtil;
@@ -20,11 +22,22 @@ public class Driver {
 
 	public static void main(String[] args) {
 
-		//initialValues();
+		initialValues();
 		//profile(); //done
-		allEmpl();
+		//allEmpl();
 		//submit(); //done
+		//pending();
+		
+		//resolved();
 		HibernateUtil.closeSes();
+	}
+	
+	public static void pending() {
+		List<Status> pending = reimserv.pendingHQL(userserv.profile(3));
+	}
+	
+	public static void resolved() {
+		List<Status> resolved = reimserv.resolvedHQL(userserv.profile(3));
 	}
 	
 	public static void profile() {
@@ -37,37 +50,66 @@ public class Driver {
 	
 	public static void submit() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		ERSReimbursement reim = new ERSReimbursement(18.5, timestamp, "Test2", userserv.profile(3));
-		ERSStatus s = new ERSStatus("PENDING", reim);
-		ERSType t = new ERSType("LODGE", reim);
+		//Reimbursement reim = new Reimbursement(1000, timestamp, "HILTON INN", userserv.profile(3));
 		
 		/*reimserv.insert(reim);
 		reimserv.insert(s);
 		reimserv.insert(t);*/
 		
-		reimserv.submit(reim, s, t);
 	}
 	
 	public static void initialValues() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+		Role role1 = new Role(1, "EMPLOYEE");
+		userserv.insert(role1);
+		Role role2 = new Role(2, "MANAGER");
+		userserv.insert(role2);
+
+		System.out.println("done saving user to db");
 
 		// Instantiate a BankUser Mapped to a Table, provide the primary key
-		User user = new User("mareo1997", "password", "Mareo", "Yapp", "mareo1997@gmail.com");
-		user.getRole().getRole();
+		User user = new User("mareo1997", "password", "Mareo", "Yapp", "mareo1997@gmail.com", role1);
+		User mareo = user;
 		userserv.insert(user);
-		Role role = new Role("EMPLOYEE", user);
-		userserv.insert(role);
-		
-		user = new User("marwil", "william", "Marcia", "Williamson", "mother@gmail.com");
-		userserv.insert(user);
-		role = new Role("EMPLOYEE", user);
-		userserv.insert(role);
 
-		user = new User("king", "george", "Kingsley", "Yapp", "father@gmail.com");
+		user = new User("marwil", "william", "Marcia", "Williamson", "mother@gmail.com", role1);
 		userserv.insert(user);
-		role = new Role("MANAGER", user);
-		userserv.insert(role);
-		
+
+		user = new User("king", "george", "Kingsley", "Yapp", "father@gmail.com", role2);
+		userserv.insert(user);
+
 		System.out.println("done saving user to db");
+
+		Status status = new Status(1, "PENDING");
+		reimserv.insert(status);
+		status = new Status(2, "APPROVED");
+		Status approved = status;
+		reimserv.insert(status);
+		status = new Status(3, "DENIED");
+		reimserv.insert(status);
+
+		System.out.println("done saving user to db");
+
+		Type type = new Type(1, "LODGE");
+		Type lodge = type;
+		reimserv.insert(type);
+		type = new Type(2, "TRAVEL");
+		reimserv.insert(type);
+		type = new Type(3, "FOOD");
+		reimserv.insert(type);
+		type = new Type(4, "OTHER");
+		reimserv.insert(type);
+
+		System.out.println("done saving user to db");
+		
+		Reimbursement reim = new Reimbursement(mareo, 1897, "HILTON INN", timestamp, null, null, approved, lodge);
+		reimserv.insert(reim);
+
+		System.out.println("done saving user to db");
+		
+		User login = LoginService.confirm(mareo.getUsername(), mareo.getPassword());
+		System.out.println("login "+login);
 
 	}
 }

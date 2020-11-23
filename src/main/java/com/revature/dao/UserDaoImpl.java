@@ -70,13 +70,12 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	@Override
-	public List<User> allEmp() { //- A Manager can view all Employees **DONE**
+	public List<Role> allEmp() { //- A Manager can view all Employees **DONE**
 		ses = HibernateUtil.getSession();		
 		// This is an example of HQL --> HQL will check for the class name (of our java models)
 		//List<Role> r = ses.createQuery("from Role where role = 'MANAGER' ").list();
 		//System.out.println(r);
-		String hql = "Select User FROM User u join u.userid";
-		List<User> empl = ses.createQuery(hql,User.class).list();
+		List<Role> empl = ses.createQuery("from Role", Role.class).list();
 		// HQL is returning all instances of the User class
 		// no need for transaction object here We are just querying Data, NOT committing any changes to our database, hence it's not a transaction
 		return empl;

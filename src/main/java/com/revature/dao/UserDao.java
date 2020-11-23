@@ -15,6 +15,6 @@ public interface UserDao {
 
 	public void update();
 	public void allEmpl();
-	public List<User> allEmp();
+	public List<Role> allEmp();
 
 }

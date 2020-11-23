@@ -1,14 +1,13 @@
 package com.revature.model;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -35,37 +34,13 @@ public class User {
 	@Column(name="email", nullable=false, unique=true)
 	private String email;
 	
-    @OneToOne(mappedBy = "userid", cascade = CascadeType.ALL)
+	//@JsonManagedReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	private Role role;
     
 	//@OneToMany(mappedBy="AuthorFK", fetch=FetchType.LAZY)
 	//private List<ERSReimbursement> e = new ArrayList<>();
-
-	public User(String firstname, String lastname, String username, String password, String email, Role role,
-			List<ERSReimbursement> e) {
-		super();
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.role = role;
-		//this.e = e;
-	}
-
-	public User(int userid, String firstname, String lastname, String username, String password, String email,
-			Role role, List<ERSReimbursement> e) {
-		super();
-		this.userid = userid;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.role = role;
-		//this.e = e;
-	}
-
+    
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
@@ -79,34 +54,14 @@ public class User {
 		this.email = email;
 		this.role = role;
 	}
-
-	public User(String firstname, String lastname, String username, String password, String email, Role role) {
-		super();
+	
+	public User(String username, String password, String firstname, String lastname, String email, Role role) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.role = role;
-	}
-
-	public User(int userid, String username, String password, String firstname, String lastname, String email) {
-		super();
-		this.userid = userid;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-	}
-	
-	public User(String username, String password, String firstname, String lastname, String email) {
-		super();
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.username = username;
-		this.password = password;
-		this.email = email;
 	}
 	
 	@Override
@@ -164,13 +119,13 @@ public class User {
 		this.email = email;
 	}
 
-	public Role getRole() {
+	/*public Role getRole() {
 		return role;
 	}
 
 	public void setRole(Role role) {
 		this.role = role;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {
@@ -180,6 +135,7 @@ public class User {
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + userid;
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
@@ -214,6 +170,11 @@ public class User {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
+		if (role == null) {
+			if (other.role != null)
+				return false;
+		} else if (!role.equals(other.role))
+			return false;
 		if (userid != other.userid)
 			return false;
 		if (username == null) {
@@ -222,6 +183,14 @@ public class User {
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	

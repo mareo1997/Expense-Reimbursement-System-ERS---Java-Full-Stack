@@ -1,23 +1,24 @@
 package com.revature;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.revature.dao.ReimbursmentDaoImpl;
-import com.revature.dao.UserDaoImpl;
-import com.revature.model.ERSReimbursement;
-import com.revature.model.ERSStatus;
-import com.revature.model.ERSType;
+import com.revature.model.Reimbursement;
+import com.revature.model.Status;
+import com.revature.model.Type;
 import com.revature.model.User;
 import com.revature.services.LoginService;
+import com.revature.services.ReimbursementServicesImpl;
+import com.revature.services.UserServicesImpl;
 
 public class DriverTest {
 	
-	private static final UserDaoImpl user = new UserDaoImpl();
-	private static final ReimbursmentDaoImpl reim = new ReimbursmentDaoImpl();
+	private static final UserServicesImpl user = new UserServicesImpl();
+	private static final ReimbursementServicesImpl reim = new ReimbursementServicesImpl();
 
 
 	@Before
@@ -32,18 +33,19 @@ public class DriverTest {
 	}
 	
 	@Test
-	public void login() {
-		assertTrue(LoginService.login("king","george"));
-		assertFalse(LoginService.login("a","a"));
+	public void login() { //HQL passed
+		System.out.println(LoginService.confirm("mareo1997", "password")); 
+		///assertTrue(LoginService.login("king","george"));
+		//assertFalse(LoginService.login("a","a"));
 	}
 	
-	@Test
+	/*@Test
 	public void submit() {
 		//User u = new User(1, "mareo1997", "password", "Mareo", "Yapp", "mareo1997@gmail.com");
 		User u = new User(2, "marwil", "william", "Marcia", "Williamson", "mother@gmail.com");
-		ERSType t = new ERSType("LODGE");
-		ERSStatus s = new ERSStatus("PENDING");
-		ERSReimbursement r = new ERSReimbursement(u.getUserid(),"TESTING STATUS AND TYPE",5.5,s,t);
+		Type t = new Type("LODGE");
+		Status s = new Status("PENDING");
+		Reimbursement r = new Reimbursement();
 				
 		reim.submit(u,r);
 	}
@@ -57,9 +59,16 @@ public class DriverTest {
 	
 	@Test
 	public void pending() {
-		User u = new User(1, "mareo1997", "password", "Mareo", "Yapp", "mareo1997@gmail.com");
-		//User u = new User(2, "marwil", "william", "Marcia", "Williamson", "mother@gmail.com");
-		reim.pending(u);
+		//User u = new User(1, "mareo1997", "password", "Mareo", "Yapp", "mareo1997@gmail.com");
+		User u = new User(2, "marwil", "william", "Marcia", "Williamson", "mother@gmail.com");
+		List<Reimbursement> reimburse = reim.pending(u);
+		if (reimburse.size() > 0) {
+			for (Reimbursement r : reimburse) {
+				System.out.println(r);
+			}
+		}else {
+			System.out.println(u.getUsername()+" has no pending requests\n");
+		}
 	}
 	
 	@Test
@@ -77,7 +86,7 @@ public class DriverTest {
 		
 		reim.resolve(2, "APPROVED", u.getUserid());
 		reim.resolved(u2);
-	}
+	}*/
 	
 	@Test
 	public void allEmployees() {

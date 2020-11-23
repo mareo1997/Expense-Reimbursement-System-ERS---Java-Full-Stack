@@ -5,10 +5,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-import com.revature.model.Role;
+import org.hibernate.Session;
+
 import com.revature.model.User;
 import com.revature.util.ConnectionUtil;
+import com.revature.util.HibernateUtil;
 
 public class LoginService {
 
@@ -47,7 +50,16 @@ public class LoginService {
 	}
 	
 	public static User confirm(String username, String password) {
-		User user = null;
+		Session ses = HibernateUtil.getSession(); // capture the session
+		List<User> u = ses.createQuery("from User where username = '"+username+"' and password = '"+password+"' ", User.class).list();
+		System.out.println(u);
+		if(u.size()>0) {
+			return u.get(0);
+		}else {
+			return null;
+		}
+				
+		/*User user = null;
 		try (Connection conn = ConnectionUtil.getConnectionFromFile("connection.properties")) {
 			sql = "select * from ersuser e inner join roles r on r.userid =e.userid  where username=? and erspassword=?";
 			
@@ -67,6 +79,6 @@ public class LoginService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return user;
+		return user;*/
 	}
 }

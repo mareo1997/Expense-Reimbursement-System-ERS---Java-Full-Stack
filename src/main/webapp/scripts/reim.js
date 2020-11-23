@@ -1,13 +1,21 @@
+function begin(){
+    let userString = sessionStorage.getItem('currentUser');
+    let currentUser = JSON.parse(userString);
+    console.log(currentUser);
+}
+
 function sendReim(){
     console.log("sendReim() started")
     let reimForm = document.reimForm;
-    let userid = document.getElementById('userid').value;
+    let userString = sessionStorage.getItem('currentUser');
+    let currentUser = JSON.parse(userString);
+
     let amount = document.getElementById('amount').value;
     let description = document.getElementById('description').value;
     let type = document.getElementById('type').value;
 
     let reimtemplate={
-        userid: userid,
+        userid: currentUser.userid,
         amount: amount,
         description: description,
         type: type

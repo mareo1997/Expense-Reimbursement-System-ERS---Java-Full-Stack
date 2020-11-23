@@ -6,20 +6,29 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="scripts/reim.js"></script>
 </head>
-<body>
+<body onload="begin()">
+
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
 			<h1 class="display-4">Welcome, employee</h1>
+			<script>
+				let userString = sessionStorage.getItem('currentUser');
+	
+				if (userString === null) {
+					window.location = "http://localhost:8080/project-1/"
+				} else {
+					let currentUser = JSON.parse(userString);
+					if (currentUser != null) {
+						console.log(currentUser);
+					}
+				}
+			</script>
 		</div>
 	</div>
+
 	<div class="container-fluid">
 		<!-- This script will be defined in index.js -->
 		<form name="reimForm" onSubmit="sendReim(event.preventDefault())"><!--  I may have prevent default() -->
-			
-			<div class="form-group">
-				<label for="userid">ID</label> 
-				<input type="number" class="form-control" required name="userid" id="userid" aria-describedby="emailHelp" placeholder="Enter amount">
-			</div>
 
 			<div class="form-group">
 				<label for="amount">Amount</label> 
@@ -39,6 +48,6 @@
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
-	<button onclick="home()">GO BACK</button>
+	<button class="btn btn-primary" onclick="home()">GO BACK</button>
 </body>
 </html>

@@ -15,7 +15,7 @@
 	</div>
 	<div class="container-fluid">
 		<!-- This script will be defined in index.js -->
-		<form name="loginForm" onSubmit="sendLogin(event.preventDefault())"><!--  I may have prevent default() -->
+		<form name="loginForm" action="/project-1/login" onsubmit="sendLogin()" method="POST" ><!--  I may have prevent default() -->
 			
 			<div class="form-group">
 				<label for="username">USERNAME</label> 
@@ -28,7 +28,7 @@
 			</div>
 			<div id="warningText"></div>
 			
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<input id="login" type="submit" class="btn btn-primary" value="Submit">
 		</form>
 	</div>
 </body>
