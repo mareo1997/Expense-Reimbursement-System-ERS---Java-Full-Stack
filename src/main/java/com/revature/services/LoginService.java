@@ -7,14 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import com.revature.model.User;
 import com.revature.util.ConnectionUtil;
 import com.revature.util.HibernateUtil;
 
-public class LoginService {
+public class LoginService { //Applied logs and HQL
 
+	private static Logger log = Logger.getLogger(LoginService.class);
 	public static String sql;
 	public static PreparedStatement ps;
 	public static ResultSet rs;
@@ -50,13 +52,28 @@ public class LoginService {
 	}
 
 	public static User confirm(String username, String password) {
+		log.info("Attempting to login "+username+" \n");
 		Session ses = HibernateUtil.getSession(); // capture the session
-		List<User> u = ses.createQuery(
-				"from User where username = '" + username + "' and password = '" + password + "' ", User.class).list();
-		System.out.println(u);
+		List<User> u = ses.createQuery("from User where username = '" + username + "' and password = '" + password + "' ", User.class).list();
 		if (u.size() > 0) {
+			log.info("Returning "+username+" credentials\n");
 			return u.get(0);
 		} else {
+			log.warn("Could not find "+username+" \n");
+			return null;
+		}
+	}
+	
+	public static User authority(String username) {
+		log.info("Attempting to validate "+username+" \n");
+
+		Session ses = HibernateUtil.getSession(); // capture the session
+		List<User> u = ses.createQuery("from User where username = '" + username + "' ", User.class).list();
+		if (u.size() > 0) {
+			log.info("Returning "+username+" credentials\n");
+			return u.get(0);
+		} else {
+			log.warn("Could not validate "+username+" \n");
 			return null;
 		}
 	}

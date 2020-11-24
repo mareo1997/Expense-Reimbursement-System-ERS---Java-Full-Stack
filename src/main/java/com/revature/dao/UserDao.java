@@ -13,9 +13,9 @@ public interface UserDao {
 
 	public void profile(User u);
 
-	public User profileHQL(int id);
+	public User profileHQL(User u);
 
-	public void update();
+	public User updateHQL(User u, String fname, String lname, String email, String username, String password, String repassword);
 
 	public void allEmpl();
 

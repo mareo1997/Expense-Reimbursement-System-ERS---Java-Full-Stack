@@ -15,7 +15,7 @@
 
 	<servlet>
 		<servlet-name>FrontController</servlet-name>
-		<servlet-class>com.revature.web.FrontController</servlet-class>
+		<servlet-class>com.revature.servlets.FrontController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FrontController</servlet-name>
@@ -40,7 +40,7 @@
 		<description></description>
 		<display-name>HibernateServlet</display-name>
 		<servlet-name>HibernateServlet</servlet-name>
-		<servlet-class>com.revature.web.HibernateServlet</servlet-class>
+		<servlet-class>com.revature.servlets.HibernateServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>HibernateServlet</servlet-name>

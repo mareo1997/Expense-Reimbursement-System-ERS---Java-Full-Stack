@@ -1,6 +1,5 @@
 package com.revature.dao;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import com.revature.model.Reimbursement;
@@ -31,14 +30,6 @@ public interface ReimburmentDao {
 	public void insert(Type t);
 
 	public Reimbursement findReimHQL(int reimbursementid);
-
-	public void submitHQL(Reimbursement reim);
-
-	public Reimbursement resolveHQL(Reimbursement reim, User resolver, Status status, Timestamp resolved);
-
-	public List<Reimbursement> pendingHQL(User profile);
-
-	public List<Reimbursement> resolvedHQL(User profile);
 
 	public Type typeHQL(String t);
 

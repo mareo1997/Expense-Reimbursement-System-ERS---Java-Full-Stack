@@ -19,6 +19,8 @@ public interface ReimbursementServices {
 	public void resolve(int id, String status, int resolver);
 
 	public void requests(int userid);
+	
+	public List<Reimbursement> requestsHQL(User u);
 
 	public void resolvedrequests();
 
@@ -32,9 +34,11 @@ public interface ReimbursementServices {
 
 	public Reimbursement findReimHQL(int reimbursementid);
 
-	public void submitHQL(Reimbursement reim);
+	public Reimbursement submitHQL(Reimbursement reim);
 
 	public Reimbursement resolveHQL(Reimbursement reim, User resolver, Status status, Timestamp resolved);
+	
+	public List<Reimbursement> resolvedrequestsHQL();
 
 	public List<Reimbursement> pendingHQL(User profile);
 
@@ -43,5 +47,7 @@ public interface ReimbursementServices {
 	public Type typeHQL(String t);
 
 	public Status statusHQL(int s);
+	
+	public List<Reimbursement> pendingrequestsHQL();
 
 }

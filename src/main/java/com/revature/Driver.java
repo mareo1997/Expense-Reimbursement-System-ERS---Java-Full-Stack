@@ -2,7 +2,6 @@
 package com.revature;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import com.revature.model.Reimbursement;
 import com.revature.model.Role;
@@ -22,17 +21,17 @@ public class Driver {
 
 	public static void main(String[] args) {
 
-		initialValues();
+		//initialValues();
 		// profile(); //done
 		// allEmpl();
-		// submit(); //done
+		 submit(); //done
 		// pending();
 
 		// resolved();
 		HibernateUtil.closeSes();
 	}
 
-	public static void pending() {
+	/*public static void pending() {
 		List<Reimbursement> pending = reimserv.pendingHQL(userserv.profileHQL(3));
 		System.out.println(pending);
 	}
@@ -44,7 +43,7 @@ public class Driver {
 
 	public static void profile() {
 		System.out.println(userserv.profileHQL(3));
-	}
+	}*/
 
 	public static void allEmpl() {
 		System.out.println(userserv.allEmplHQL());
@@ -58,7 +57,9 @@ public class Driver {
 		/*
 		 * reimserv.insert(reim); reimserv.insert(s); reimserv.insert(t);
 		 */
-
+		Role role1 = new Role(1, "EMPLOYEE");
+		User user = new User("u", "p", "f", "l", "@", role1);
+		userserv.insert(user);
 	}
 
 	public static void initialValues() {

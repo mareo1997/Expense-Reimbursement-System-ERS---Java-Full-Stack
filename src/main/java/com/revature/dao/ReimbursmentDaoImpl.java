@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,25 +31,19 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 	public static UserServicesImpl userserv = new UserServicesImpl();
 
 	@Override
-	public Reimbursement resolveHQL(Reimbursement reim, User resolver, Status status, Timestamp resolved) {
+	public Reimbursement findReimHQL(int reimbursementid) {
+		log.info("Attempting to get request id: "+reimbursementid+"\n");
 
 		Session ses = HibernateUtil.getSession();
-		Transaction tx = ses.beginTransaction(); // perform an operation on DB
-		ses.evict(reim);
 
-		reim.setResolve(resolver);
-		reim.setResolved(resolved);
-		reim.setStatus(status);
+		Reimbursement reim = ses.get(Reimbursement.class, reimbursementid);
 
-		ses.update(reim);
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction
-						// interface
 		return reim;
-
 	}
 
 	@Override
 	public Status statusHQL(int s) {
+		log.info("Attempting to get pending status\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 
 		Query q = ses.createQuery("From Status where statusid = :s");
@@ -62,62 +55,8 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 	}
 
 	@Override
-	public List<Reimbursement> pendingHQL(User u) { // - An Employee can view their pending reimbursement requests ****
-
-		Session ses = HibernateUtil.getSession();
-
-		List<Reimbursement> reim = ses
-				.createQuery("FROM Reimbursement where status_statusid = 1 and authorfk = " + u.getUserid() + " ",
-						Reimbursement.class)
-				.list();
-		if (reim.size() > 0) {
-			return reim;
-		} else {
-			System.out.println(u.getUsername() + " has no pending requests\n");
-			return null;
-		}
-
-	}
-
-	@Override
-	public Reimbursement findReimHQL(int reimbursementid) {
-		Session ses = HibernateUtil.getSession();
-
-		Reimbursement reim = ses.get(Reimbursement.class, reimbursementid);
-
-		return reim;
-	}
-
-	@Override
-	public List<Reimbursement> resolvedHQL(User u) { // - An Employee can view their pending reimbursement requests ****
-
-		Session ses = HibernateUtil.getSession();
-
-		List<Reimbursement> reim = ses
-				.createQuery("FROM Reimbursement where authorfk = " + u.getUserid() + " and not status_statusid = 1 ",
-						Reimbursement.class)
-				.list();
-		if (reim.size() > 0) {
-			return reim;
-		} else {
-			System.out.println(u.getUsername() + " has no resolved requests\n");
-			return null;
-		}
-
-	}
-
-	@Override
-	public void submitHQL(Reimbursement r) {
-		Session ses = HibernateUtil.getSession(); // capture the session
-
-		Transaction tx = ses.beginTransaction();
-		ses.save(r);
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction
-						// interface
-	}
-
-	@Override
 	public Type typeHQL(String t) {
+		log.info("Attempting to get type "+t+"\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 
 		Query q = ses.createQuery("From Type where type = :type");
@@ -439,5 +378,6 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 			e.printStackTrace();
 		}
 	}
+
 
 }

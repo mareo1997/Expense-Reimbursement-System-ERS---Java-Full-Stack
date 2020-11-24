@@ -13,11 +13,11 @@ public interface UserServices {
 
 	public void profile(User u);
 
-	public User profileHQL(int id);
-
-	public void update();
+	public User profileHQL(User u);
 
 	public List<User> allEmplHQL();
 
 	public void allEmpl();
+
+	public User updateHQL(User u, String fname, String lname, String email, String username, String password, String repassword);
 }

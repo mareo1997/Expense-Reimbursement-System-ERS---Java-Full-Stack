@@ -26,13 +26,13 @@ public class UserServicesImpl implements UserServices {
 	}
 
 	@Override
-	public User profileHQL(int id) {
-		return dao.profileHQL(id);
+	public User profileHQL(User u) {
+		return dao.profileHQL(u);
 	}
 
 	@Override
-	public void update() {
-		dao.update();
+	public User updateHQL(User u, String fname, String lname, String email, String username, String password, String repassword) {
+		return dao.updateHQL(u, fname, lname, email, username, password, repassword);
 	}
 
 	@Override

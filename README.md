@@ -9,23 +9,23 @@
 #### Employee User Stories 
 - An Employee can login **DONE**
 - An Employee can view the Employee Homepage **LATER**
-- An Employee can logout **LATER**
+- An Employee can logout **DONE**
 - An Employee can submit a reimbursement request **DONE**
-- An Employee can upload an image of his/her receipt as part of the reimbursement request (extra credit) **MAYBE**
+- An Employee can upload an image of his/her receipt as part of the reimbursement request (extra credit) **OPTIONAL**
 - An Employee can view their pending reimbursement requests **DONE**
 - An Employee can view their resolved reimbursement requests **DONE**
 - An Employee can view their information **DONE**
 - An Employee can update their information **LATER**
-- An Employee receives an email when one of their reimbursement requests is resolved (optional) **MAYBE**
+- An Employee receives an email when one of their reimbursement requests is resolved (optional) **OPTIONAL**
 
 #### Manager User Stories
 - A Manager can login **DONE**
 - A Manager can view the Manager Homepage **LATER**
-- A Manager can logout **LATER**
+- A Manager can logout **DONE**
 - A Manager can approve/deny pending reimbursement requests **DONE**
 - A Manager can view all pending requests from all employees **DONE**
-- A Manager can view images of the receipts from reimbursement requests (extra credit) **MAYBE**
-- A Manager can view all resolved requests from all employees and see which manager resolved it **PROBABLY DONE**
+- A Manager can view images of the receipts from reimbursement requests (extra credit) **OPTIONAL**
+- A Manager can view all resolved requests from all employees and see which manager resolved it **DONE**
 - A Manager can view all Employees **DONE**
 - A Manager can view reimbursement requests from a single Employee **DONE**
 
@@ -51,8 +51,8 @@ Employees must select the type of reimbursement as: LODGING, TRAVEL, FOOD, or OT
 
 ## Technical Requirements
 
-* The back-end system shall use **Hibernate** to connect to an **AWS RDS Postgres database**. 
-* The application shall deploy onto a Tomcat Server. 
+* The back-end system shall use **Hibernate** to connect to an **AWS RDS Postgres database**. **DONE**
+* The application shall deploy onto a Tomcat Server. **DONE**
 * The middle tier shall use Servlet technology for dynamic Web application development. 
 * The front-end view shall use HTML/JavaScript to make an application that can call server-side components. 
 * Passwords shall be encrypted in Java and securely stored in the database. 

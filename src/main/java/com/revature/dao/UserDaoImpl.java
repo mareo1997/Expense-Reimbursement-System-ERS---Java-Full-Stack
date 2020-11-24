@@ -33,7 +33,7 @@ import com.revature.util.HibernateUtil;
  * 3. Native SQL 
  * 
  */
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl implements UserDao { //Applied log
 
 	private static Logger log = Logger.getLogger(UserDaoImpl.class);
 	Session ses;
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void insert(User u) {
-		// log.info("Attempting to insert user\n");
+		log.info("Attempting to insert user\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 
@@ -56,25 +56,26 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void insert(Role r) {
-		// log.info("Attempting to insert user\n");
+		log.info("Attempting to insert user\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 
 		ses.save(r); // use the save() session method to perform an insert operation
 		tx.commit(); // commit the transaction by utilizing the methods from the Transaction
 						// interface
-
 	}
 
 	@Override
-	public User profileHQL(int id) {
+	public User profileHQL(User u) {
+		log.info("Attempting to get "+u.getUsername()+" profile\n");
 		ses = HibernateUtil.getSession();
-		User u = ses.get(User.class, id);
+		u = ses.get(User.class, u.getUserid());
 		return u;
 	}
 
 	@Override
 	public List<User> allEmplHQL() { // - A Manager can view all Employees **DONE**
+		log.info("Attempting to get all employees\n");
 		ses = HibernateUtil.getSession();
 		// This is an example of HQL --> HQL will check for the class name (of our java
 		// models)
@@ -85,12 +86,44 @@ public class UserDaoImpl implements UserDao {
 		// no need for transaction object here We are just querying Data, NOT committing
 		// any changes to our database, hence it's not a transaction
 		if (empl.size() > 0) {
+			log.info("Returning employees\n");
 			return empl;
 		} else {
+			log.warn("Coulld not find employees\n");
 			return null;
 		}
 	}
 
+	@Override
+	public User updateHQL(User user, String firstname, String lastname, String email, String username, String password,
+			String repassword) {
+		
+		log.info("Attempting to change "+user.getUsername()+" profile\n");
+		Session ses = HibernateUtil.getSession();
+		Transaction tx = ses.beginTransaction(); // perform an operation on DB
+		ses.evict(user);
+
+		if (!(firstname.isEmpty() || firstname.isBlank())) {
+			user.setFirstname(firstname);
+		}
+		if (!(lastname.isEmpty() || lastname.isBlank())) {
+			user.setLastname(lastname);
+		}
+		if (!(email.isEmpty() || email.isBlank())) {
+			user.setEmail(email);
+		}
+		if (!(username.isEmpty() || username.isBlank())) {
+			user.setUsername(username);
+		}
+		if (!(password.isEmpty() || password.isBlank()) && !(repassword.isEmpty() || repassword.isBlank()) && (password.equals(repassword))) {
+			user.setPassword(password);
+		}
+
+		ses.update(user);
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+		return user;
+	}
+	
 	public String sql, call;
 	public PreparedStatement ps;
 	public ResultSet rs;
@@ -128,12 +161,6 @@ public class UserDaoImpl implements UserDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

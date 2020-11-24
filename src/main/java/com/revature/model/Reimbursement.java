@@ -99,7 +99,7 @@ public class Reimbursement {
 	public String toString() {
 		String result = "ReimbursementID: " + Reimbursementid + "\tAmount: $" + amt + "\n" + "Description: "
 				+ description + "\n" + "Author: " + author.getUsername() + " \t\tSubmitted: " + submitted + "\n"
-				+ "Resolver: " + resolver.getUsername() + " \t\tResolved: " + resolved + "\n" + "Status: "
+				+ "Resolver: " + resolver + " \t\tResolved: " + resolved + "\n" + "Status: "
 				+ status.getStatus() + "\tType: " + type.getType() + "\n";
 		return result;
 	}
