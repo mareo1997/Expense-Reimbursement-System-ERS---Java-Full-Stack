@@ -12,7 +12,7 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 	<servlet>
 		<servlet-name>FrontController</servlet-name>
 		<servlet-class>com.revature.web.FrontController</servlet-class>
@@ -22,9 +22,18 @@
 		<url-pattern>/login</url-pattern>
 		<url-pattern>/logout</url-pattern>
 		<url-pattern>/reim</url-pattern>
+		<url-pattern>/reimid</url-pattern>
 		<url-pattern>/pending</url-pattern>
+		<url-pattern>/resolve</url-pattern>
 		<url-pattern>/resolved</url-pattern>
 		<url-pattern>/profile</url-pattern>
+		<url-pattern>/allempls</url-pattern>
+		<url-pattern>/type</url-pattern>
+		<url-pattern>/status</url-pattern>
+		<url-pattern>/update</url-pattern>
+		<url-pattern>/requests</url-pattern>
+		<url-pattern>/resolvedrequests</url-pattern>
+		<url-pattern>/pendingrequests</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

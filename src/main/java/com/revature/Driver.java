@@ -23,41 +23,44 @@ public class Driver {
 	public static void main(String[] args) {
 
 		initialValues();
-		//profile(); //done
-		//allEmpl();
-		//submit(); //done
-		//pending();
-		
-		//resolved();
+		// profile(); //done
+		// allEmpl();
+		// submit(); //done
+		// pending();
+
+		// resolved();
 		HibernateUtil.closeSes();
 	}
-	
+
 	public static void pending() {
-		List<Status> pending = reimserv.pendingHQL(userserv.profile(3));
+		List<Reimbursement> pending = reimserv.pendingHQL(userserv.profileHQL(3));
+		System.out.println(pending);
 	}
-	
+
 	public static void resolved() {
-		List<Status> resolved = reimserv.resolvedHQL(userserv.profile(3));
+		List<Reimbursement> resolved = reimserv.resolvedHQL(userserv.profileHQL(3));
+		System.out.println(resolved);
 	}
-	
+
 	public static void profile() {
-		System.out.println(userserv.profile(3));
+		System.out.println(userserv.profileHQL(3));
 	}
-	
+
 	public static void allEmpl() {
-		System.out.println(userserv.allEmp());
+		System.out.println(userserv.allEmplHQL());
 	}
-	
+
 	public static void submit() {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		//Reimbursement reim = new Reimbursement(1000, timestamp, "HILTON INN", userserv.profile(3));
-		
-		/*reimserv.insert(reim);
-		reimserv.insert(s);
-		reimserv.insert(t);*/
-		
+		// Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		// Reimbursement reim = new Reimbursement(1000, timestamp, "HILTON INN",
+		// userserv.profile(3));
+
+		/*
+		 * reimserv.insert(reim); reimserv.insert(s); reimserv.insert(t);
+		 */
+
 	}
-	
+
 	public static void initialValues() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -102,14 +105,14 @@ public class Driver {
 		reimserv.insert(type);
 
 		System.out.println("done saving user to db");
-		
-		Reimbursement reim = new Reimbursement(mareo, 1897, "HILTON INN", timestamp, null, null, approved, lodge);
+
+		Reimbursement reim = new Reimbursement(mareo, 1897, "HILTON INN", timestamp, approved, lodge);
 		reimserv.insert(reim);
 
 		System.out.println("done saving user to db");
-		
+
 		User login = LoginService.confirm(mareo.getUsername(), mareo.getPassword());
-		System.out.println("login "+login);
+		System.out.println("login " + login);
 
 	}
 }

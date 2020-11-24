@@ -11,41 +11,42 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="errser")
+@Table(name = "errser")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO) // this acts like the SERIAL datatype in SQL	
-	@Column(name="userid")
+	@GeneratedValue(strategy = GenerationType.AUTO) // this acts like the SERIAL datatype in SQL
+	@Column(name = "userid")
 	private int userid;
-	
-	@Column(name="firstname", nullable=false)
-	private String firstname; 
-	
-	@Column(name="lastname", nullable=false)
+
+	@Column(name = "firstname", nullable = false)
+	private String firstname;
+
+	@Column(name = "lastname", nullable = false)
 	private String lastname;
-	
-	@Column(name="username", nullable=false, unique=true)
+
+	@Column(name = "username", nullable = false, unique = true)
 	private String username;
-	
-	@Column(name="password", nullable=false)
+
+	@Column(name = "password", nullable = false)
 	private String password;
-	
-	@Column(name="email", nullable=false, unique=true)
+
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
-	
-	//@JsonManagedReference
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+
+	// @JsonManagedReference
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Role role;
-    
-	//@OneToMany(mappedBy="AuthorFK", fetch=FetchType.LAZY)
-	//private List<ERSReimbursement> e = new ArrayList<>();
-    
+
+	// @OneToMany(mappedBy="AuthorFK", fetch=FetchType.LAZY)
+	// private List<ERSReimbursement> e = new ArrayList<>();
+
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public User(int userid, String username, String password, String firstname, String lastname, String email, Role role) {
+
+	public User(int userid, String username, String password, String firstname, String lastname, String email,
+			Role role) {
 		this.userid = userid;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -54,7 +55,7 @@ public class User {
 		this.email = email;
 		this.role = role;
 	}
-	
+
 	public User(String username, String password, String firstname, String lastname, String email, Role role) {
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -63,7 +64,7 @@ public class User {
 		this.email = email;
 		this.role = role;
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = "\nUserID: " + userid + "\t\tName: " + firstname + " " + lastname + "\nUser name: " + username
@@ -119,13 +120,11 @@ public class User {
 		this.email = email;
 	}
 
-	/*public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}*/
+	/*
+	 * public Role getRole() { return role; }
+	 * 
+	 * public void setRole(Role role) { this.role = role; }
+	 */
 
 	@Override
 	public int hashCode() {
@@ -193,6 +192,4 @@ public class User {
 		this.role = role;
 	}
 
-	
-	
 }

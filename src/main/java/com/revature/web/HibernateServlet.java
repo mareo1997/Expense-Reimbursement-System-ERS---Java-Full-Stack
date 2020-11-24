@@ -66,15 +66,15 @@ public class HibernateServlet extends HttpServlet {
 
 		System.out.println("done saving user to db");
 
-		Reimbursement reim = new Reimbursement(mareo, 1897, "HILTON INN", timestamp, null, null, approved, lodge);
+		Reimbursement reim = new Reimbursement(mareo, 1897, "HILTON INN", timestamp, approved, lodge);
 		reimserv.insert(reim);
 
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println(userserv.profile(3));
-		System.out.println(userserv.allEmp());
+		System.out.println(userserv.profileHQL(3));
+		System.out.println(userserv.allEmplHQL());
 		HibernateUtil.closeSes();
 	}
 

@@ -9,7 +9,7 @@ import com.revature.model.User;
 public class UserServicesImpl implements UserServices {
 
 	UserDaoImpl dao = new UserDaoImpl();
-	
+
 	@Override
 	public void insert(User u) {
 		dao.insert(u);
@@ -24,10 +24,10 @@ public class UserServicesImpl implements UserServices {
 	public void profile(User u) {
 		dao.profile(u);
 	}
-	
+
 	@Override
-	public User profile(int id) {
-		return dao.profile(id);		
+	public User profileHQL(int id) {
+		return dao.profileHQL(id);
 	}
 
 	@Override
@@ -37,15 +37,12 @@ public class UserServicesImpl implements UserServices {
 
 	@Override
 	public void allEmpl() {
-		 dao.allEmpl();
+		dao.allEmpl();
 	}
-	
+
 	@Override
-	public List<Role> allEmp() {
-		return dao.allEmp();
+	public List<User> allEmplHQL() {
+		return dao.allEmplHQL();
 	}
 
-
-
-	
 }

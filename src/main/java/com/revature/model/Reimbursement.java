@@ -20,7 +20,7 @@ public class Reimbursement {
 	@Id
 	@Column(name = "Reimbursementid")
 	@GeneratedValue(strategy = GenerationType.AUTO) // this acts like the SERIAL datatype in SQL
-	private int ersid;
+	private int Reimbursementid;
 
 	@Column(name = "amount", nullable = false)
 	private double amt;
@@ -63,7 +63,7 @@ public class Reimbursement {
 	public Reimbursement(int ersid, User author, double amt, String description, Timestamp submitted, User resolver,
 			Timestamp resolved, Status status, Type type) {
 		super();
-		this.ersid = ersid;
+		this.Reimbursementid = ersid;
 		this.author = author;
 		this.resolver = resolver;
 		this.amt = amt;
@@ -74,24 +74,33 @@ public class Reimbursement {
 		this.type = type;
 	}
 
-	public Reimbursement(User author, double amt, String description, Timestamp submitted, User resolver,
-			Timestamp resolved, Status status, Type type) {
+	public Reimbursement(User author, double amt, String description, Timestamp submitted,
+			/*
+			 * User resolver, Timestamp resolved,
+			 */ Status status, Type type) {
 		super();
 		this.author = author;
-		this.resolver = resolver;
 		this.amt = amt;
 		this.submitted = submitted;
-		this.resolved = resolved;
 		this.description = description;
 		this.status = status;
 		this.type = type;
+	}
+
+	public Reimbursement(int ersid, User resolver, Timestamp resolved, Status status) {
+		super();
+		this.Reimbursementid = ersid;
+		this.resolver = resolver;
+		this.resolved = resolved;
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
-		String result = "ReimbursementID: " + ersid + " \tAuthor: " + author + "\nDescription: " + description
-				+ "\nAmount: $" + amt + " \tSubmitted: " + submitted + "\nResolver: " + resolver + " \t\tResolved: "
-				+ resolved + "\n" + status + "\n" + type + "\n";
+		String result = "ReimbursementID: " + Reimbursementid + "\tAmount: $" + amt + "\n" + "Description: "
+				+ description + "\n" + "Author: " + author.getUsername() + " \t\tSubmitted: " + submitted + "\n"
+				+ "Resolver: " + resolver.getUsername() + " \t\tResolved: " + resolved + "\n" + "Status: "
+				+ status.getStatus() + "\tType: " + type.getType() + "\n";
 		return result;
 	}
 
@@ -136,11 +145,11 @@ public class Reimbursement {
 	}
 
 	public int getErsid() {
-		return ersid;
+		return Reimbursementid;
 	}
 
 	public void setErsid(int ersid) {
-		this.ersid = ersid;
+		this.Reimbursementid = ersid;
 	}
 
 	public Timestamp getSubmitted() {
@@ -168,7 +177,7 @@ public class Reimbursement {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ersid;
+		result = prime * result + Reimbursementid;
 		result = prime * result + ((resolver == null) ? 0 : resolver.hashCode());
 		result = prime * result + ((resolved == null) ? 0 : resolved.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
@@ -198,7 +207,7 @@ public class Reimbursement {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (ersid != other.ersid)
+		if (Reimbursementid != other.Reimbursementid)
 			return false;
 		if (resolver == null) {
 			if (other.resolver != null)

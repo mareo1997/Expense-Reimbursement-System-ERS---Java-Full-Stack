@@ -8,21 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Role")
+@Table(name = "Role")
 public class Role {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY) // this acts like the SERIAL datatype in SQL	
-	@Column(name="roleid")
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // this acts like the SERIAL datatype in SQL
+	@Column(name = "roleid")
 	private int roleid;
 
-	@Column(name="ersroles", nullable=false)
+	@Column(name = "ersroles", nullable = false)
 	private String role;
 
 	public Role() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Role(int roleid, String role) {
 		super();
 		this.roleid = roleid;
@@ -36,10 +36,10 @@ public class Role {
 
 	@Override
 	public String toString() {
-		String result = "RoleID: "+roleid+" \t\tRole: "+role+"\n";
+		String result = "RoleID: " + roleid + " \t\tRole: " + role + "\n";
 		return result;
 	}
-	
+
 	public int getRoleid() {
 		return roleid;
 	}
@@ -83,6 +83,5 @@ public class Role {
 			return false;
 		return true;
 	}
-	
-	
+
 }

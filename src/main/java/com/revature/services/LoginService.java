@@ -23,19 +23,19 @@ public class LoginService {
 		String u = null, p = null;
 		try (Connection conn = ConnectionUtil.getConnectionFromFile("connection.properties")) {
 			sql = "select username, erspassword from ersuser where username=? and erspassword=?";
-			
+
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
 			ps.setString(2, password);
 			rs = ps.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				u = rs.getString(1);
 				p = rs.getString(2);
 			}
 			if (u != null && p != null) {
 				return true;
-				//return (username.equalsIgnoreCase("Aretha") && password.equals("awesome"));
+				// return (username.equalsIgnoreCase("Aretha") && password.equals("awesome"));
 			} else {
 				return false;
 			}
@@ -48,37 +48,16 @@ public class LoginService {
 		}
 		return false;
 	}
-	
+
 	public static User confirm(String username, String password) {
 		Session ses = HibernateUtil.getSession(); // capture the session
-		List<User> u = ses.createQuery("from User where username = '"+username+"' and password = '"+password+"' ", User.class).list();
+		List<User> u = ses.createQuery(
+				"from User where username = '" + username + "' and password = '" + password + "' ", User.class).list();
 		System.out.println(u);
-		if(u.size()>0) {
+		if (u.size() > 0) {
 			return u.get(0);
-		}else {
+		} else {
 			return null;
 		}
-				
-		/*User user = null;
-		try (Connection conn = ConnectionUtil.getConnectionFromFile("connection.properties")) {
-			sql = "select * from ersuser e inner join roles r on r.userid =e.userid  where username=? and erspassword=?";
-			
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
-			ps.setString(2, password);
-			rs = ps.executeQuery();
-			
-			if(rs.next()) {
-				Role role = new Role(rs.getInt(7), rs.getString(8));
-				user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),role);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return user;*/
 	}
 }

@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.revature.dao.ReimbursmentDaoImpl;
@@ -11,7 +12,7 @@ import com.revature.model.User;
 public class ReimbursementServicesImpl implements ReimbursementServices {
 
 	ReimbursmentDaoImpl dao = new ReimbursmentDaoImpl();
-	
+
 	@Override
 	public void insert(Reimbursement e) {
 		dao.insert(e);
@@ -63,18 +64,37 @@ public class ReimbursementServicesImpl implements ReimbursementServices {
 	}
 
 	@Override
-	public void submit(Reimbursement r, Status s, Type t) {
-		dao.submit(r, s, t);
-	}
-
-	@Override
-	public List<Status> pendingHQL(User u) {
+	public List<Reimbursement> pendingHQL(User u) {
 		return dao.pendingHQL(u);
 	}
 
 	@Override
-	public List<Status> resolvedHQL(User profile) {
+	public List<Reimbursement> resolvedHQL(User profile) {
 		return dao.resolvedHQL(profile);
+	}
+
+	@Override
+	public void submitHQL(Reimbursement reim) {
+		dao.submitHQL(reim);
+	}
+
+	@Override
+	public Type typeHQL(String t) {
+		return dao.typeHQL(t);
+	}
+
+	@Override
+	public Reimbursement findReimHQL(int reimbursementid) {
+		return dao.findReimHQL(reimbursementid);
+	}
+
+	@Override
+	public Reimbursement resolveHQL(Reimbursement reim, User resolver, Status status, Timestamp resolved) {
+		return dao.resolveHQL(reim, resolver, status, resolved);
+	}
+
+	public Status statusHQL(int s) {
+		return dao.statusHQL(s);
 	}
 
 }

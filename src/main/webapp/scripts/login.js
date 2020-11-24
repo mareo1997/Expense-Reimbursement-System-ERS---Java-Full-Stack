@@ -1,5 +1,5 @@
 //const sendLogin = () => {
-function sendLogin(){
+function sendLogin() {
 	console.log("sendLogin() started")
 	let loginForm = document.loginForm;
 	let username = document.getElementById('username').value;
@@ -41,6 +41,6 @@ function sendLogin(){
 	xhr.setRequestHeader("\"password\"", `${logintemplate.password}`)
 	xhr.send(logintemplate);
 
-} 
+}
 
 //document.getElementById("login").addEventListener('submit', sendLogin);

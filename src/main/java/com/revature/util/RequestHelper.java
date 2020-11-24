@@ -1,6 +1,5 @@
 package com.revature.util;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
@@ -14,7 +13,6 @@ import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.revature.model.ReimTemplate;
 import com.revature.model.Reimbursement;
 import com.revature.model.Status;
 import com.revature.model.Type;
@@ -31,68 +29,28 @@ public class RequestHelper {
 	public static ReimbursementServicesImpl reimserv = new ReimbursementServicesImpl();
 
 	public static void processLogin(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		
+
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		System.out.println("username and password "+username+password);
-		
+		System.out.println("username and password " + username + password);
+
 		User login = LoginService.confirm(username, password);
-		System.out.println("login "+login);
-		
+		System.out.println("login " + login);
+
 		res.setContentType("application/json");
 		PrintWriter ps = res.getWriter();
-		
-		if(login!=null) {
+
+		if (login != null) {
 			HttpSession session = req.getSession();
 			session.setAttribute("username", username);
-			//res.setStatus(200);
+			res.setStatus(200);
 			System.out.println(login);
-			ps.println(om.writeValueAsString(login));		
-//			res.sendRedirect("http://localhost:8080/project-1/Ehome.html");
+			ps.println(om.writeValueAsString(login));
+			res.sendRedirect("http://localhost:8080/project-1/Ehome.html");
 		} else {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			ps.write(new ObjectMapper().writeValueAsString("Invalid credentials"));
 		}
-
-		
-		/*BufferedReader reader = req.getReader();
-		System.out.println("reader " + reader);
-		StringBuilder s = new StringBuilder();
-
-		// we are just transferring our Reader data to our StringBuilder, line by line
-		String line = null;
-
-		while ((line = reader.readLine()) != null) {
-			System.out.println("line " + line);
-			s.append(line);
-			System.out.println("s " + s);
-			line = reader.readLine();
-		}
-		String body = s.toString();
-		System.out.println("body " + body);
-
-		LoginTemplate attempt = om.readValue(body, LoginTemplate.class);
-		String username = attempt.getUsername();
-		String password = attempt.getPassword();
-
-		log.info("Username attempted " + username);
-		User login = LoginService.confirm(username, password);
-		if (login != null) {
-			HttpSession session = req.getSession();
-			session.setAttribute("username", username);
-
-			PrintWriter pw = res.getWriter();
-			res.setContentType("application/json");
-			res.setStatus(200);
-
-			pw.println(om.writeValueAsString(login));
-
-			log.info(username + " has successfully logged in.\n");
-
-		} else {
-			res.setContentType("application/json");
-			res.setStatus(204); // Connection was successful but no user found
-		}*/
 	}
 
 	public static void processLogout(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -106,164 +64,197 @@ public class RequestHelper {
 		res.setStatus(200);
 	}
 
-	public static void processReim(HttpServletRequest req, HttpServletResponse res) throws IOException {  //Worked but gave back 500
+	public static void processReim(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		BufferedReader reader = req.getReader();
-		System.out.println("reader " + reader);
-		StringBuilder sb = new StringBuilder();
-
-		// we are just transferring our Reader data to our StringBuilder, line by line
-		String line = null;
-
-		while ((line = reader.readLine()) != null) {
-			System.out.println("line " + line);
-			sb.append(line);
-			System.out.println("s " + sb);
-			line = reader.readLine();
-		}
-		String body = sb.toString();
-		System.out.println("body " + body);
-
-		ReimTemplate attempt = om.readValue(body, ReimTemplate.class);
-		System.out.println(attempt);
-		int userid = attempt.getUserid();
-		double amount = attempt.getAmount();
-		String description = attempt.getDescription();
-		String type = attempt.getType();
-
-		Reimbursement reim = new Reimbursement();
-		Status s = new Status("PENDING");
-		Type t = new Type(type);
-		//reimserv.submit(reim, s, t);
-
-		PrintWriter pw = res.getWriter();
 		res.setContentType("application/json");
-		res.setStatus(200);
 
-		pw.println(om.writeValueAsString(reim));
-	}
-
-	public static void processPending(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		BufferedReader reader = req.getReader();
-		System.out.println("reader " + reader);
-		StringBuilder s = new StringBuilder();
-
-		// we are just transferring our Reader data to our StringBuilder, line by line
-		String line = null;
-
-		while ((line = reader.readLine()) != null) {
-			System.out.println("line " + line);
-			s.append(line);
-			System.out.println("s " + s);
-			line = reader.readLine();
-		}
-		String body = s.toString();
-		System.out.println("body " + body);
-		
-		User u = om.readValue(body, User.class);
-
-		//User u = new User(2, "marwil", "william", "Marcia", "Williamson", "mother@gmail.com");
-		List<Reimbursement> reimburse = reimserv.pending(u);
-		PrintWriter pw = res.getWriter();
-
-		if (reimburse.size() > 0) {
-			res.setContentType("application/json");
-			res.setStatus(200);
-
-			for (Reimbursement r : reimburse) {
-				pw.write(om.writeValueAsString(r));
-			}
-
-		}else {
-			res.setStatus(204); // Connection was successful but no user found
-			pw.write(om.writeValueAsString(u.getUsername()+" has no pending requests"));
-		}
-
-	}
-
-	public static void processResolved(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		BufferedReader reader = req.getReader();
-		System.out.println("reader " + reader);
-		StringBuilder s = new StringBuilder();
-
-		// we are just transferring our Reader data to our StringBuilder, line by line
-		String line = null;
-
-		while ((line = reader.readLine()) != null) {
-			System.out.println("line " + line);
-			s.append(line);
-			System.out.println("s " + s);
-			line = reader.readLine();
-		}
-		String body = s.toString();
-		System.out.println("body " + body);
-		
-		User u = om.readValue(body, User.class);
-
-		//User u = new User(2, "marwil", "william", "Marcia", "Williamson", "mother@gmail.com");
-		List<Reimbursement> reimburse = reimserv.resolved(u);
-		PrintWriter pw = res.getWriter();
-
-		if (reimburse.size() > 0) {
-			res.setContentType("application/json");
-			res.setStatus(200);
-
-			for (Reimbursement r : reimburse) {
-				pw.write(om.writeValueAsString(r));
-			}
-
-		}else {
-			res.setStatus(204); // Connection was successful but no user found
-			pw.write(om.writeValueAsString(u.getUsername()+" has no pending requests"));
-		}		
-	}
-
-	public static void processProfile(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		
 		int userid = Integer.parseInt(req.getParameter("userid"));
-		
-		User u = userserv.profile(userid);
-				
+		double amount = Double.parseDouble(req.getParameter("amount"));
+		String description = req.getParameter("description");
+		String t = req.getParameter("type");
+
+		User u = userserv.profileHQL(userid);
+		Status status = reimserv.statusHQL(1);
+		Type type = reimserv.typeHQL(t);
+
+		Reimbursement reim = new Reimbursement(u, amount, description, timestamp, status, type);
+
+		reimserv.submitHQL(reim);
+	}
+
+	public static void processResolve(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		Timestamp resolved = new Timestamp(System.currentTimeMillis());
 		res.setContentType("application/json");
 		PrintWriter ps = res.getWriter();
-		
-		if(u!=null) {
+
+		int userid = Integer.parseInt(req.getParameter("userid"));
+		int reimid = Integer.parseInt(req.getParameter("reimid"));
+		int statusid = Integer.parseInt(req.getParameter("status"));
+
+		User u = userserv.profileHQL(userid);
+		Status status = reimserv.statusHQL(statusid);
+		Reimbursement reim = reimserv.findReimHQL(reimid);
+
+		reim = reimserv.resolveHQL(reim, u, status, resolved);
+
+		if (reim != null) {
 			res.setStatus(200);
-			System.out.println(u);
-			ps.println(om.writeValueAsString(u));		
-//			res.sendRedirect("http://localhost:8080/project-1/Ehome.html");
+			System.out.println(reim);
+			ps.println(om.writeValueAsString(reim));
 		} else {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			ps.write(new ObjectMapper().writeValueAsString("Invalid credentials"));
 		}
-		
-		/*BufferedReader reader = req.getReader();
-		System.out.println("reader " + reader);
-		StringBuilder s = new StringBuilder();
+	}
 
-		// we are just transferring our Reader data to our StringBuilder, line by line
-		String line = null;
+	public static void processPending(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
-		while ((line = reader.readLine()) != null) {
-			System.out.println("line " + line);
-			s.append(line);
-			System.out.println("s " + s);
-			line = reader.readLine();
+		res.setContentType("application/json");
+		PrintWriter ps = res.getWriter();
+
+		int userid = Integer.parseInt(req.getParameter("userid"));
+
+		User u = userserv.profileHQL(userid);
+
+		List<Reimbursement> reim = reimserv.pendingHQL(u);
+
+		if (reim != null) {
+			res.setStatus(200);
+			for (Reimbursement r : reim) {
+				System.out.println(r);
+				ps.println(om.writeValueAsString(r));
+			}
+		} else {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			ps.write(new ObjectMapper().writeValueAsString("Invalid credentials"));
 		}
-		String body = s.toString();
-		System.out.println("body " + body);		
-		
-		User u = om.readValue(body, User.class);
+	}
 
-		u = userserv.profile(u.getUserid());
-		
-		if(u!=null) {
-			PrintWriter pw = res.getWriter();
-			res.setContentType("application/json");
+	public static void processResolved(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+		res.setContentType("application/json");
+		PrintWriter ps = res.getWriter();
+
+		int userid = Integer.parseInt(req.getParameter("userid"));
+
+		User u = userserv.profileHQL(userid);
+
+		List<Reimbursement> reim = reimserv.resolvedHQL(u);
+
+		if (reim != null) {
+			res.setStatus(200);
+			for (Reimbursement r : reim) {
+				System.out.println(r);
+				ps.println(om.writeValueAsString(r));
+			}
+		} else {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			ps.write(new ObjectMapper().writeValueAsString("Invalid credentials"));
+		}
+	}
+
+	public static void processProfile(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		res.setContentType("application/json");
+		PrintWriter ps = res.getWriter();
+
+		int userid = Integer.parseInt(req.getParameter("userid"));
+
+		User u = userserv.profileHQL(userid);
+
+		if (u != null) {
 			res.setStatus(200);
 			System.out.println(u);
-			pw.println(om.writeValueAsString(u));
-		}*/
+			ps.println(om.writeValueAsString(u));
+		} else {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			ps.write(new ObjectMapper().writeValueAsString("Invalid credentials"));
+		}
+	}
+
+	public static void processEmpls(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		res.setContentType("application/json");
+		PrintWriter ps = res.getWriter();
+
+		List<User> u = userserv.allEmplHQL();
+
+		if (u != null) {
+			res.setStatus(200);
+			for (User user : u) {
+				// if(user.getRole().getRole().equalsIgnoreCase("employee")) {
+				System.out.println(user);
+				ps.println(om.writeValueAsString(user));
+				// }
+			}
+		} else {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			ps.write(new ObjectMapper().writeValueAsString("Invalid credentials"));
+		}
+	}
+
+	public static void processType(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		res.setContentType("application/json");
+		PrintWriter ps = res.getWriter();
+
+		String t = req.getParameter("type");
+
+		Type type = reimserv.typeHQL(t);
+
+		res.setStatus(200);
+		System.out.println(type);
+		ps.println(om.writeValueAsString(type));
+
+	}
+
+	public static void processStatus(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		res.setContentType("application/json");
+		PrintWriter ps = res.getWriter();
+
+		int statusid = Integer.parseInt(req.getParameter("status"));
+
+		Status status = reimserv.statusHQL(statusid);
+
+		res.setStatus(200);
+		System.out.println(status);
+		ps.println(om.writeValueAsString(status));
+
+	}
+
+	public static void processReimID(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		res.setContentType("application/json");
+		PrintWriter ps = res.getWriter();
+
+		int Reimbursementid = Integer.parseInt(req.getParameter("reimid"));
+
+		Reimbursement reim = reimserv.findReimHQL(Reimbursementid);
+
+		if (reim != null) {
+			res.setStatus(200);
+			System.out.println(reim);
+			ps.println(om.writeValueAsString(reim));
+		} else {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			ps.write(new ObjectMapper().writeValueAsString("Invalid credentials"));
+		}
+	}
+
+	public static void procesRequests(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public static void processPendingRequests(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public static void processResolvedRequests(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public static void processUpdate(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

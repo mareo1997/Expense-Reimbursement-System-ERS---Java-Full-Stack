@@ -22,7 +22,7 @@ public class Status {
 	public Status() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Status(int statusid, String status) {
 		super();
 		this.statusid = statusid;

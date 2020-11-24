@@ -1,3 +1,3 @@
-function profile(){
+function profile() {
 
 }

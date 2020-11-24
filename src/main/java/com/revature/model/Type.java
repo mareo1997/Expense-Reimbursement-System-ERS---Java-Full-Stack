@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Type {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // 
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //
 	@Column(name = "typeid")
 	private int typeid;
 
