@@ -1,4 +1,4 @@
-package com.revature.servlets;
+package com.revature.why;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 
 import com.revature.model.User;
 import com.revature.services.LoginService;
-import com.revature.util.HtmlTemplate;
 /**
  * Servlet implementation class LoginServlet
  */

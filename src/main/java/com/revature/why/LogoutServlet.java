@@ -1,4 +1,4 @@
-package com.revature.servlets;
+package com.revature.why;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-
-import com.revature.util.HtmlTemplate;
 
 /**
  * Servlet implementation class LogoutServlet

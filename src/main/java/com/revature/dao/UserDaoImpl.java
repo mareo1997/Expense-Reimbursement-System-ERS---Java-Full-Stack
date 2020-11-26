@@ -33,7 +33,7 @@ import com.revature.util.HibernateUtil;
  * 3. Native SQL 
  * 
  */
-public class UserDaoImpl implements UserDao { //Applied log
+public class UserDaoImpl implements UserDao { // Applied log
 
 	private static Logger log = Logger.getLogger(UserDaoImpl.class);
 	Session ses;
@@ -67,7 +67,7 @@ public class UserDaoImpl implements UserDao { //Applied log
 
 	@Override
 	public User profileHQL(User u) {
-		log.info("Attempting to get "+u.getUsername()+" profile\n");
+		log.info("Attempting to get " + u.getUsername() + " profile\n");
 		ses = HibernateUtil.getSession();
 		u = ses.get(User.class, u.getUserid());
 		return u;
@@ -97,8 +97,8 @@ public class UserDaoImpl implements UserDao { //Applied log
 	@Override
 	public User updateHQL(User user, String firstname, String lastname, String email, String username, String password,
 			String repassword) {
-		
-		log.info("Attempting to change "+user.getUsername()+" profile\n");
+
+		log.info("Attempting to change " + user.getUsername() + " profile\n");
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 		ses.evict(user);
@@ -115,15 +115,17 @@ public class UserDaoImpl implements UserDao { //Applied log
 		if (!(username.isEmpty() || username.isBlank())) {
 			user.setUsername(username);
 		}
-		if (!(password.isEmpty() || password.isBlank()) && !(repassword.isEmpty() || repassword.isBlank()) && (password.equals(repassword))) {
+		if (!(password.isEmpty() || password.isBlank()) && !(repassword.isEmpty() || repassword.isBlank())
+				&& (password.equals(repassword))) {
 			user.setPassword(password);
 		}
 
 		ses.update(user);
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction
+						// interface
 		return user;
 	}
-	
+
 	public String sql, call;
 	public PreparedStatement ps;
 	public ResultSet rs;

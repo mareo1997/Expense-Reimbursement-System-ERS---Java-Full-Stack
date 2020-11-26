@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Update Profile</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script>
+		function home() {
+			window.location = "http://localhost:8080/project-1/Ehome.html"
+		}
+
+		function update() {
+			console.log("update() started")
+			let updateForm = document.updateForm;
+			let userString = sessionStorage.getItem('currentUser');
+			let currentUser = JSON.parse(userString);
+
+			let firstname = document.getElementById('firstname').value;
+			let lastname = document.getElementById('lastname').value;
+			let email = document.getElementById('email').value;
+			let username = document.getElementById('username').value;
+			let password = document.getElementById('password').value;
+			let repassword = document.getElementById('repassword').value;
+
+			const updatetemplate = {
+				updater: currentUser.username,
+				firstname: firstname,
+				lastname: lastname,
+				email: email,
+				username: username,
+				password: password,
+				repassword: repassword
+			}
+
+			let xhr = new XMLHttpRequest();
+
+			xhr.onreadystatechange = function () {
+				console.log("Processing")
+				if (this.readyState === 4 && this.status === 200) {
+					console.log("Success");
+					document.getElementById("warningText").innerHTML = this.responseText;
+					window.location = "http://localhost:8080/project-1/profile.html"
+				}
+				if (this.readyState === 4 && this.status === 204) {
+					console.log("Failed");
+					let childDiv = document.getElementById("warningText")
+					childDiv.textContent = "Failed"
+				}
+			}
+
+			xhr.open("POST", "http://localhost:8080/project-1/update");
+			xhr.send(JSON.stringify(updatetemplate));
+		}
+
+	</script>
+</head>
+
+<body>
+
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 id="welcome">Welcome to Updates</h1>
+			<script>
+				let welcome = document.getElementById('welcome');
+				let userString = sessionStorage.getItem('currentUser');
+				let currentUser = JSON.parse(userString);
+				if (userString === null) {
+					//window.location = "http://localhost:8080/project-1/index.html"
+				} else {
+					console.log(currentUser);
+					if (currentUser != null) {
+						welcome.innerHTML = "Welcome to Updates " + currentUser.username;
+					}
+				}
+			</script>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<!-- This script will be defined in index.js -->
+		<form name="updateForm" onsubmit="update(event.preventDefault())">
+			<!--  I may have prevent default() -->
+
+			<div class="form-group">
+				<label for="firstname">First Name</label> <input type="text" class="form-control" name="firstname"
+					id="firstname" placeholder="Enter first name">
+			</div>
+
+			<div class="form-group">
+				<label for="lastname">Last Name</label> <input type="text" class="form-control" name="lastname"
+					id="lastname" placeholder="Enter last name">
+			</div>
+
+			<div class="form-group">
+				<label for="email">Email</label> <input type="text" class="form-control" name="email" id="email"
+					placeholder="Enter email">
+			</div>
+
+			<div class="form-group">
+				<label for="username">Username</label> <input type="text" class="form-control" name="username"
+					id="username" placeholder="Enter username">
+			</div>
+
+			<div class="form-group">
+				<label for="password">Password</label> <input type="password" class="form-control" name="password"
+					id="password" placeholder="Enter password">
+			</div>
+
+			<div class="form-group">
+				<label for="repassword">Reenter password</label> <input type="password" class="form-control"
+					name="repassword" id="repassword" placeholder="Reenter password">
+			</div>
+
+			<button id="login" type="submit" class="btn btn-primary" value="Submit">Submit</button>
+			<br>
+			<div id="warningText"></div>
+		</form>
+		<br>
+		<button class="btn btn-primary" onclick="home()">GO BACK</button>
+	</div>
+</body>
+
+</html>

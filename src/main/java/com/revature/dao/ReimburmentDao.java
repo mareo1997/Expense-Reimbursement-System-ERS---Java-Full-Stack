@@ -31,7 +31,7 @@ public interface ReimburmentDao {
 
 	public Reimbursement findReimHQL(int reimbursementid);
 
-	public Type typeHQL(String t);
+	public Type typeHQL(int t);
 
 	public Status statusHQL(int s);
 

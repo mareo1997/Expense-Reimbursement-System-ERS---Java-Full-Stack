@@ -1,46 +1,24 @@
-package com.revature.model;
+package com.revature.template;
 
 import java.io.Serializable;
 
 public class ReimTemplate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private String username, description;
 	private double amount;
-	private int userid;
-	private String description, type;
+	private int type;
 
 	public ReimTemplate() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	@Override
-	public String toString() {
-		return "ReimTemplate [amount=" + amount + ", userid=" + userid + ", description=" + description + ", type="
-				+ type + "]";
+
+	public String getUsername() {
+		return username;
 	}
 
-	public ReimTemplate(double amount, int userid, String description, String type) {
-		super();
-		this.amount = amount;
-		this.userid = userid;
-		this.description = description;
-		this.type = type;
-	}
-
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
-	public int getUserid() {
-		return userid;
-	}
-
-	public void setUserid(int userid) {
-		this.userid = userid;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getDescription() {
@@ -51,11 +29,19 @@ public class ReimTemplate implements Serializable {
 		this.description = description;
 	}
 
-	public String getType() {
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public int getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 
@@ -67,8 +53,8 @@ public class ReimTemplate implements Serializable {
 		temp = Double.doubleToLongBits(amount);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + userid;
+		result = prime * result + type;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -88,14 +74,28 @@ public class ReimTemplate implements Serializable {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (type == null) {
-			if (other.type != null)
-				return false;
-		} else if (!type.equals(other.type))
+		if (type != other.type)
 			return false;
-		if (userid != other.userid)
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ReimTemplate [username=" + username + ", description=" + description + ", amount=" + amount + ", type="
+				+ type + "]";
+	}
+
+	public ReimTemplate(String username, String description, double amount, int type) {
+		super();
+		this.username = username;
+		this.description = description;
+		this.amount = amount;
+		this.type = type;
 	}
 
 }

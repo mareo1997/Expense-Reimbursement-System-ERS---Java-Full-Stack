@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Resolve Reimbursement</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script>
+		function home() {
+			window.location = "http://localhost:8080/project-1/Mhome.html"
+		}
+
+		function sendResolve() {
+			console.log("sendResolve() started")
+			let resolveForm = document.resolveForm;
+			let userString = sessionStorage.getItem('currentUser');
+			let currentUser = JSON.parse(userString);
+
+			let reimid = document.getElementById('reimid').value;
+			let status = document.getElementById('status').value;
+
+			const resolvetemplate = {
+				username: currentUser.username,
+				reimid: reimid,
+				status: status
+			}
+
+			let xhr = new XMLHttpRequest();
+
+			xhr.onreadystatechange = function () {
+				console.log("Processing")
+				if (this.readyState === 4 && this.status === 200) {
+					console.log("Success");
+					document.getElementById("warningText").innerHTML = this.responseText;
+					console.log(this.responseText);
+				}
+				if (this.readyState === 4 && this.status === 204) {
+					console.log("Failed");
+					let childDiv = document.getElementById("warningText")
+					childDiv.textContent = "Failed"
+				}
+			}
+
+			xhr.open("POST", "http://localhost:8080/project-1/resolve");
+			xhr.send(JSON.stringify(resolvetemplate));
+		}
+	</script>
+</head>
+
+<body>
+
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 id="welcome">Welcome to Reimbursements</h1>
+			<script>
+				let welcome = document.getElementById('welcome');
+				let userString = sessionStorage.getItem('currentUser');
+				let currentUser = JSON.parse(userString);
+				if (userString === null) {
+					//window.location = "http://localhost:8080/project-1/index.html"
+				} else {
+					console.log(currentUser);
+					if (currentUser != null) {
+						welcome.innerHTML = "Welcome to Reimbursements " + currentUser.username;
+					}
+				}
+			</script>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<!-- This script will be defined in index.js -->
+		<form name="resolveForm" onsubmit="sendResolve(event.preventDefault())">
+			<!--  I may have prevent default() -->
+
+			<div class="form-group">
+				<label for="reimid">Reimbursement ID</label> <input type="number" class="form-control" required
+					name="reimid" id="reimid" placeholder="Enter ID">
+			</div>
+
+			<div class="form-group">
+				<label for="status">Status</label>
+				<ol>
+					<li>PENDING</li>
+					<li>APPROVAL</li>
+					<li>DENIED</li>
+				</ol>
+				<input type="number" min="1" max="3" class="form-control" required name="status" id="status"
+					placeholder="Enter Status">
+			</div>
+
+			<button id="login" type="submit" class="btn btn-primary" value="Submit">Submit</button>
+			<div id="warningText"></div>
+		</form>
+		<br>
+		<button class="btn btn-primary" onclick="home()">GO BACK</button>
+	</div>
+</body>
+
+</html>

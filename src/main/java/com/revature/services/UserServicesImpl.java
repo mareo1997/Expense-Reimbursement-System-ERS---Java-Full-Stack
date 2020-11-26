@@ -31,7 +31,8 @@ public class UserServicesImpl implements UserServices {
 	}
 
 	@Override
-	public User updateHQL(User u, String fname, String lname, String email, String username, String password, String repassword) {
+	public User updateHQL(User u, String fname, String lname, String email, String username, String password,
+			String repassword) {
 		return dao.updateHQL(u, fname, lname, email, username, password, repassword);
 	}
 

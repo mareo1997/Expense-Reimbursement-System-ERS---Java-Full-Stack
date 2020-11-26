@@ -17,13 +17,19 @@ function sendLogin() {
 	// setting up a callback function for when ready state changed (ready stat starts from 0 to 4)
 	// this call back is called everytime readyState changes
 	xhr.onreadystatechange = function() {
+		console.log("Processing")
 		if (this.readyState === 4 && this.status === 200) {
-			console.log("Success");
-			window.sessionStorage.setItem('currentUser', username);
-			//window.location = "http://localhost:8080/project-1/Ehome.html"
-			console.log(sessionStorage.getItem('currentUser'))
+			console.log("Employee");
+            sessionStorage.setItem('currentUser',this.responseText);
+			window.location = "http://localhost:8080/project-1/Ehome.html"
+            //console.log(sessionStorage.getItem('currentUser'))
 		}
-
+		if (this.readyState === 4 && this.status === 201) {
+			console.log("Manager");
+            sessionStorage.setItem('currentUser',this.responseText);
+			window.location = "http://localhost:8080/project-1/Mhome.html"
+			//console.log(sessionStorage.getItem('currentUser'))
+		}
 		if (this.readyState === 4 && this.status === 204) {
 			console.log("Failed");
 			alert("Failed to log in! Username or password is incorrect");
@@ -31,16 +37,10 @@ function sendLogin() {
 			childDiv.textContent = "Failed to log in! Username or Password is incorrect"
 
 		}
-		console.log("Processing")
-
-	}
+	};
 
 	xhr.open("POST", "http://localhost:8080/project-1/login");
-	xhr.setRequestHeader("content-type", "application/json")
-	xhr.setRequestHeader("\"username\"", `${logintemplate.username}`)
-	xhr.setRequestHeader("\"password\"", `${logintemplate.password}`)
-	xhr.send(logintemplate);
-
+    xhr.send(JSON.stringify(logintemplate));
 }
 
 //document.getElementById("login").addEventListener('submit', sendLogin);

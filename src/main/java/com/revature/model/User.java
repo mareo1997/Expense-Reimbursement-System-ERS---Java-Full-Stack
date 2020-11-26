@@ -34,12 +34,8 @@ public class User {
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
-	// @JsonManagedReference
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Role role;
-
-	// @OneToMany(mappedBy="AuthorFK", fetch=FetchType.LAZY)
-	// private List<ERSReimbursement> e = new ArrayList<>();
 
 	public User() {
 		// TODO Auto-generated constructor stub

@@ -14,7 +14,7 @@ import com.revature.model.User;
 import com.revature.util.ConnectionUtil;
 import com.revature.util.HibernateUtil;
 
-public class LoginService { //Applied logs and HQL
+public class LoginService { // Applied logs and HQL
 
 	private static Logger log = Logger.getLogger(LoginService.class);
 	public static String sql;
@@ -52,28 +52,29 @@ public class LoginService { //Applied logs and HQL
 	}
 
 	public static User confirm(String username, String password) {
-		log.info("Attempting to login "+username+" \n");
+		log.info("Attempting to login " + username + " \n");
 		Session ses = HibernateUtil.getSession(); // capture the session
-		List<User> u = ses.createQuery("from User where username = '" + username + "' and password = '" + password + "' ", User.class).list();
+		List<User> u = ses.createQuery(
+				"from User where username = '" + username + "' and password = '" + password + "' ", User.class).list();
 		if (u.size() > 0) {
-			log.info("Returning "+username+" credentials\n");
+			log.info("Returning " + username + " credentials\n");
 			return u.get(0);
 		} else {
-			log.warn("Could not find "+username+" \n");
+			log.warn("Could not find " + username + " \n");
 			return null;
 		}
 	}
-	
+
 	public static User authority(String username) {
-		log.info("Attempting to validate "+username+" \n");
+		log.info("Attempting to validate " + username + " \n");
 
 		Session ses = HibernateUtil.getSession(); // capture the session
 		List<User> u = ses.createQuery("from User where username = '" + username + "' ", User.class).list();
 		if (u.size() > 0) {
-			log.info("Returning "+username+" credentials\n");
+			log.info("Returning " + username + " credentials\n");
 			return u.get(0);
 		} else {
-			log.warn("Could not validate "+username+" \n");
+			log.warn("Could not validate " + username + " \n");
 			return null;
 		}
 	}

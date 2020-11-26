@@ -8,7 +8,7 @@
 
 #### Employee User Stories 
 - An Employee can login **DONE**
-- An Employee can view the Employee Homepage **LATER**
+- An Employee can view the Employee Homepage **DONE**
 - An Employee can logout **DONE**
 - An Employee can submit a reimbursement request **DONE**
 - An Employee can upload an image of his/her receipt as part of the reimbursement request (extra credit) **OPTIONAL**
@@ -20,7 +20,7 @@
 
 #### Manager User Stories
 - A Manager can login **DONE**
-- A Manager can view the Manager Homepage **LATER**
+- A Manager can view the Manager Homepage **DONE**
 - A Manager can logout **DONE**
 - A Manager can approve/deny pending reimbursement requests **DONE**
 - A Manager can view all pending requests from all employees **DONE**
@@ -53,10 +53,12 @@ Employees must select the type of reimbursement as: LODGING, TRAVEL, FOOD, or OT
 
 * The back-end system shall use **Hibernate** to connect to an **AWS RDS Postgres database**. **DONE**
 * The application shall deploy onto a Tomcat Server. **DONE**
-* The middle tier shall use Servlet technology for dynamic Web application development. 
-* The front-end view shall use HTML/JavaScript to make an application that can call server-side components. 
+* The middle tier shall use Servlet technology for dynamic Web application development. **DONE**
+* The front-end view shall use HTML/JavaScript to make an application that can call server-side components. **DONE**
 * Passwords shall be encrypted in Java and securely stored in the database. 
-* The middle tier shall follow proper layered architecture, have reasonable (~70%) test coverage of the service layer, and implement log4j for appropriate logging. 
+* The middle tier shall follow proper layered architecture, **DONE**
+* have reasonable (~70%) test coverage of the service layer, and 
+* implement log4j for appropriate logging. 
 
 **Stretch Goals:** *These will count for extra credit and are entirely optional*
 * Replace HTML/JavaScript with an Angular single page application. (We will learn Angular in Week 5)

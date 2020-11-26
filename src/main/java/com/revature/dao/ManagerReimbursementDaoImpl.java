@@ -28,7 +28,7 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 		reim.setStatus(status);
 
 		ses.update(reim);
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+		tx.commit(); /* commit the transaction by utilizing the methods from the Transaction interface*/
 		return reim;
 
 	}
@@ -38,7 +38,8 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 		log.info("Attempting to get all pending requests\n");
 		Session ses = HibernateUtil.getSession();
 
-		List<Reimbursement> reim = ses.createQuery("FROM Reimbursement where status_statusid = 1", Reimbursement.class).list();
+		List<Reimbursement> reim = ses.createQuery("FROM Reimbursement where status_statusid = 1", Reimbursement.class)
+				.list();
 		if (reim.size() > 0) {
 			log.info("Returning all pending requests\n");
 			return reim;
@@ -47,13 +48,14 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public List<Reimbursement> resolvedrequestsHQL() {
 		log.info("Attempting to get all resolved requests\n");
 		Session ses = HibernateUtil.getSession();
 
-		List<Reimbursement> reim = ses.createQuery("FROM Reimbursement where not status_statusid = 1", Reimbursement.class).list();
+		List<Reimbursement> reim = ses
+				.createQuery("FROM Reimbursement where not status_statusid = 1", Reimbursement.class).list();
 		if (reim.size() > 0) {
 			log.info("Returning all resolved requests\n");
 			return reim;
@@ -68,8 +70,11 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 		log.info("Attempting to get list empl requests");
 		Session ses = HibernateUtil.getSession();
 
-		List<Reimbursement> reim = ses.createQuery("FROM Reimbursement where authorfk = '"+u.getUserid()+"' and not status_statusid = 1", Reimbursement.class).list();
-		
+		List<Reimbursement> reim = ses
+				.createQuery("FROM Reimbursement where authorfk = '" + u.getUserid() + "' and status_statusid = 1",
+						Reimbursement.class)
+				.list();
+
 		if (reim.size() > 0) {
 			log.info("Returning pending requests");
 			return reim;
@@ -78,6 +83,5 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 			return null;
 		}
 	}
-
 
 }

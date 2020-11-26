@@ -1,14 +1,55 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Home</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-<script src="scripts/home.js"></script>
+	<meta charset="ISO-8859-1">
+	<title>Employee HomePage</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script>
+		function logout() { //DONE
+			let xhr = new XMLHttpRequest();
+
+			xhr.open("POST", "http://localhost:8080/project-1/logout");
+			xhr.send();
+
+			sessionStorage.removeItem('currentUser');
+			window.location = "http://localhost:8080/project-1/index.html";
+		}
+
+		function reim() { //DONE
+			console.log("reim() started")
+			console.log(sessionStorage.getItem('currentUser'))
+			window.location = "http://localhost:8080/project-1/reim.html"
+		}
+
+		function pending() {  //DONE
+			console.log("pending() started")
+			console.log(sessionStorage.getItem('currentUser'))
+			window.location = "http://localhost:8080/project-1/pending.html"
+		}
+
+		function resolved() { //DONE
+			console.log("resolved() started")
+			console.log(sessionStorage.getItem('currentUser'))
+			window.location = "http://localhost:8080/project-1/resolved.html"
+		}
+
+		function profile() { //DONE
+			console.log("profile() started")
+			console.log(sessionStorage.getItem('currentUser'))
+			window.location = "http://localhost:8080/project-1/profile.html"
+		}
+
+		function update() { //DONE
+			console.log("update() started")
+			console.log(sessionStorage.getItem('currentUser'))
+			window.location = "http://localhost:8080/project-1/update.html"
+		}
+
+	</script>
 </head>
+
 <body>
 	<div class="jumbotron">
 		<h1 id="welcome">You are logged in!</h1>
@@ -18,77 +59,29 @@
 			let currentUser = JSON.parse(userString);
 
 			if (userString === null) {
-				window.location = "http://localhost:8080/project-1/"
+				// window.location = "http://localhost:8080/project-1/index.html"
 			} else {
 				console.log(currentUser);
 				if (currentUser != null) {
 					welcome.innerHTML = "Welcome " + currentUser.username;
 				}
 			}
-
-			function pending() {
-				console.log("pending() started")
-				let xhr = new XMLHttpRequest();
-
-				xhr.onreadystatechange = function() {
-					if (this.readyState === 4 && this.status === 200) {
-						let childDiv = document.getElementById("display")
-						childDiv.textContent = "Pending"
-					}
-
-					if (this.readyState === 4 && this.status === 204) {
-						console.log("Failed");
-						let childDiv = document.getElementById("display")
-						childDiv.textContent = "No pending requests"
-					}
-				}
-
-				xhr.open("GET", "http://localhost:8080/project-1/pending");
-				xhr.send(JSON.stringify(currentUser));
-			}
-
-			function resolved() {
-				console.log("resolved() started")
-				let xhr = new XMLHttpRequest();
-
-				xhr.onreadystatechange = function() {
-					if (this.readyState === 4 && this.status === 200) {
-						let childDiv = document.getElementById("display")
-						childDiv.textContent = "Resolved"
-					}
-
-					if (this.readyState === 4 && this.status === 204) {
-						console.log("Failed");
-						let childDiv = document.getElementById("display")
-						childDiv.textContent = "No resolved requests"
-					}
-				}
-
-				xhr.open("GET", "http://localhost:8080/project-1/resolved");
-				xhr.send(JSON.stringify(currentUser));
-			}
-
-			function profile() {
-				console.log("profile() started")
-				window.location = "http://localhost:8080/project-1/profile.html"
-			}
 		</script>
 	</div>
 
-	<button type="button" class="btn btn-outline-primary"
-		onclick="logout()">Logout</button>
-	<button type="button" class="btn btn-outline-secondary"
-		onclick="reim()">Reimbursement</button>
-	<button type="button" class="btn btn-outline-success"
-		onclick="pending()">Pending</button>
-	<button type="button" class="btn btn-outline-danger"
-		onclick="resolved()">Resolved</button>
-	<button type="button" class="btn btn-outline-warning"
-		onclick="profile()">Profile</button>
-	<button type="button" class="btn btn-outline-info">Info</button>
-	<button type="button" class="btn btn-outline-light">Light</button>
-	<button type="button" class="btn btn-outline-dark">Dark</button>
-
+	<button type="button" class="btn btn-outline-warning" onclick="profile()">View Profile</button>
+	<br> <br>
+	<button type="button" class="btn btn-outline-info" onclick="update()">Update Profile</button>
+	<br><br>
+	<button type="button" class="btn btn-outline-secondary" onclick="reim()">Submit Reimbursement</button>
+	<br> <br>
+	<button type="button" class="btn btn-outline-success" onclick="pending()">Pending requests</button>
+	<br> <br>
+	<button type="button" class="btn btn-outline-danger" onclick="resolved()">Resolved requests</button>
+	<br> <br>
+	<button type="button" class="btn btn-outline-primary" onclick="logout()">Logout</button>
+	<br> <br>
 	<div id="display"></div>
 </body>
+
 </html>

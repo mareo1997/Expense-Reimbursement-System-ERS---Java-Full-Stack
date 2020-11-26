@@ -10,25 +10,25 @@ import com.revature.model.Reimbursement;
 import com.revature.model.User;
 import com.revature.util.HibernateUtil;
 
-public class EmplReimbursementDaoImpl implements EmplReimbursementDao {//Applied log
+public class EmplReimbursementDaoImpl implements EmplReimbursementDao {// Applied log
 
 	private static Logger log = Logger.getLogger(EmplReimbursementDaoImpl.class);
-	
+
 	@Override
 	public Reimbursement submitHQL(Reimbursement r) {
-		log.info("Attempting to submit "+r+"\n");
+		log.info("Attempting to submit " + r + "\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 
 		Transaction tx = ses.beginTransaction();
 		ses.save(r);
 		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
-		
+
 		return r;
 	}
 
 	@Override
 	public List<Reimbursement> pendingHQL(User u) { // - An Employee can view their pending reimbursement requests ****
-		log.info("Attempting to get pending reim for "+u.getUsername()+"\n");
+		log.info("Attempting to get pending reim for " + u.getUsername() + "\n");
 		Session ses = HibernateUtil.getSession();
 
 		List<Reimbursement> reim = ses
@@ -48,7 +48,7 @@ public class EmplReimbursementDaoImpl implements EmplReimbursementDao {//Applied
 	@Override
 	public List<Reimbursement> resolvedHQL(User u) { // - An Employee can view their pending reimbursement requests ****
 
-		log.info("Attempting to get resolved requests for "+u.getUsername()+"\n");
+		log.info("Attempting to get resolved requests for " + u.getUsername() + "\n");
 		Session ses = HibernateUtil.getSession();
 
 		List<Reimbursement> reim = ses
@@ -64,7 +64,5 @@ public class EmplReimbursementDaoImpl implements EmplReimbursementDao {//Applied
 		}
 
 	}
-
-
 
 }

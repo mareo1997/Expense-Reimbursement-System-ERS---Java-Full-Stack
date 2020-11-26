@@ -21,45 +21,13 @@ public class Driver {
 
 	public static void main(String[] args) {
 
-		//initialValues();
-		// profile(); //done
-		// allEmpl();
-		 submit(); //done
-		// pending();
-
-		// resolved();
+		initialValues();
+		allEmpl();
 		HibernateUtil.closeSes();
 	}
 
-	/*public static void pending() {
-		List<Reimbursement> pending = reimserv.pendingHQL(userserv.profileHQL(3));
-		System.out.println(pending);
-	}
-
-	public static void resolved() {
-		List<Reimbursement> resolved = reimserv.resolvedHQL(userserv.profileHQL(3));
-		System.out.println(resolved);
-	}
-
-	public static void profile() {
-		System.out.println(userserv.profileHQL(3));
-	}*/
-
 	public static void allEmpl() {
 		System.out.println(userserv.allEmplHQL());
-	}
-
-	public static void submit() {
-		// Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		// Reimbursement reim = new Reimbursement(1000, timestamp, "HILTON INN",
-		// userserv.profile(3));
-
-		/*
-		 * reimserv.insert(reim); reimserv.insert(s); reimserv.insert(t);
-		 */
-		Role role1 = new Role(1, "EMPLOYEE");
-		User user = new User("u", "p", "f", "l", "@", role1);
-		userserv.insert(user);
 	}
 
 	public static void initialValues() {

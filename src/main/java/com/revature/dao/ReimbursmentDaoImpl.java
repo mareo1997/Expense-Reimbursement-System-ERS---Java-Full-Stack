@@ -32,7 +32,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 
 	@Override
 	public Reimbursement findReimHQL(int reimbursementid) {
-		log.info("Attempting to get request id: "+reimbursementid+"\n");
+		log.info("Attempting to get request id: " + reimbursementid + "\n");
 
 		Session ses = HibernateUtil.getSession();
 
@@ -55,11 +55,11 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 	}
 
 	@Override
-	public Type typeHQL(String t) {
-		log.info("Attempting to get type "+t+"\n");
+	public Type typeHQL(int t) {
+		log.info("Attempting to get type " + t + "\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 
-		Query q = ses.createQuery("From Type where type = :type");
+		Query q = ses.createQuery("From Type where typeid = :type");
 		q.setParameter("type", t);
 		@SuppressWarnings("unchecked")
 		List<Type> types = q.getResultList();
@@ -378,6 +378,5 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 			e.printStackTrace();
 		}
 	}
-
 
 }

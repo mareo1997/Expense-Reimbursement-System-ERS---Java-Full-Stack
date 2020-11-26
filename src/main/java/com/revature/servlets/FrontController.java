@@ -16,62 +16,46 @@ public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		final String URI = req.getRequestURI();// .replace("/project-1/", "");
 		System.out.println("begin " + URI);
 
 		switch (URI) {
-		case "/project-1/allempls": // DONE
+		case "/project-1/profile": // DONE
 			System.out.println("case " + URI);
-			ManagerRequestHelper.processEmpls(req, res);
+			UserRequestHelper.processProfile(req, res);
 			break;
+
 		case "/project-1/pending": // DONE
 			System.out.println("case " + URI);
 			EmplRequestHelper.processPending(req, res);
-			break;
-		case "/project-1/requests": //DONE
-			System.out.println("case " + URI);
-			ManagerRequestHelper.processRequests(req, res);
-			break;
-		case "/project-1/pendingrequests": //DONE
-			System.out.println("case " + URI);
-			ManagerRequestHelper.processPendingRequests(req, res);
-			break;
-		case "/project-1/resolvedrequests": //DONE
-			System.out.println("case " + URI);
-			ManagerRequestHelper.processResolvedRequests(req, res);
 			break;
 		case "/project-1/resolved": // DONE
 			System.out.println("case " + URI);
 			EmplRequestHelper.processResolved(req, res);
 			break;
-		case "/project-1/profile": // DONE
+
+		case "/project-1/allempls": // DONE
 			System.out.println("case " + URI);
-			UserRequestHelper.processProfile(req, res);
+			ManagerRequestHelper.processEmpls(req, res);
 			break;
-		case "/project-1/type": // DONE
+		case "/project-1/pendingrequests": // DONE
 			System.out.println("case " + URI);
-			ManagerRequestHelper.processType(req, res);
+			ManagerRequestHelper.processPendingRequests(req, res);
 			break;
-		case "/project-1/status": // DONE
+		case "/project-1/resolvedrequests": // DONE
 			System.out.println("case " + URI);
-			ManagerRequestHelper.processStatus(req, res);
-			break;
-		case "/project-1/reimid": // DONE
-			System.out.println("case " + URI);
-			ManagerRequestHelper.processReimID(req, res);
+			ManagerRequestHelper.processResolvedRequests(req, res);
 			break;
 		default:
-			doPost(req, res);// req.getRequestDispatcher("login.html").forward(req, res);
+			doPost(req, res);
 			break;
 		}
 	}
-//Have the post and get methods in form and then servlet can retrive
-//ajax
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		final String URI = req.getRequestURI();// .replace("/project-1/", "");
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+		final String URI = req.getRequestURI();
 		System.out.println("begin " + URI);
 
 		switch (URI) {
@@ -83,17 +67,23 @@ public class FrontController extends HttpServlet {
 			System.out.println("case " + URI);
 			UserRequestHelper.processLogout(req, res);
 			break;
+		case "/project-1/update": // DONE
+			System.out.println("case " + URI);
+			UserRequestHelper.processUpdate(req, res);
+			break;
+
 		case "/project-1/reim": // DONE
 			System.out.println("case " + URI);
 			EmplRequestHelper.processReim(req, res);
 			break;
+
+		case "/project-1/requests": // DONE
+			System.out.println("case " + URI);
+			ManagerRequestHelper.processRequests(req, res);
+			break;
 		case "/project-1/resolve": // DONE
 			System.out.println("case " + URI);
 			ManagerRequestHelper.processResolve(req, res);
-			break;
-		case "/project-1/update": //DONE
-			System.out.println("case " + URI);
-			UserRequestHelper.processUpdate(req, res);
 			break;
 		default:
 			System.out.println(URI);

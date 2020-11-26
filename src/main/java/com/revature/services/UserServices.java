@@ -19,5 +19,6 @@ public interface UserServices {
 
 	public void allEmpl();
 
-	public User updateHQL(User u, String fname, String lname, String email, String username, String password, String repassword);
+	public User updateHQL(User u, String fname, String lname, String email, String username, String password,
+			String repassword);
 }

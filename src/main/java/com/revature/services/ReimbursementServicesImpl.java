@@ -83,7 +83,7 @@ public class ReimbursementServicesImpl implements ReimbursementServices {
 	}
 
 	@Override
-	public Type typeHQL(String t) {
+	public Type typeHQL(int t) {
 		return reim.typeHQL(t);
 	}
 

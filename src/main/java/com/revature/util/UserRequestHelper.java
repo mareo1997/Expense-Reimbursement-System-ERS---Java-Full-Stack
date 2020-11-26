@@ -1,9 +1,9 @@
 package com.revature.util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,39 +15,65 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.revature.model.User;
 import com.revature.services.LoginService;
 import com.revature.services.UserServicesImpl;
+import com.revature.template.LoginTemplate;
+import com.revature.template.UpdateTemplate;
 
 public class UserRequestHelper {
 	private static Logger log = Logger.getLogger(UserRequestHelper.class);
 	private static ObjectMapper om = new ObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 	public static UserServicesImpl userserv = new UserServicesImpl();
 
-	public static void processLogin(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public static void processLogin(HttpServletRequest req, HttpServletResponse res) throws IOException{ //Worked
+		BufferedReader reader = req.getReader();
+		System.out.println("reader "+reader);
+		StringBuilder s = new StringBuilder();
+
+		// we are just transferring our Reader data to our StringBuilder, line by line
+		String line = null;
 		
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");//System.out.println("username and password " + username + password);
+		while((line=reader.readLine()) != null) {
+			System.out.println("line "+line);
+			s.append(line);
+			System.out.println("s "+s);
+			line = reader.readLine();
+		}
+
+		String body = s.toString();
+		System.out.println("body "+body);
+		
+		LoginTemplate attempt = om.readValue(body, LoginTemplate.class);
+		String username = attempt.getUsername();
+		String password = attempt.getPassword();
+
+		log.info("Username attempted " + username);
 
 		User login = LoginService.confirm(username, password);
-
-		res.setContentType("application/json");
+		
 		PrintWriter ps = res.getWriter();
+		res.setContentType("application/json");
 
 		if (login != null) {
-			log.info(username+" successfully logged in\n");
 			HttpSession session = req.getSession();
-			session.setAttribute("username", username);
-			res.setStatus(200);
-			System.out.println(login);
-			ps.println(om.writeValueAsString(login));
-			req.getRequestDispatcher("Ehome.html").forward(req, res);//res.sendRedirect("http://localhost:8080/project-1/Ehome.html");
-		} else {
-			log.warn(username+" could not login");
-			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			ps.write(new ObjectMapper().writeValueAsString("Invalid credentials"));
-			req.getRequestDispatcher("index.html").forward(req, res);
+			session.setAttribute("username", username);			
+			
+			if (login.getRole().getRoleid() == 1) {
+				System.out.println(login);
+				ps.println(om.writeValueAsString(login));
+				log.info(username + " successfully logged in\n");
+				res.setStatus(200);
+			} else if (login.getRole().getRoleid() == 2) {
+				System.out.println(login);
+				ps.println(om.writeValueAsString(login));
+				log.info(username + " successfully logged in\n");
+				res.setStatus(201);
+			}
+		}else {
+			res.setContentType("application/json");
+			res.setStatus(204); // Connection was successful but no user found
 		}
 	}
 
-	public static void processLogout(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public static void processLogout(HttpServletRequest req, HttpServletResponse res) { //Worked
 		HttpSession session = req.getSession(false);
 
 		if (session != null) {
@@ -55,17 +81,16 @@ public class UserRequestHelper {
 			log.info(username + " logged out\n");
 			session.invalidate();
 		}
-		req.getRequestDispatcher("index.html").forward(req, res);
 		res.setStatus(200);
 	}
 
-	public static void processProfile(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public static void processProfile(HttpServletRequest req, HttpServletResponse res) throws IOException   {  //Worked, displayed, needs to be refined
+
 		res.setContentType("application/json");
 		PrintWriter ps = res.getWriter();
 
 		try {
 			HttpSession session = req.getSession(false);
-
 			if (session != null) {
 				String username = (String) session.getAttribute("username");
 				User u = LoginService.authority(username);
@@ -77,69 +102,68 @@ public class UserRequestHelper {
 					ps.println(om.writeValueAsString(u));
 				} else {
 					log.warn("Couldn't get profile\n");
-					res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-					ps.write(new ObjectMapper().writeValueAsString("Does not exist."));
+					res.setStatus(204);
+					ps.write(om.writeValueAsString("Does not exist."));
 				}
 			} else {
 				log.warn("Not logged in\n");
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				ps.write(new ObjectMapper().writeValueAsString("The requested action is not permitted."));
-				req.getRequestDispatcher("index.html").forward(req, res);
+				ps.write(om.writeValueAsString("The requested action is not permitted."));
 			}
 
 		} catch (NullPointerException e) {
 			log.warn(e);
 			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			ps.write(new ObjectMapper().writeValueAsString("The requested action is not permitted."));
-			req.getRequestDispatcher("index.html").forward(req, res);
+			ps.write(om.writeValueAsString("The requested action is not permitted."));
 		}
 	}
 
-	public static void processUpdate(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public static void processUpdate(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		
+		BufferedReader reader = req.getReader();
+		System.out.println("reader "+reader);
+		StringBuilder s = new StringBuilder();
+
+		// we are just transferring our Reader data to our StringBuilder, line by line
+		String line = null;
+		
+		while((line=reader.readLine()) != null) {
+			System.out.println("line "+line);
+			s.append(line);
+			System.out.println("s "+s);
+			line = reader.readLine();
+		}
+
+		String body = s.toString();
+		System.out.println("body "+body);
+
+		UpdateTemplate attempt = om.readValue(body, UpdateTemplate.class);
+		String updater = attempt.getUpdater();
+		String firstname = attempt.getFirstname();
+		String lastname = attempt.getLastname();
+		String email = attempt.getEmail();
+		String username = attempt.getUsername();
+		String password = attempt.getPassword();
+		String repassword = attempt.getRepassword();
+		
+		User update = LoginService.authority(updater);
 		res.setContentType("application/json");
 		PrintWriter ps = res.getWriter();
 
-		try {
-			HttpSession session = req.getSession(false);
-
-			if (session != null) {
-				String username = (String) session.getAttribute("username");
-				User update = LoginService.authority(username);
-
-				if (update != null) {
-					String fname = req.getParameter("firstname");
-					String lname = req.getParameter("lastname");
-					String email = req.getParameter("email");
-					String username1 = req.getParameter("username");
-					String password = req.getParameter("password");
-					String repassword = req.getParameter("repassword");
-
-					update = userserv.updateHQL(update, fname, lname, email, username1, password, repassword);
-					
-					if (update != null) {
-						log.info("Updated "+update.getUsername()+" profile");
-						res.setStatus(200);
-						System.out.println(update);
-						ps.println(om.writeValueAsString(update));
-					} else {
-						res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-						ps.write(new ObjectMapper().writeValueAsString("Does not exist."));
-					}
-				}else {
-					res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-					ps.write(new ObjectMapper().writeValueAsString("Does not exist."));
-				}
-			}else {
-				log.warn("Not logged in\n");
-				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				ps.write(new ObjectMapper().writeValueAsString("The requested action is not permitted."));
-				req.getRequestDispatcher("index.html").forward(req, res);
+		if (update != null) {
+			update = userserv.updateHQL(update, firstname, lastname, email, username, password, repassword);
+			if (update != null) {
+				log.info("Updated " + update.getUsername() + " profile");
+				res.setStatus(200);
+				System.out.println(update);
+				ps.println(om.writeValueAsString(update));
+			} else {
+				res.setStatus(204);
+				ps.write(om.writeValueAsString("Does not exist."));
 			}
-		} catch (NullPointerException e) {
-			log.warn(e);
-			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			ps.write(new ObjectMapper().writeValueAsString("The requested action is not permitted."));
-			req.getRequestDispatcher("index.html").forward(req, res);
+		} else {
+			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			ps.write(om.writeValueAsString("Does not exist."));
 		}
 	}
 

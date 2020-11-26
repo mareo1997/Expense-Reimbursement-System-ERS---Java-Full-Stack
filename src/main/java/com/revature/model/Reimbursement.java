@@ -74,10 +74,7 @@ public class Reimbursement {
 		this.type = type;
 	}
 
-	public Reimbursement(User author, double amt, String description, Timestamp submitted,
-			/*
-			 * User resolver, Timestamp resolved,
-			 */ Status status, Type type) {
+	public Reimbursement(User author, double amt, String description, Timestamp submitted, Status status, Type type) {
 		super();
 		this.author = author;
 		this.amt = amt;
@@ -99,8 +96,8 @@ public class Reimbursement {
 	public String toString() {
 		String result = "ReimbursementID: " + Reimbursementid + "\tAmount: $" + amt + "\n" + "Description: "
 				+ description + "\n" + "Author: " + author.getUsername() + " \t\tSubmitted: " + submitted + "\n"
-				+ "Resolver: " + resolver + " \t\tResolved: " + resolved + "\n" + "Status: "
-				+ status.getStatus() + "\tType: " + type.getType() + "\n";
+				+ "Resolver: " + resolver + " \t\tResolved: " + resolved + "\n" + "Status: " + status.getStatus()
+				+ "\tType: " + type.getType() + "\n";
 		return result;
 	}
 

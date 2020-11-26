@@ -73,7 +73,6 @@ public class HibernateServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//System.out.println(userserv.profileHQL(3));
 		System.out.println(userserv.allEmplHQL());
 		HibernateUtil.closeSes();
 	}
