@@ -8,9 +8,15 @@
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script>
 		function home() {
-			window.location = "http://localhost:8080/project-1/Ehome.html"
+			window.location = "http://localhost:8080/project-1/employee/Ehome.html"
 		}
 
+		function profile() { //DONE
+			console.log("profile() started")
+			console.log(sessionStorage.getItem('currentUser'))
+			window.location = "http://localhost:8080/project-1/employee/profile.html"
+		}
+		
 		function update() {
 			console.log("update() started")
 			let updateForm = document.updateForm;
@@ -40,8 +46,8 @@
 				console.log("Processing")
 				if (this.readyState === 4 && this.status === 200) {
 					console.log("Success");
-					document.getElementById("warningText").innerHTML = this.responseText;
-					window.location = "http://localhost:8080/project-1/profile.html"
+					//document.getElementById("warningText").innerHTML = this.responseText;
+					profile();
 				}
 				if (this.readyState === 4 && this.status === 204) {
 					console.log("Failed");
@@ -53,7 +59,6 @@
 			xhr.open("POST", "http://localhost:8080/project-1/update");
 			xhr.send(JSON.stringify(updatetemplate));
 		}
-
 	</script>
 </head>
 
@@ -67,7 +72,7 @@
 				let userString = sessionStorage.getItem('currentUser');
 				let currentUser = JSON.parse(userString);
 				if (userString === null) {
-					//window.location = "http://localhost:8080/project-1/index.html"
+					window.location = "http://localhost:8080/project-1/index.html"
 				} else {
 					console.log(currentUser);
 					if (currentUser != null) {
@@ -115,10 +120,12 @@
 
 			<button id="login" type="submit" class="btn btn-primary" value="Submit">Submit</button>
 			<br>
-			<div id="warningText"></div>
 		</form>
 		<br>
 		<button class="btn btn-primary" onclick="home()">GO BACK</button>
+		<br><br>
+		<div id="warningText"></div>
+		
 	</div>
 </body>
 

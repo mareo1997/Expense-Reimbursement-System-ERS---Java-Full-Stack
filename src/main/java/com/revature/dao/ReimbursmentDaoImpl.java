@@ -27,7 +27,6 @@ import com.revature.util.HibernateUtil;
 public class ReimbursmentDaoImpl implements ReimburmentDao {
 
 	private static Logger log = Logger.getLogger(ReimbursmentDaoImpl.class);
-	Session ses = HibernateUtil.getSession();
 	public static UserServicesImpl userserv = new UserServicesImpl();
 
 	@Override
@@ -37,6 +36,8 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 		Session ses = HibernateUtil.getSession();
 
 		Reimbursement reim = ses.get(Reimbursement.class, reimbursementid);
+
+		//HibernateUtil.closeSes();
 
 		return reim;
 	}
@@ -51,6 +52,8 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 		@SuppressWarnings("unchecked")
 		List<Status> status = q.getResultList();
 
+		//HibernateUtil.closeSes();
+
 		return status.get(0);
 	}
 
@@ -63,8 +66,8 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 		q.setParameter("type", t);
 		@SuppressWarnings("unchecked")
 		List<Type> types = q.getResultList();
-		// List<Type> types = ses.createQuery("From Type where type='" + t + "'",
-		// Type.class).list();
+
+		//HibernateUtil.closeSes();
 
 		if (types.size() <= 0) {
 			return new Type(4, "OTHER");
@@ -76,36 +79,38 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 
 	@Override
 	public void insert(Reimbursement e) {
-		// log.info("Attempting to insert user\n");
+		log.info("Attempting to insert reimbursement\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 
 		ses.save(e); // use the save() session method to perform an insert operation
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction
-						// interface
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+
+		//HibernateUtil.closeSes();
 
 	}
 
 	@Override
 	public void insert(Status s) {
-		// log.info("Attempting to insert user\n");
+		log.info("Attempting to insert status "+s+"\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 
 		ses.save(s); // use the save() session method to perform an insert operation
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction
-						// interface
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+		//HibernateUtil.closeSes();
 	}
 
 	@Override
 	public void insert(Type t) {
-		// log.info("Attempting to insert user\n");
+		log.info("Attempting to insert type "+t+" \n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 
 		ses.save(t); // use the save() session method to perform an insert operation
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction
-						// interface
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+		//HibernateUtil.closeSes();
+
 	}
 
 	public String sql, call;

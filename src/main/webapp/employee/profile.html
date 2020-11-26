@@ -6,11 +6,10 @@
 	<title>Profile</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/profile.css">
 </head>
 <script>
 	function home() {
-		window.location = "http://localhost:8080/project-1/Ehome.html"
+		window.location = "http://localhost:8080/project-1/employee/Ehome.html"
 	}
 
 	function profile() {
@@ -33,7 +32,7 @@
 
 			if (this.readyState === 4 && this.status === 204) {
 				console.log("Failed");
-				window.location = "http://localhost:8080/project-1/Ehome.html"
+				window.location = "http://localhost:8080/project-1/employee/Ehome.html"
 			}
 		}
 
@@ -45,7 +44,23 @@
 <body onload="profile()">
 	<div class="jumbotron">
 		<h1 id="welcome">Welcome to your profile</h1>
+		<br>
 		<div id="profile"></div>
+		<script>
+			let welcome = document.getElementById('welcome');
+			let userString = sessionStorage.getItem('currentUser');
+			let currentUser = JSON.parse(userString);
+
+			if (userString === null) {
+				window.location = "http://localhost:8080/project-1/index.html"
+			} else {
+				console.log(currentUser);
+				if (currentUser != null) {
+					welcome.innerHTML = "Welcome to your profile " + currentUser.username;
+				}
+			}
+			profile();
+		</script>
 		<br>
 		<button class="btn btn-primary" onclick="home()">GO BACK</button>
 	</div>

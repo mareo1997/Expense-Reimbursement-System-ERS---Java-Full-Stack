@@ -49,20 +49,21 @@ public class UserDaoImpl implements UserDao { // Applied log
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 
 		ses.save(u); // use the save() session method to perform an insert operation
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction
-						// interface
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+		//HibernateUtil.closeSes();
 
 	}
 
 	@Override
 	public void insert(Role r) {
-		log.info("Attempting to insert user\n");
+		log.info("Attempting to insert role "+r+"\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 
 		ses.save(r); // use the save() session method to perform an insert operation
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction
-						// interface
+		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
+		//HibernateUtil.closeSes();
+
 	}
 
 	@Override
@@ -70,6 +71,7 @@ public class UserDaoImpl implements UserDao { // Applied log
 		log.info("Attempting to get " + u.getUsername() + " profile\n");
 		ses = HibernateUtil.getSession();
 		u = ses.get(User.class, u.getUserid());
+		//HibernateUtil.closeSes();
 		return u;
 	}
 
@@ -79,12 +81,14 @@ public class UserDaoImpl implements UserDao { // Applied log
 		ses = HibernateUtil.getSession();
 		// This is an example of HQL --> HQL will check for the class name (of our java
 		// models)
-		// List<Role> r = ses.createQuery("from Role where role = 'MANAGER' ").list();
-		// System.out.println(r);
+
 		List<User> empl = ses.createQuery("from User where role_roleid = 1", User.class).list();
 		// HQL is returning all instances of the User class
 		// no need for transaction object here We are just querying Data, NOT committing
 		// any changes to our database, hence it's not a transaction
+		
+		//HibernateUtil.closeSes();
+
 		if (empl.size() > 0) {
 			log.info("Returning employees\n");
 			return empl;
@@ -121,8 +125,9 @@ public class UserDaoImpl implements UserDao { // Applied log
 		}
 
 		ses.update(user);
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction
-						// interface
+		tx.commit();
+		//HibernateUtil.closeSes();
+
 		return user;
 	}
 

@@ -10,7 +10,7 @@
 </head>
 <script>
 	function home() {
-		window.location = "http://localhost:8080/project-1/Mhome.html"
+		window.location = "http://localhost:8080/project-1/manager/Mhome.html"
 	}
 
 	function allrequests() {
@@ -49,17 +49,18 @@
 			let currentUser = JSON.parse(userString);
 
 			if (userString === null) {
-				// window.location = "http://localhost:8080/project-1/index.html"
+				window.location = "http://localhost:8080/project-1/index.html"
 			} else {
 				console.log(currentUser);
 				if (currentUser != null) {
-					welcome.innerHTML = "Welcome " + currentUser.username;
+					welcome.innerHTML = "Welcome "+currentUser.username+" to all employee pending requests";
 				}
 			}
 		</script>
-		<div id="allrequests"></div>
-		<br><br>
+		<br>
 		<button class="btn btn-primary" onclick="home()">GO BACK</button>
+		<br><br>
+		<div id="allrequests"></div>
 	</div>
 </body>
 

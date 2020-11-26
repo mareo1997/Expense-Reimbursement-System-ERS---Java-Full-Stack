@@ -1,4 +1,3 @@
-//const sendLogin = () => {
 function sendLogin() {
 	console.log("sendLogin() started")
 	let loginForm = document.loginForm;
@@ -21,14 +20,12 @@ function sendLogin() {
 		if (this.readyState === 4 && this.status === 200) {
 			console.log("Employee");
             sessionStorage.setItem('currentUser',this.responseText);
-			window.location = "http://localhost:8080/project-1/Ehome.html"
-            //console.log(sessionStorage.getItem('currentUser'))
+			window.location = "http://localhost:8080/project-1/employee/Ehome.html"
 		}
 		if (this.readyState === 4 && this.status === 201) {
 			console.log("Manager");
             sessionStorage.setItem('currentUser',this.responseText);
-			window.location = "http://localhost:8080/project-1/Mhome.html"
-			//console.log(sessionStorage.getItem('currentUser'))
+			window.location = "http://localhost:8080/project-1/manager/Mhome.html"
 		}
 		if (this.readyState === 4 && this.status === 204) {
 			console.log("Failed");
@@ -42,5 +39,3 @@ function sendLogin() {
 	xhr.open("POST", "http://localhost:8080/project-1/login");
     xhr.send(JSON.stringify(logintemplate));
 }
-
-//document.getElementById("login").addEventListener('submit', sendLogin);

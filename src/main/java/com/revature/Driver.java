@@ -11,7 +11,6 @@ import com.revature.model.User;
 import com.revature.services.LoginService;
 import com.revature.services.ReimbursementServicesImpl;
 import com.revature.services.UserServicesImpl;
-import com.revature.util.HibernateUtil;
 
 public class Driver {
 
@@ -21,13 +20,15 @@ public class Driver {
 
 	public static void main(String[] args) {
 
-		initialValues();
+		//initialValues();
 		allEmpl();
-		HibernateUtil.closeSes();
+		allEmpl();
 	}
 
 	public static void allEmpl() {
 		System.out.println(userserv.allEmplHQL());
+		//HibernateUtil.closeSes();
+
 	}
 
 	public static void initialValues() {
@@ -46,6 +47,7 @@ public class Driver {
 		userserv.insert(user);
 
 		user = new User("marwil", "william", "Marcia", "Williamson", "mother@gmail.com", role1);
+		User marcia = user;
 		userserv.insert(user);
 
 		user = new User("king", "george", "Kingsley", "Yapp", "father@gmail.com", role2);
@@ -67,6 +69,7 @@ public class Driver {
 		Type lodge = type;
 		reimserv.insert(type);
 		type = new Type(2, "TRAVEL");
+		Type travel = type;
 		reimserv.insert(type);
 		type = new Type(3, "FOOD");
 		reimserv.insert(type);
@@ -76,6 +79,9 @@ public class Driver {
 		System.out.println("done saving user to db");
 
 		Reimbursement reim = new Reimbursement(mareo, 1897, "HILTON INN", timestamp, approved, lodge);
+		reimserv.insert(reim);
+		
+		reim = new Reimbursement(marcia, 1997, "Jet Blue", timestamp, approved, travel);
 		reimserv.insert(reim);
 
 		System.out.println("done saving user to db");

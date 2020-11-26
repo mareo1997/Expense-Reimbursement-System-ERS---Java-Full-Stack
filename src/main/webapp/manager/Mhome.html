@@ -22,31 +22,31 @@
 	function empl() { //DONE
 		console.log("empl() started")
 		console.log(sessionStorage.getItem('currentUser'))
-		window.location = "http://localhost:8080/project-1/empl.html"
+		window.location = "http://localhost:8080/project-1/manager/empl.html"
 	}
 
 	function allrequests() {  //DONE
 		console.log("allrequests() started")
 		console.log(sessionStorage.getItem('currentUser'))
-		window.location = "http://localhost:8080/project-1/allrequests.html"
+		window.location = "http://localhost:8080/project-1/manager/allrequests.html"
 	}
 
 	function resolve() { //DONE
 		console.log("resolve() started")
 		console.log(sessionStorage.getItem('currentUser'))
-		window.location = "http://localhost:8080/project-1/resolve.html"
+		window.location = "http://localhost:8080/project-1/manager/resolve.html"
 	}
 
 	function allresolved() { //DONE
 		console.log("allresolved() started")
 		console.log(sessionStorage.getItem('currentUser'))
-		window.location = "http://localhost:8080/project-1/allresolved.html"
+		window.location = "http://localhost:8080/project-1/manager/allresolved.html"
 	}
 
 	function requests() { //DONE
 		console.log("requests() started")
 		console.log(sessionStorage.getItem('currentUser'))
-		window.location = "http://localhost:8080/project-1/requests.html"
+		window.location = "http://localhost:8080/project-1/manager/requests.html"
 	}
 
 </script>
@@ -60,16 +60,15 @@
 			let currentUser = JSON.parse(userString);
 
 			if (userString === null) {
-				//window.location = "http://localhost:8080/project-1/"
+				window.location = "http://localhost:8080/project-1/index.html"
 			} else {
 				console.log(currentUser);
 				if (currentUser != null) {
-					welcome.innerHTML = "Welcome " + currentUser.username;
+					welcome.innerHTML = "Welcome to the Manager Home Page " + currentUser.username;
 				}
 			}
 		</script>
-	</div>
-
+	<br>
 	<button type="button" class="btn btn-outline-danger" onclick="requests()">See an Employees Requests</button>
 	<br> <br>
 	<button type="button" class="btn btn-outline-success" onclick="empl()">See Employees</button>
@@ -82,7 +81,8 @@
 	<br><br>
 	<button type="button" class="btn btn-outline-primary" onclick="logout()">Logout</button>
 	<br> <br>
-	<div id="display"></div>
+		</div>
+	
 </body>
 
 </html>

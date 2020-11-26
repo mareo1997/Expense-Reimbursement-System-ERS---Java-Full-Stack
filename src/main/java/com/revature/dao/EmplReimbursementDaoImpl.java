@@ -22,7 +22,7 @@ public class EmplReimbursementDaoImpl implements EmplReimbursementDao {// Applie
 		Transaction tx = ses.beginTransaction();
 		ses.save(r);
 		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
-
+		//HibernateUtil.closeSes();
 		return r;
 	}
 
@@ -35,6 +35,9 @@ public class EmplReimbursementDaoImpl implements EmplReimbursementDao {// Applie
 				.createQuery("FROM Reimbursement where status_statusid = 1 and authorfk = " + u.getUserid() + " ",
 						Reimbursement.class)
 				.list();
+
+		//HibernateUtil.closeSes();
+
 		if (reim.size() > 0) {
 			log.info("Returning pending requests");
 			return reim;
@@ -55,6 +58,9 @@ public class EmplReimbursementDaoImpl implements EmplReimbursementDao {// Applie
 				.createQuery("FROM Reimbursement where authorfk = " + u.getUserid() + " and not status_statusid = 1 ",
 						Reimbursement.class)
 				.list();
+		
+		//HibernateUtil.closeSes();
+
 		if (reim.size() > 0) {
 			log.info("Returning resolved requests");
 			return reim;
