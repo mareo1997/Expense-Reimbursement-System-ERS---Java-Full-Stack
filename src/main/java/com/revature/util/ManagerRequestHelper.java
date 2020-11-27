@@ -45,11 +45,9 @@ public class ManagerRequestHelper {
 					List<User> empl = userserv.allEmplHQL();
 					if (empl != null) {
 						res.setStatus(200);
-						for (User user : empl) {
-							log.info("Got employees");
-							System.out.println(user);
-							ps.println(om.writeValueAsString(user));
-						}
+						log.info("Got employees");
+						System.out.println(empl);
+						ps.println(om.writeValueAsString(empl));
 					} else {
 						res.setStatus(204);
 						ps.println(om.writeValueAsString("No employeed"));
@@ -151,10 +149,8 @@ public class ManagerRequestHelper {
 				if (reim != null) {
 					log.info("Got requests\n");
 					res.setStatus(200);
-					for (Reimbursement r : reim) {
-						System.out.println(r);
-						ps.println(om.writeValueAsString(r));
-					}
+					System.out.println(reim);
+					ps.println(om.writeValueAsString(reim));
 				} else {
 					log.warn("No requests found\n");
 					res.setStatus(204);
@@ -168,48 +164,6 @@ public class ManagerRequestHelper {
 			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			ps.write(om.writeValueAsString("The requested action is not permitted."));
 		}
-		
-		/*try {
-			HttpSession session = req.getSession(false);
-			if (session != null) {
-				String username = (String) session.getAttribute("username");
-				User u = LoginService.authority(username);
-				if (u != null && u.getRole().getRoleid() == 2) {
-					String username1 = req.getParameter("username");
-					User empl = LoginService.authority(username1);
-					if (empl != null) {
-						List<Reimbursement> reim = reimserv.requestsHQL(empl);
-						if (reim != null) {
-							log.info("Got requests\n");
-							res.setStatus(200);
-							for (Reimbursement r : reim) {
-								System.out.println(r);
-								ps.println(om.writeValueAsString(r));
-							}
-						} else {
-							log.warn("No requests found\n");
-							res.setStatus(204);
-						}
-					} else {
-						log.warn("Could not find\n");
-						res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-						ps.write(om.writeValueAsString("Does not exist."));
-					}
-				} else {
-					log.warn("Not permitted\n");
-					res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-					ps.write(om.writeValueAsString("The requested action is not permitted."));
-				}
-			} else {
-				log.warn("Not logged in\n");
-				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				ps.write(om.writeValueAsString("The requested action is not permitted."));
-			}
-		} catch (NullPointerException e) {
-			log.warn(e);
-			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			ps.write(om.writeValueAsString("The requested action is not permitted."));
-		}*/
 	}
 
 	public static void processPendingRequests(HttpServletRequest req, HttpServletResponse res) throws IOException { /* Manager views all empls pendings */
@@ -226,10 +180,8 @@ public class ManagerRequestHelper {
 					if (reim != null) {
 						log.info("Got all pending requests\n");
 						res.setStatus(200);
-						for (Reimbursement r : reim) {
-							System.out.println(r);
-							ps.println(om.writeValueAsString(r));
-						}
+						System.out.println(reim);
+						ps.println(om.writeValueAsString(reim));
 					} else {
 						log.warn("No requests found\n");
 						res.setStatus(204);
@@ -265,10 +217,8 @@ public class ManagerRequestHelper {
 					if (reim != null) {
 						log.info("Got all resolved requests\n");
 						res.setStatus(200);
-						for (Reimbursement r : reim) {
-							System.out.println(r);
-							ps.println(om.writeValueAsString(r));
-						}
+						System.out.println(reim);
+						ps.println(om.writeValueAsString(reim));
 					} else {
 						log.warn("No resolved found\n");
 						res.setStatus(204);

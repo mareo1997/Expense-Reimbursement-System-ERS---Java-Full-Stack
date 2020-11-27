@@ -7,7 +7,7 @@ if (userString === null) {
 } else {
     console.log(currentUser);
     if (currentUser != null) {
-        welcome.innerHTML = "Welcome to the Employee Home Page " + currentUser.username;
+        welcome.innerHTML = "Welcome to the Manager Home Page " + currentUser.username;
     }
 }
 
@@ -21,32 +21,32 @@ function logout() { //DONE
     window.location = "http://localhost:8080/project-1/index.html";
 }
 
-function reim() { //DONE
-    console.log("reim() started")
+function empl() { //DONE
+    console.log("empl() started")
     console.log(sessionStorage.getItem('currentUser'))
-    window.location = "http://localhost:8080/project-1/employee/reim.html"
+    window.location = "http://localhost:8080/project-1/manager/empl.html"
 }
 
-function pending() {  //DONE
-    console.log("pending() started")
+function allrequests() {  //DONE
+    console.log("allrequests() started")
     console.log(sessionStorage.getItem('currentUser'))
-    window.location = "http://localhost:8080/project-1/employee/pending.html"
+    window.location = "http://localhost:8080/project-1/manager/allrequests.html"
 }
 
-function resolved() { //DONE
-    console.log("resolved() started")
+function resolve() { //DONE
+    console.log("resolve() started")
     console.log(sessionStorage.getItem('currentUser'))
-    window.location = "http://localhost:8080/project-1/employee/resolved.html"
+    window.location = "http://localhost:8080/project-1/manager/resolve.html"
 }
 
-function profile() { //DONE
-    console.log("profile() started")
+function allresolved() { //DONE
+    console.log("allresolved() started")
     console.log(sessionStorage.getItem('currentUser'))
-    window.location = "http://localhost:8080/project-1/employee/profile.html"
+    window.location = "http://localhost:8080/project-1/manager/allresolved.html"
 }
 
-function update() { //DONE
-    console.log("update() started")
+function requests() { //DONE
+    console.log("requests() started")
     console.log(sessionStorage.getItem('currentUser'))
-    window.location = "http://localhost:8080/project-1/employee/update.html"
+    window.location = "http://localhost:8080/project-1/manager/requests.html"
 }
