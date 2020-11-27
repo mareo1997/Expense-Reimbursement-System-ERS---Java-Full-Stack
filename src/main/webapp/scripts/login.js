@@ -30,9 +30,6 @@ function sendLogin() {
 		if (this.readyState === 4 && this.status === 204) {
 			console.log("Failed");
 			alert("Failed to log in! Username or password is incorrect");
-			let childDiv = document.getElementById("warningText")
-			childDiv.textContent = "Failed to log in! Username or Password is incorrect"
-
 		}
 	};
 

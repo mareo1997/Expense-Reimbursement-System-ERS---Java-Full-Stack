@@ -22,4 +22,6 @@ public interface UserDao {
 
 	public List<User> allEmplHQL();
 
+	public Role roleHQL();
+
 }

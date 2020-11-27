@@ -21,8 +21,8 @@
 
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 		<property name="hibernate.connection.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-		<property name="hibernate.show_sql">true</property>
-		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.format_sql">false</property>
 
 		<!-- The conn pool is a method of speeding up DB calls. Hibernate will 
 			create 10 conns to the DB when it starts up. Everytime you create a session 
@@ -33,7 +33,7 @@
 
 		<!-- hbm2ddl.auto is a hibernate prop that exports schema DDL to the DB 
 			when the sessionfactory is created -->
-		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.hbm2ddl.auto">validate</property>
 		<!-- CREATE, VALIDATE, UPDATE, NONE 
 		
 		CREATE: drops all existing tables and objs with the names provided in annotations and then hibernate will create the schema for us. Not greate for production but useful for dev 

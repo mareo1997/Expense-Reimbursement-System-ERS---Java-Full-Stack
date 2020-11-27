@@ -45,5 +45,10 @@ public class UserServicesImpl implements UserServices {
 	public List<User> allEmplHQL() {
 		return dao.allEmplHQL();
 	}
+	
+	@Override
+	public Role roleHQL() {
+		return dao.roleHQL();
+	}
 
 }

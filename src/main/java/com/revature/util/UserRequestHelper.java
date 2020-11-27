@@ -91,33 +91,37 @@ public class UserRequestHelper {
 
 		try {
 			HttpSession session = req.getSession(false);
-			if (session != null) {
+			
+			if (session != null) {//System.out.println("logged in");
 				String username = (String) session.getAttribute("username");
 				User u = LoginService.authority(username);
 				u = userserv.profileHQL(u);
-				if (u != null) {
+				
+				if (u != null) {//System.out.println("user found");
 					log.info("Got profile\n");
 					res.setStatus(200);
 					System.out.println(u);
 					ps.println(om.writeValueAsString(u));
+				
 				} else {
 					log.warn("Couldn't get profile\n");
 					res.setStatus(204);
 					ps.write(om.writeValueAsString("Does not exist."));
 				}
+				
 			} else {
 				log.warn("Not logged in\n");
-				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				res.setStatus(HttpServletResponse.SC_FORBIDDEN);
 				ps.write(om.writeValueAsString("The requested action is not permitted."));
 			}
 
 		} catch (NullPointerException e) {
 			log.warn(e);
-			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			res.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			ps.write(om.writeValueAsString("The requested action is not permitted."));
 		}
 	}
-
+	
 	public static void processUpdate(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		
 		BufferedReader reader = req.getReader();

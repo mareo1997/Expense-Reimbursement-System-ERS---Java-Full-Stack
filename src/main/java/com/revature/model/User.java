@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 @Entity
 @Table(name = "ersuser")
 public class User {
@@ -56,7 +58,7 @@ public class User {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
-		this.password = password;
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
 		this.email = email;
 		this.role = role;
 	}
@@ -64,7 +66,7 @@ public class User {
 	@Override
 	public String toString() {
 		String result = "\nUserID: " + userid + "\t\tName: " + firstname + " " + lastname + "\nUser name: " + username
-				+ "\tEmail: " + email + "\n" + role + "\n";
+				+ "\tEmail: " + email + "\n";
 		return result;
 	}
 
@@ -105,7 +107,7 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 
 	public String getEmail() {
@@ -116,11 +118,6 @@ public class User {
 		this.email = email;
 	}
 
-	/*
-	 * public Role getRole() { return role; }
-	 * 
-	 * public void setRole(Role role) { this.role = role; }
-	 */
 
 	@Override
 	public int hashCode() {

@@ -20,11 +20,26 @@ public class Driver {
 
 	public static void main(String[] args) {
 
-		//initialValues();
-		allEmpl();
-		allEmpl();
+		initialValues();
+		//insert();
+		//allEmpl();
+		//login();
+	}
+	
+	public static void login() {
+		User login = LoginService.confirm("mareo1997","password");
+		System.out.println("login " + login);
 	}
 
+	public static void insert() {
+		Role role = userserv.roleHQL();
+		
+		User user = new User("15", "16", "17", "18", "19", role);
+		userserv.insert(user);
+		System.out.println(user.getPassword());
+
+	}
+	
 	public static void allEmpl() {
 		System.out.println(userserv.allEmplHQL());
 		//HibernateUtil.closeSes();
@@ -36,6 +51,7 @@ public class Driver {
 
 		Role role1 = new Role(1, "EMPLOYEE");
 		userserv.insert(role1);
+		
 		Role role2 = new Role(2, "MANAGER");
 		userserv.insert(role2);
 
@@ -56,10 +72,12 @@ public class Driver {
 		System.out.println("done saving user to db");
 
 		Status status = new Status(1, "PENDING");
+		Status pending = status;
 		reimserv.insert(status);
+		
 		status = new Status(2, "APPROVED");
-		Status approved = status;
 		reimserv.insert(status);
+		
 		status = new Status(3, "DENIED");
 		reimserv.insert(status);
 
@@ -68,26 +86,36 @@ public class Driver {
 		Type type = new Type(1, "LODGE");
 		Type lodge = type;
 		reimserv.insert(type);
+		
 		type = new Type(2, "TRAVEL");
 		Type travel = type;
 		reimserv.insert(type);
-		type = new Type(3, "FOOD");
-		reimserv.insert(type);
-		type = new Type(4, "OTHER");
-		reimserv.insert(type);
-
-		System.out.println("done saving user to db");
-
-		Reimbursement reim = new Reimbursement(mareo, 1897, "HILTON INN", timestamp, approved, lodge);
-		reimserv.insert(reim);
 		
-		reim = new Reimbursement(marcia, 1997, "Jet Blue", timestamp, approved, travel);
-		reimserv.insert(reim);
+		type = new Type(3, "FOOD");
+		Type food = type;
+		reimserv.insert(type);
+		
+		type = new Type(4, "OTHER");
+		Type other = type;
+		reimserv.insert(type);
 
 		System.out.println("done saving user to db");
 
-		User login = LoginService.confirm(mareo.getUsername(), mareo.getPassword());
-		System.out.println("login " + login);
+		Reimbursement reim = new Reimbursement(mareo, 100, "Hiton Inn", timestamp, pending, lodge);
+		reimserv.insert(reim);
+		reim = new Reimbursement(marcia, 100, "Jet Blue", timestamp, pending, travel);
+		reimserv.insert(reim);
+		reim = new Reimbursement(mareo, 200, "American Airlines", timestamp, pending, travel);
+		reimserv.insert(reim);
+		reim = new Reimbursement(marcia, 200, "4 Seasons", timestamp, pending, lodge);
+		reimserv.insert(reim);
+		reim = new Reimbursement(mareo, 300, "Wendy's", timestamp, pending, food);
+		reimserv.insert(reim);
+		reim = new Reimbursement(marcia, 300, "Misc", timestamp, pending, other);
+		reimserv.insert(reim);
+		reim = new Reimbursement(mareo, 400, "Misc", timestamp, pending, other);
+		reimserv.insert(reim);
 
+		System.out.println("done saving user to db");
 	}
 }

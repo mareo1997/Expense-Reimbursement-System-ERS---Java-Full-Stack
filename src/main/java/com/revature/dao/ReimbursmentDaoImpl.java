@@ -357,7 +357,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 
 		try (Connection conn = ConnectionUtil.getConnectionFromFile("connection.properties")) {
 
-			log.info("Attempting to get all resolved requests\n");
+			log.info("Attempting to get all pending requests\n");
 
 			sql = "select * FROM ersuser e " + "inner join roles r on r.userid =e.userid "
 					+ "WHERE r.ersroles ='EMPLOYEE'";

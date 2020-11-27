@@ -3,6 +3,8 @@ package com.revature.dao;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -39,11 +41,8 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 		log.info("Attempting to get all pending requests\n");
 		Session ses = HibernateUtil.getSession();
 
-		List<Reimbursement> reim = ses.createQuery("FROM Reimbursement where status_statusid = 1", Reimbursement.class)
-				.list();
+		List<Reimbursement> reim = ses.createQuery("FROM Reimbursement where status_statusid = 1", Reimbursement.class).list();
 		
-		//HibernateUtil.closeSes();
-
 		if (reim.size() > 0) {
 			log.info("Returning all pending requests\n");
 			return reim;
@@ -74,18 +73,23 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 
 	@Override
 	public List<Reimbursement> requestsHQL(User u) {
-		log.info("Attempting to get list empl requests");
+		log.info("Attempting to get list of an employees requests\n");
 		Session ses = HibernateUtil.getSession();
 
-		List<Reimbursement> reim = ses
+		Query q = ses.createQuery("FROM Reimbursement where authorfk = :authorfk and status_statusid = 1");
+		q.setParameter("authorfk", u.getUserid());
+		@SuppressWarnings("unchecked")
+		List<Reimbursement> reim = q.getResultList();
+
+		/*List<Reimbursement> reim = ses
 				.createQuery("FROM Reimbursement where authorfk = '" + u.getUserid() + "' and status_statusid = 1",
 						Reimbursement.class)
-				.list();
+				.list();*/
 
 		//HibernateUtil.closeSes();
 
 		if (reim.size() > 0) {
-			log.info("Returning pending requests");
+			log.info("Returning pending requests\n");
 			return reim;
 		} else {
 			log.warn(u.getUsername() + " has no pending requests\n");

@@ -21,4 +21,6 @@ public interface UserServices {
 
 	public User updateHQL(User u, String fname, String lname, String email, String username, String password,
 			String repassword);
+
+	public Role roleHQL();
 }

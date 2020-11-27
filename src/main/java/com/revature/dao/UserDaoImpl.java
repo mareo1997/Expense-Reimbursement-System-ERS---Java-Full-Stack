@@ -65,6 +65,19 @@ public class UserDaoImpl implements UserDao { // Applied log
 		//HibernateUtil.closeSes();
 
 	}
+	
+	@Override
+	public Role roleHQL() {
+		log.info("Attemting to get roleid");
+		Session ses = HibernateUtil.getSession(); // capture the session
+
+		Role r = ses.get(Role.class, 1);
+
+		//HibernateUtil.closeSes();
+
+		return r;
+
+	}
 
 	@Override
 	public User profileHQL(User u) {
