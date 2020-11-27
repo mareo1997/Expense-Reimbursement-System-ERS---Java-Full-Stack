@@ -120,16 +120,16 @@ public class UserDaoImpl implements UserDao { // Applied log
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 		ses.evict(user);
 
-		if (!(firstname.isEmpty() || firstname.isBlank())) {
+		if (!(firstname.isEmpty() || firstname.isBlank() || firstname.equals(user.getFirstname()))) {
 			user.setFirstname(firstname);
 		}
-		if (!(lastname.isEmpty() || lastname.isBlank())) {
+		if (!(lastname.isEmpty() || lastname.isBlank() || lastname.equals(user.getFirstname()))) {
 			user.setLastname(lastname);
 		}
-		if (!(email.isEmpty() || email.isBlank())) {
+		if (!(email.isEmpty() || email.isBlank() || email.equals(user.getFirstname()))) {
 			user.setEmail(email);
 		}
-		if (!(username.isEmpty() || username.isBlank())) {
+		if (!(username.isEmpty() || username.isBlank() || username.equals(user.getFirstname()))) {
 			user.setUsername(username);
 		}
 		if (!(password.isEmpty() || password.isBlank()) && !(repassword.isEmpty() || repassword.isBlank())

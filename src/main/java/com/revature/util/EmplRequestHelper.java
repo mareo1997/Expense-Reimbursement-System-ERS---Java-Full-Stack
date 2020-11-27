@@ -92,10 +92,8 @@ public class EmplRequestHelper { // Applied log, exceptions
 					if (reim != null) {
 						log.info("Got pending reims");
 						res.setStatus(200);
-						for (Reimbursement r : reim) {
-							System.out.println(r);
-							ps.println(om.writeValueAsString(r));
-						}
+						System.out.println(reim);
+						ps.println(om.writeValueAsString(reim));
 					} else {
 						res.setStatus(204);
 						ps.write(om.writeValueAsString("No pending reims\n"));
@@ -132,10 +130,8 @@ public class EmplRequestHelper { // Applied log, exceptions
 					if (reim != null) {
 						log.info("Got resolved reims");
 						res.setStatus(200);
-						for (Reimbursement r : reim) {
-							System.out.println(r);
-							ps.println(om.writeValueAsString(r));
-						}
+						System.out.println(reim);
+						ps.println(om.writeValueAsString(reim));
 					} else {
 						res.setStatus(204);
 						ps.write(om.writeValueAsString("No resolved reims\n"));

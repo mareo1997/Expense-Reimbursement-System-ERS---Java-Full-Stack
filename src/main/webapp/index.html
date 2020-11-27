@@ -6,7 +6,6 @@
 	<title>Login</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<script src="scripts/login.js"></script>
 </head>
 
 <body>
@@ -14,27 +13,28 @@
 		<div class="container">
 			<h1 class="display-4">Welcome, employee</h1>
 			<p class="lead">Please login below with your username and password.</p>
-		
-	<div class="container-fluid">
-		<!-- This script will be defined in index.js -->
-		<!--<form name="loginForm" action="login" method="POST">-->
-		<form name="loginForm" onsubmit="sendLogin(event.preventDefault())">
-			<div class="form-group">
-				<label for="username">USERNAME</label> <input type="text" class="form-control" required name="username"
-					id="username" aria-describedby="emailHelp" placeholder="Enter username">
-			</div>
 
-			<div class="form-group">
-				<label for="password">PASSWORD</label> <input type="password" name="password" required
-					class="form-control" id="password" placeholder="Password">
-			</div>
-			<div id="warningText"></div>
+			<div class="container-fluid">
+				<!-- This script will be defined in index.js -->
+				<!--<form name="loginForm" action="login" method="POST">-->
+				<form name="loginForm" onsubmit="sendLogin(event.preventDefault())">
+					<div class="form-group">
+						<label for="username">USERNAME</label> <input type="text" class="form-control" required
+							name="username" id="username" aria-describedby="emailHelp" placeholder="Enter username">
+					</div>
 
-			<button id="login" type="submit" class="btn btn-primary" value="Submit">Submit</button>
-		</form>
-		</div>
+					<div class="form-group">
+						<label for="password">PASSWORD</label> <input type="password" name="password" required
+							class="form-control" id="password" placeholder="Password">
+					</div>
+					<div id="warningText"></div>
+
+					<button id="login" type="submit" class="btn btn-primary" value="Submit">Submit</button>
+				</form>
+			</div>
 		</div>
 	</div>
+	<script src="scripts/login.js"></script>
 </body>
 
 </html>

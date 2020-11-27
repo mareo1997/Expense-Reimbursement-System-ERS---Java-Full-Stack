@@ -6,48 +6,7 @@
 	<title>Submit Reimbursement</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<script>
-		function home() {
-			window.location = "http://localhost:8080/project-1/employee/Ehome.html"
-		}
 
-		function sendReim() {
-			console.log("sendReim() started")
-			let reimForm = document.reimForm;
-			let userString = sessionStorage.getItem('currentUser');
-			let currentUser = JSON.parse(userString);
-
-			let amount = document.getElementById('amount').value;
-			let description = document.getElementById('description').value;
-			let type = document.getElementById('type').value;
-
-			const reimtemplate = {
-				username: currentUser.username,
-				amount: amount,
-				description: description,
-				type: type
-			}
-
-			let xhr = new XMLHttpRequest();
-
-			xhr.onreadystatechange = function () {
-				console.log("Processing")
-				if (this.readyState === 4 && this.status === 200) {
-					console.log("Success");
-					document.getElementById("warningText").innerHTML = this.responseText;
-					console.log(this.responseText);
-				}
-				if (this.readyState === 4 && this.status === 204) {
-					console.log("Failed");
-					let childDiv = document.getElementById("warningText")
-					childDiv.textContent = "Failed"
-				}
-			}
-
-			xhr.open("POST", "http://localhost:8080/project-1/reim");
-			xhr.send(JSON.stringify(reimtemplate));
-		}
-	</script>
 </head>
 
 <body>
@@ -55,57 +14,44 @@
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
 			<h1 id="welcome">Welcome to Reimbursements</h1>
-			<script>
-				let welcome = document.getElementById('welcome');
-				let userString = sessionStorage.getItem('currentUser');
-				let currentUser = JSON.parse(userString);
-				if (userString === null) {
-					window.location = "http://localhost:8080/project-1/index.html"
-				} else {
-					console.log(currentUser);
-					if (currentUser != null) {
-						welcome.innerHTML = "Welcome to Reimbursements " + currentUser.username;
-					}
-				}
-			</script>
 			<br>
-	<div class="container-fluid">
-		<!-- This script will be defined in index.js -->
-		<form name="reimForm" onsubmit="sendReim(event.preventDefault())">
-			<!--  I may have prevent default() -->
+			<div class="container-fluid">
+				<!-- This script will be defined in index.js -->
+				<form name="reimForm" onsubmit="sendReim(event.preventDefault())">
+					<!--  I may have prevent default() -->
 
-			<div class="form-group">
-				<label for="amount">Amount</label> <input type="number" class="form-control" required name="amount"
-					id="amount" placeholder="Enter amount" min="1.00" max="1000000">
+					<div class="form-group">
+						<label for="amount">Amount</label> <input type="number" class="form-control" required
+							name="amount" id="amount" placeholder="Enter amount" min="1.00" max="1000000">
+					</div>
+
+					<div class="form-group">
+						<label for="description">Description</label> <input type="text" class="form-control" required
+							name="description" id="description" placeholder="Enter description">
+					</div>
+
+					<div class="form-group">
+						<label for="type">Type</label>
+						<ol>
+							<li>LODGE</li>
+							<li>FOOD</li>
+							<li>TRAVEL</li>
+							<li>OTHER</li>
+						</ol>
+						<input type="number" min="1" max="4" class="form-control" required name="type" id="type"
+							placeholder="Enter Type">
+					</div>
+
+					<button id="login" type="submit" class="btn btn-primary" value="Submit">Submit</button>
+				</form>
+				<br>
+				<div id="warningText"></div>
+				<br>
+				<button class="btn btn-primary" onclick="home()">GO BACK</button>
 			</div>
-
-			<div class="form-group">
-				<label for="description">Description</label> <input type="text" class="form-control" required
-					name="description" id="description" placeholder="Enter description">
-			</div>
-
-			<div class="form-group">
-				<label for="type">Type</label>
-				<ol>
-					<li>LODGE</li>
-					<li>FOOD</li>
-					<li>TRAVEL</li>
-					<li>OTHER</li>
-				</ol>
-				<input type="number" min="1" max="4" class="form-control" required name="type" id="type"
-					placeholder="Enter Type">
-			</div>
-
-			<button id="login" type="submit" class="btn btn-primary" value="Submit">Submit</button>
-		</form>
-		<br>
-		<button class="btn btn-primary" onclick="home()">GO BACK</button>
-		<br><br>
-		<div id="warningText"></div>
-		
+		</div>
 	</div>
-			</div>
-	</div>
+	<script src="scripts/reim.js"></script>
 </body>
 
 </html>

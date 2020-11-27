@@ -20,15 +20,23 @@ public class Driver {
 
 	public static void main(String[] args) {
 
-		initialValues();
+		//initialValues();
 		//insert();
-		//allEmpl();
-		//login();
+		reim();
+		allEmpl();
+		login();
 	}
 	
 	public static void login() {
 		User login = LoginService.confirm("mareo1997","password");
+		userserv.profileHQL(login);
 		System.out.println("login " + login);
+	}
+	
+	public static void reim() {
+		reimserv.findReimHQL(4);
+		reimserv.pendingrequestsHQL();
+		reimserv.resolvedrequestsHQL();
 	}
 
 	public static void insert() {
@@ -42,8 +50,6 @@ public class Driver {
 	
 	public static void allEmpl() {
 		System.out.println(userserv.allEmplHQL());
-		//HibernateUtil.closeSes();
-
 	}
 
 	public static void initialValues() {

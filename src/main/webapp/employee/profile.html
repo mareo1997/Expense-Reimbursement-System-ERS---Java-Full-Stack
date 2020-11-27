@@ -7,63 +7,16 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<script>
-	function home() {
-		window.location = "http://localhost:8080/project-1/employee/Ehome.html"
-	}
-
-	function profile() {
-		console.log("profile() started")
-
-		let userString = sessionStorage.getItem('currentUser');
-		let currentUser = JSON.parse(userString);
-
-		let xhr = new XMLHttpRequest();
-
-		xhr.onreadystatechange = function () {
-			console.log("Processing")
-			if (this.readyState === 4 && this.status === 200) {
-				console.log("Success");
-				console.log(currentUser);
-				if (currentUser != null) {
-					document.getElementById("profile").innerHTML = this.responseText;
-				}
-			}
-
-			if (this.readyState === 4 && this.status === 204) {
-				console.log("Failed");
-				window.location = "http://localhost:8080/project-1/employee/Ehome.html"
-			}
-		}
-
-		xhr.open("GET", "http://localhost:8080/project-1/profile");
-		xhr.send();
-	}
-</script>
 
 <body>
 	<div class="jumbotron">
 		<h1 id="welcome">Welcome to your profile</h1>
 		<br>
-		<div id="profile"></div>
-		<script>
-			let welcome = document.getElementById('welcome');
-			let userString = sessionStorage.getItem('currentUser');
-			let currentUser = JSON.parse(userString);
-
-			if (userString === null) {
-				window.location = "http://localhost:8080/project-1/index.html"
-			} else {
-				console.log(currentUser);
-				if (currentUser != null) {
-					welcome.innerHTML = "Welcome to your profile " + currentUser.username;
-				}
-			}
-			profile();
-		</script>
+		<div id="input"></div>
 		<br>
 		<button class="btn btn-primary" onclick="home()">GO BACK</button>
 	</div>
+	<script src="scripts/profile.js"></script>
 </body>
 
 </html>
