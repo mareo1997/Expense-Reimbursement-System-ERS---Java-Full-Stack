@@ -63,106 +63,118 @@ public class ManagerRequestHelper {
 			}
 		} catch (NullPointerException e) {
 			log.warn(e);
-			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			res.setStatus(204);
 			ps.write(om.writeValueAsString("The requested action is not permitted."));
 		}
 	}
 
 	public static void processResolve(HttpServletRequest req, HttpServletResponse res) throws IOException { /* Manager resolves a reim */
-		BufferedReader reader = req.getReader();
-		System.out.println("reader " + reader);
-		StringBuilder s = new StringBuilder();
+		try {
+			BufferedReader reader = req.getReader();
+			System.out.println("reader " + reader);
+			StringBuilder s = new StringBuilder();
 
-		// we are just transferring our Reader data to our StringBuilder, line by line
-		String line = null;
+			// we are just transferring our Reader data to our StringBuilder, line by line
+			String line = null;
 
-		while ((line = reader.readLine()) != null) {
-			System.out.println("line " + line);
-			s.append(line);
-			System.out.println("s " + s);
-			line = reader.readLine();
-		}
-
-		String body = s.toString();
-		System.out.println("body " + body);
-
-		ResolveTemplate attempt = om.readValue(body, ResolveTemplate.class);
-		
-		int reimid = attempt.getReimid();
-		Reimbursement reim = reimserv.findReimHQL(reimid);
-		String username = attempt.getUsername();
-		User u = LoginService.authority(username);
-		int statusid = attempt.getStatus();
-		Status status = reimserv.statusHQL(statusid);
-		Timestamp resolved = new Timestamp(System.currentTimeMillis());
-
-		res.setContentType("application/json");
-		PrintWriter ps = res.getWriter();
-
-		if (u != null && u.getRole().getRoleid() == 2) {
-			reim = reimserv.resolveHQL(reim, u, status, resolved);
-
-			if (reim != null) {
-				log.info("Submitted form");
-				res.setStatus(200);
-				System.out.println(reim);
-				ps.println(om.writeValueAsString(reim));
-			} else {
-				res.setStatus(204); // Connection was successful but no user found
+			while ((line = reader.readLine()) != null) {
+				System.out.println("line " + line);
+				s.append(line);
+				System.out.println("s " + s);
+				line = reader.readLine();
 			}
-		} else {
-			log.warn("Not permitted\n");
-			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			ps.write(om.writeValueAsString("The requested action is not permitted."));
-		}
-	}
 
-	public static void processRequests(HttpServletRequest req, HttpServletResponse res) throws IOException{ /* Manager views an empl requests */
-		BufferedReader reader = req.getReader();
-		System.out.println("reader " + reader);
-		StringBuilder s = new StringBuilder();
+			String body = s.toString();
+			System.out.println("body " + body);
 
-		// we are just transferring our Reader data to our StringBuilder, line by line
-		String line = null;
+			ResolveTemplate attempt = om.readValue(body, ResolveTemplate.class);
 
-		while ((line = reader.readLine()) != null) {
-			System.out.println("line " + line);
-			s.append(line);
-			System.out.println("s " + s);
-			line = reader.readLine();
-		}
+			int reimid = attempt.getReimid();
+			Reimbursement reim = reimserv.findReimHQL(reimid);
+			String username = attempt.getUsername();
+			User u = LoginService.authority(username);
+			int statusid = attempt.getStatus();
+			Status status = reimserv.statusHQL(statusid);
+			Timestamp resolved = new Timestamp(System.currentTimeMillis());
 
-		String body = s.toString();
-		System.out.println("body " + body);
+			res.setContentType("application/json");
+			PrintWriter ps = res.getWriter();
 
-		RequestsTemplate attempt = om.readValue(body, RequestsTemplate.class);
-		String m = attempt.getManager();
-		User man = LoginService.authority(m);
-		res.setContentType("application/json");
-		PrintWriter ps = res.getWriter();
-		
-		if (man != null && man.getRole().getRoleid() == 2) {
-			String e = attempt.getEmployee();
-			User empl = LoginService.authority(e);
-			if (empl != null) {
-				List<Reimbursement> reim = reimserv.requestsHQL(empl);
+			if (u != null && u.getRole().getRoleid() == 2) {
+				reim = reimserv.resolveHQL(reim, u, status, resolved);
+
 				if (reim != null) {
-					log.info("Got requests\n");
+					log.info("Submitted form");
 					res.setStatus(200);
 					System.out.println(reim);
 					ps.println(om.writeValueAsString(reim));
 				} else {
-					log.warn("No requests found\n");
-					res.setStatus(204);
+					res.setStatus(204); // Connection was successful but no user found
 				}
 			} else {
-				log.warn("No requests found\n");
-				res.setStatus(204);
+				log.warn("Not permitted\n");
+				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				ps.write(om.writeValueAsString("The requested action is not permitted."));
 			}
-		} else {
-			log.warn("Not logged in\n");
-			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			ps.write(om.writeValueAsString("The requested action is not permitted."));
+		} catch (NullPointerException e) {
+			res.setStatus(204);
+		}
+	}
+
+	public static void processRequests(HttpServletRequest req, HttpServletResponse res) throws IOException{ /* Manager views an empl requests */
+		try {
+			BufferedReader reader = req.getReader();
+			System.out.println("reader " + reader);
+			StringBuilder s = new StringBuilder();
+
+			// we are just transferring our Reader data to our StringBuilder, line by line
+			String line = null;
+
+			while ((line = reader.readLine()) != null) {
+				System.out.println("line " + line);
+				s.append(line);
+				System.out.println("s " + s);
+				line = reader.readLine();
+			}
+
+			String body = s.toString();
+			System.out.println("body " + body);
+
+			RequestsTemplate attempt = om.readValue(body, RequestsTemplate.class);
+			String m = attempt.getManager();
+			User man = LoginService.authority(m);
+			res.setContentType("application/json");
+			PrintWriter ps = res.getWriter();
+
+			if (man != null && man.getRole().getRoleid() == 2) {
+				String e = attempt.getEmployee();
+				User empl = LoginService.authority(e);
+				if (empl != null) {
+					List<Reimbursement> reim = reimserv.requestsHQL(empl);
+					if (reim != null) {
+						log.info("Got requests\n");
+						res.setStatus(200);
+						System.out.println(reim);
+						ps.println(om.writeValueAsString(reim));
+					} else {
+						log.warn("No requests found\n");
+						res.setStatus(204);
+						System.out.println("Has no pending requests");
+						ps.println(om.writeValueAsString("Has no pending requests"));
+					}
+				} else {
+					log.warn("No requests found\n");
+					res.setStatus(204);
+					System.out.println("Can not find employee");
+					ps.println(om.writeValueAsString("Can not find employee"));
+				}
+			} else {
+				log.warn("Not logged in\n");
+				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				ps.write(om.writeValueAsString("The requested action is not permitted."));
+			}
+		} catch (NullPointerException e) {
+			res.setStatus(204);
 		}
 	}
 
@@ -198,7 +210,7 @@ public class ManagerRequestHelper {
 			}
 		} catch (NullPointerException e) {
 			log.warn(e);
-			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			res.setStatus(204);
 			ps.write(om.writeValueAsString("The requested action is not permitted."));
 		}
 	}
@@ -235,7 +247,7 @@ public class ManagerRequestHelper {
 			}
 		} catch (NullPointerException e) {
 			log.warn(e);
-			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			res.setStatus(204);
 			ps.write(om.writeValueAsString("The requested action is not permitted."));
 		}
 	}

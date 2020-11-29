@@ -23,5 +23,7 @@ public interface UserDao {
 	public List<User> allEmplHQL();
 
 	public Role roleHQL();
+	
+	public User useridHQL(int i);
 
 }

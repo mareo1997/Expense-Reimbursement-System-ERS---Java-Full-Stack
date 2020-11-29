@@ -123,52 +123,56 @@ public class UserRequestHelper {
 	}
 	
 	public static void processUpdate(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		
-		BufferedReader reader = req.getReader();
-		System.out.println("reader "+reader);
-		StringBuilder s = new StringBuilder();
 
-		// we are just transferring our Reader data to our StringBuilder, line by line
-		String line = null;
-		
-		while((line=reader.readLine()) != null) {
-			System.out.println("line "+line);
-			s.append(line);
-			System.out.println("s "+s);
-			line = reader.readLine();
-		}
+		try {
+			BufferedReader reader = req.getReader();
+			System.out.println("reader " + reader);
+			StringBuilder s = new StringBuilder();
 
-		String body = s.toString();
-		System.out.println("body "+body);
+			// we are just transferring our Reader data to our StringBuilder, line by line
+			String line = null;
 
-		UpdateTemplate attempt = om.readValue(body, UpdateTemplate.class);
-		String updater = attempt.getUpdater();
-		String firstname = attempt.getFirstname();
-		String lastname = attempt.getLastname();
-		String email = attempt.getEmail();
-		String username = attempt.getUsername();
-		String password = attempt.getPassword();
-		String repassword = attempt.getRepassword();
-		
-		User update = LoginService.authority(updater);
-		res.setContentType("application/json");
-		PrintWriter ps = res.getWriter();
+			while ((line = reader.readLine()) != null) {
+				System.out.println("line " + line);
+				s.append(line);
+				System.out.println("s " + s);
+				line = reader.readLine();
+			}
 
-		if (update != null) {
-			update = userserv.updateHQL(update, firstname, lastname, email, username, password, repassword);
+			String body = s.toString();
+			System.out.println("body " + body);
+
+			UpdateTemplate attempt = om.readValue(body, UpdateTemplate.class);
+			String updater = attempt.getUpdater();
+			String firstname = attempt.getFirstname();
+			String lastname = attempt.getLastname();
+			String email = attempt.getEmail();
+			String username = attempt.getUsername();
+			String password = attempt.getPassword();
+			String repassword = attempt.getRepassword();
+
+			User update = LoginService.authority(updater);
+			res.setContentType("application/json");
+			PrintWriter ps = res.getWriter();
+
 			if (update != null) {
-				log.info("Updated " + update.getUsername() + " profile");
-				res.setStatus(200);
-				System.out.println(update);
-				ps.println(om.writeValueAsString(update));
+				update = userserv.updateHQL(update, firstname, lastname, email, username, password, repassword);
+				if (update != null) {
+					log.info("Updated " + update.getUsername() + " profile");
+					res.setStatus(200);
+					System.out.println(update);
+					ps.println(om.writeValueAsString(update));
+				} else {
+					res.setStatus(204);
+					ps.write(om.writeValueAsString("Does not exist."));
+				}
 			} else {
-				res.setStatus(204);
+				res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				ps.write(om.writeValueAsString("Does not exist."));
 			}
-		} else {
-			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			ps.write(om.writeValueAsString("Does not exist."));
+		} catch (NullPointerException e) {
+			log.warn(e);
+			res.setStatus(204);
 		}
 	}
-
 }

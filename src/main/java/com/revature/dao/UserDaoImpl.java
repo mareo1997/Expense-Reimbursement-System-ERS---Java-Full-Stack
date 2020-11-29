@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -49,20 +51,17 @@ public class UserDaoImpl implements UserDao { // Applied log
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 
 		ses.save(u); // use the save() session method to perform an insert operation
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
-		//HibernateUtil.closeSes();
-
+		tx.commit(); /*commit the transaction by utilizing the methods from the Transaction interface*/
 	}
 
 	@Override
 	public void insert(Role r) {
 		log.info("Attempting to insert role "+r+"\n");
-		Session ses = HibernateUtil.getSession(); // capture the session
-		Transaction tx = ses.beginTransaction(); // perform an operation on DB
+		Session ses = HibernateUtil.getSession(); 
+		Transaction tx = ses.beginTransaction();
 
-		ses.save(r); // use the save() session method to perform an insert operation
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
-		//HibernateUtil.closeSes();
+		ses.save(r);
+		tx.commit(); 
 
 	}
 	
@@ -83,9 +82,19 @@ public class UserDaoImpl implements UserDao { // Applied log
 	public User profileHQL(User u) {
 		log.info("Attempting to get " + u.getUsername() + " profile\n");
 		ses = HibernateUtil.getSession();
-		u = ses.get(User.class, u.getUserid());
-		//HibernateUtil.closeSes();
-		return u;
+		
+		Query q = ses.createQuery("from User where userid = :userid");
+		q.setParameter("userid", u.getUserid());
+		@SuppressWarnings("unchecked")
+		List<User> u1 = q.getResultList();
+		
+		if (u1.size() > 0) {
+			log.info("Returning profile\n");
+			return u1.get(0);
+		} else {
+			log.warn(u.getUsername() + " has no profile\n");
+			return null;
+		}
 	}
 
 	@Override
@@ -100,13 +109,11 @@ public class UserDaoImpl implements UserDao { // Applied log
 		// no need for transaction object here We are just querying Data, NOT committing
 		// any changes to our database, hence it's not a transaction
 		
-		//HibernateUtil.closeSes();
-
 		if (empl.size() > 0) {
 			log.info("Returning employees\n");
 			return empl;
 		} else {
-			log.warn("Coulld not find employees\n");
+			log.warn("Could not find employees\n");
 			return null;
 		}
 	}
@@ -142,6 +149,20 @@ public class UserDaoImpl implements UserDao { // Applied log
 		//HibernateUtil.closeSes();
 
 		return user;
+	}
+	
+	@Override
+	public User useridHQL(int i) {
+		Session ses = HibernateUtil.getSession();
+
+		User u = ses.get(User.class, i);
+
+		//HibernateUtil.closeSes();
+		if(u!=null) {
+		return u;
+		}else {
+			return null;
+		}
 	}
 
 	public String sql, call;
@@ -215,5 +236,7 @@ public class UserDaoImpl implements UserDao { // Applied log
 			e.printStackTrace();
 		}
 	}
+
+	
 
 }

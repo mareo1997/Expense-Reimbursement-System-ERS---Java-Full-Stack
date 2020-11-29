@@ -37,9 +37,11 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 
 		Reimbursement reim = ses.get(Reimbursement.class, reimbursementid);
 
-		//HibernateUtil.closeSes();
-
-		return reim;
+		if (reim != null) {
+			return reim;
+		} else {
+			throw new NullPointerException();
+		}
 	}
 
 	@Override
@@ -52,9 +54,11 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 		@SuppressWarnings("unchecked")
 		List<Status> status = q.getResultList();
 
-		//HibernateUtil.closeSes();
-
-		return status.get(0);
+		if (status.size() > 0) {
+			return status.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -74,7 +78,6 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 		}
 
 		return types.get(0);
-
 	}
 
 	@Override

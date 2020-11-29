@@ -51,4 +51,9 @@ public class UserServicesImpl implements UserServices {
 		return dao.roleHQL();
 	}
 
+	@Override
+	public User useridHQL(int i) {
+		return dao.useridHQL(i);
+	}
+
 }

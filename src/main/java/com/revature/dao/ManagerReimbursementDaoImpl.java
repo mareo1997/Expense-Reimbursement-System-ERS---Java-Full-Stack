@@ -31,7 +31,7 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 
 		ses.update(reim);
 		tx.commit(); /* commit the transaction by utilizing the methods from the Transaction interface*/
-		//HibernateUtil.closeSes();
+
 		return reim;
 
 	}
@@ -60,8 +60,6 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 		List<Reimbursement> reim = ses
 				.createQuery("FROM Reimbursement where not status_statusid = 1", Reimbursement.class).list();
 		
-		//HibernateUtil.closeSes();
-
 		if (reim.size() > 0) {
 			log.info("Returning all resolved requests\n");
 			return reim;
@@ -80,13 +78,6 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 		q.setParameter("authorfk", u.getUserid());
 		@SuppressWarnings("unchecked")
 		List<Reimbursement> reim = q.getResultList();
-
-		/*List<Reimbursement> reim = ses
-				.createQuery("FROM Reimbursement where authorfk = '" + u.getUserid() + "' and status_statusid = 1",
-						Reimbursement.class)
-				.list();*/
-
-		//HibernateUtil.closeSes();
 
 		if (reim.size() > 0) {
 			log.info("Returning pending requests\n");

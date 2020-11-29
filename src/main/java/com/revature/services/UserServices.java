@@ -2,12 +2,14 @@ package com.revature.services;
 
 import java.util.List;
 
+import org.postgresql.util.PSQLException;
+
 import com.revature.model.Role;
 import com.revature.model.User;
 
 public interface UserServices {
 
-	public void insert(User u);
+	public void insert(User u) throws PSQLException;
 
 	public void insert(Role r);
 
@@ -23,4 +25,6 @@ public interface UserServices {
 			String repassword);
 
 	public Role roleHQL();
+	
+	public User useridHQL(int i);
 }
