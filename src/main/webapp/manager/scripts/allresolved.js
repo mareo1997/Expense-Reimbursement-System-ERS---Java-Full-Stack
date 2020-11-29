@@ -1,5 +1,4 @@
 let welcome = document.getElementById('welcome');
-let input = document.getElementById('allresolved');
 let userString = sessionStorage.getItem('currentUser');
 let currentUser = JSON.parse(userString);
 
@@ -43,6 +42,10 @@ function allresolved() {
 }
 
 function renderHTML(data) {
+
+	let input = document.getElementById('allresolved');
+	input.textContent = "";
+
 	for (var i = 0; i < data.length; i++) {
 
 		input.append("ID: "+ data[i].ersid);
@@ -65,13 +68,24 @@ function renderHTML(data) {
 
 		input.append("Amount: $" + data[i].amt);
 		input.append(document.createElement("br"));
-
-		input.append("Submitted: " + data[i].submitted);
+		
+		input.append("Submitted: " + converttime(data[i].submitted));
 		input.append(document.createElement("br"));
 		
-		input.append("Resolved: " + data[i].resolved);
+		input.append("Resolved: " + converttime(data[i].resolved));
 		input.append(document.createElement("br"));
 		
 		input.append(document.createElement("hr"));
 	}
+}
+
+function converttime(time){
+		var d = new Date(time);
+		var formattedDate = (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear();
+		var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
+		var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
+		var formattedTime = hours + ":" + minutes;
+
+		formattedDate = formattedDate + " " + formattedTime;
+		return formattedDate;
 }

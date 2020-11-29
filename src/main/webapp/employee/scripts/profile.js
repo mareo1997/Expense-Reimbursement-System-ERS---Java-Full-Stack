@@ -1,5 +1,4 @@
 let welcome = document.getElementById('welcome');
-let input = document.getElementById('input')
 let userString = sessionStorage.getItem('currentUser');
 let currentUser = JSON.parse(userString);
 
@@ -44,6 +43,10 @@ function profile() {
 }
 
 function renderHTML(data) {
+
+	let input = document.getElementById('input');
+	input.textContent = "";	
+
     input.append("ID: " + data.userid);
     input.append(document.createElement("br"));
 

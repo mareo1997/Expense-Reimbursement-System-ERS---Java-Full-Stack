@@ -1,5 +1,4 @@
 let welcome = document.getElementById('welcome');
-let input = document.getElementById("empl");
 let userString = sessionStorage.getItem('currentUser');
 let currentUser = JSON.parse(userString);
 
@@ -43,6 +42,10 @@ function empl() {
 }
 
 function renderHTML(data) {
+
+	let input = document.getElementById("empl");
+	input.textContent = "";
+
 	for (var i = 0; i < data.length; i++) {
 	
         input.append("ID: " + data[i].userid);
