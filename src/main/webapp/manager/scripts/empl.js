@@ -1,4 +1,5 @@
 let welcome = document.getElementById('welcome');
+let instruct = document.getElementById('instruction');
 let userString = sessionStorage.getItem('currentUser');
 let currentUser = JSON.parse(userString);
 
@@ -8,6 +9,7 @@ if (userString === null) {
     console.log(currentUser);
     if (currentUser != null) {
         welcome.innerHTML = "Welcome to your employees " + currentUser.username;
+        instruct.innerHTML = "These are your employees";
     }
 }
 empl()
@@ -24,7 +26,7 @@ function empl() {
     xhr.onreadystatechange = function () {
         console.log("Process");
         if (this.readyState === 4 && this.status === 200) {
-			alert("Success");
+			//alert("Success");
 			let data = JSON.parse(xhr.responseText);
 			console.log(data);
 			renderHTML(data);

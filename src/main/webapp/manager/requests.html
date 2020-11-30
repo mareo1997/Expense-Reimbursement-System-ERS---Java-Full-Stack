@@ -8,17 +8,16 @@
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="jumbotron jumbotron-fluid">
 	
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
 			<h1 id="welcome">Welcome to Requests</h1>
-			
 			<!-- This script will be defined in index.js -->
 			<form name="resolveForm" onsubmit="findRequests(event.preventDefault())">
 				<!--  I may have prevent default() -->
 				<div class="form-group">
-					<label for="empl">Employee Username</label> 
+					<h2>Enter a username to see there pending requests</h2>
 					<input type="text" class="form-control" required name="empl" id="empl" placeholder="Enter username">
 				</div>
 				<button id="login" type="submit" class="btn btn-primary" value="Submit">Submit</button>

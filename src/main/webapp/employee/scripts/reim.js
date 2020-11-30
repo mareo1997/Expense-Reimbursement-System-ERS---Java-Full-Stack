@@ -35,7 +35,7 @@ function sendReim() {
 	xhr.onreadystatechange = function() {
 		console.log("Processing")
 		if (this.readyState === 4 && this.status === 200) {
-			alert("Success");
+			//alert("Success");
 			let data = JSON.parse(xhr.responseText);
 			console.log(data);
 			if (data != null) {
@@ -81,10 +81,18 @@ function renderHTML(data) {
 
 function converttime(time) {
 	var d = new Date(time);
-	var formattedDate = (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear();
+	var formattedDate = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
 	var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
 	var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
-	var formattedTime = hours + ":" + minutes;
+	var hr;
+	if (hours > 12) {
+		hours = hours - 12;
+		hr = "PM";
+	} else {
+		hr = "AM";
+	}
+
+	var formattedTime = hours + ":" + minutes + " " + hr;
 
 	formattedDate = formattedDate + " " + formattedTime;
 	return formattedDate;

@@ -31,7 +31,7 @@ function findRequests() {
     xhr.onreadystatechange = function () {
         console.log("Processing")
         if (this.readyState === 4 && this.status === 200) {
-			alert("Success");
+			//alert("Success");
 			let data = JSON.parse(xhr.responseText);
 			console.log(data);
 			renderHTML(data);
@@ -39,8 +39,8 @@ function findRequests() {
 
         if (this.readyState === 4 && this.status === 204) {
             console.log("Failed");
-            let childDiv = document.getElementById("warningText")
-            childDiv.textContent = "Failed"
+            let childDiv = document.getElementById("warningText");
+            childDiv.textContent = "No pending requests found";
         }
     }
 
@@ -77,12 +77,20 @@ function renderHTML(data) {
 }
 
 function converttime(time){
-		var d = new Date(time);
-		var formattedDate = (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear();
-		var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
-		var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
-		var formattedTime = hours + ":" + minutes;
+	var d = new Date(time);
+	var formattedDate = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
+	var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
+	var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
+	var hr;
+	if (hours > 12) {
+		hours = hours - 12;
+		hr = "PM";
+	} else {
+		hr = "AM";
+	}
 
-		formattedDate = formattedDate + " " + formattedTime;
-		return formattedDate;
+	var formattedTime = hours + ":" + minutes + " " + hr;
+
+	formattedDate = formattedDate + " " + formattedTime;
+	return formattedDate;
 }

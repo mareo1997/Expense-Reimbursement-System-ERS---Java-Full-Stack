@@ -8,7 +8,7 @@
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="jumbotron jumbotron-fluid">
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
 			<h1 class="display-4">Welcome, employee</h1>
@@ -16,16 +16,13 @@
 
 			<div class="container-fluid">
 				<!-- This script will be defined in index.js -->
-				<!--<form name="loginForm" action="login" method="POST">-->
 				<form name="loginForm" onsubmit="sendLogin(event.preventDefault())">
 					<div class="form-group">
-						<label for="username">USERNAME</label> <input type="text" class="form-control" required
-							name="username" id="username" aria-describedby="emailHelp" placeholder="Enter username">
+						<input type="text" class="form-control" required name="username" id="username" aria-describedby="emailHelp" placeholder="Enter username">
 					</div>
 
 					<div class="form-group">
-						<label for="password">PASSWORD</label> <input type="password" name="password" required
-							class="form-control" id="password" placeholder="Password">
+						<input type="password" name="password" required class="form-control" id="password" placeholder="Enter password">
 					</div>
 					<div id="warningText"></div>
 

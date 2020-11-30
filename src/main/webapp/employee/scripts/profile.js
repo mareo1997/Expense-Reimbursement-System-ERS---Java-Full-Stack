@@ -25,7 +25,7 @@ function profile() {
         console.log("Processing")
 
         if (this.readyState === 4 && this.status === 200) {
-            alert("Success");
+            //alert("Success");
             let data = JSON.parse(xhr.responseText);
             if (data != null) {
                 renderHTML(data);
