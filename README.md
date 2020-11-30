@@ -57,7 +57,7 @@ Employees must select the type of reimbursement as: LODGING, TRAVEL, FOOD, or OT
 * The front-end view shall use HTML/JavaScript to make an application that can call server-side components. **DONE**
 * Passwords shall be encrypted in Java and securely stored in the database. **DONE** 
 * The middle tier shall follow proper layered architecture, **DONE**
-* have reasonable (~70%) test coverage of the service layer, and 
+* have reasonable (~70%) test coverage of the service layer, and **DONE**
 * implement log4j for appropriate logging. **DONE**
 
 **Stretch Goals:** *These will count for extra credit and are entirely optional*

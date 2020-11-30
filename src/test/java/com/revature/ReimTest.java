@@ -1,6 +1,8 @@
 package com.revature;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,7 +13,6 @@ import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -97,18 +98,23 @@ public class ReimTest {
 		reimserv.resolveHQL(reim, u, status, submit);
 	}
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void submitPass() {
 		log.info("Submit test\n");
-		User u = LoginService.authority("username");
+		
+		Reimbursement r = mock(Reimbursement.class);
+		when(reimserv.submitHQL(r)).thenReturn(r);
+		assertEquals(reimserv.submitHQL(r), r);
+		verify(empldao, times(1)).submitHQL(r);
+		
+		/*User u = LoginService.authority("username");
 		Status status = reimserv.statusHQL(3);
 		Type type = reimserv.typeHQL(4);
 		Reimbursement r = new Reimbursement(u, 1, "description", submit, status, type);
 		
-		r = reimserv.submitHQL(r);
-		when(empldao.submitHQL(r)).thenReturn(r);
-		verify(empldao, times(1)).submitHQL(r);		
+		when(reimserv.submitHQL(r)).thenReturn(r);/
+		verify(empldao, times(1)).submitHQL(r);*/	
 	}
 	
 	@Test
@@ -144,14 +150,13 @@ public class ReimTest {
 	@Test
 	public void statusFail() {
 		log.info("Find status fail test\n");
-		reimserv.statusHQL(0);
 		when(reimserv.statusHQL(0)).thenReturn(null);
 		verify(reimdao, times(1)).statusHQL(0);
 	}
 	
 	@Test
 	public void statusPass() {
-		log.info("Find status test\n");
+		log.info("Find status test\n");		
 		Status s = reimserv.statusHQL(1);
 		when(reimserv.statusHQL(1)).thenReturn(s);
 		verify(reimdao, times(1)).statusHQL(1);

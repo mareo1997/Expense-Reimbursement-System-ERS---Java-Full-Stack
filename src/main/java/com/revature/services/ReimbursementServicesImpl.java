@@ -32,40 +32,6 @@ public class ReimbursementServicesImpl implements ReimbursementServices {
 		reim.insert(t);
 	}
 
-	@Override
-	public void submit(User u, Reimbursement r) {
-		reim.submit(u, r);
-	}
-
-	@Override
-	public List<Reimbursement> pending(User u) {
-		return reim.pending(u);
-	}
-
-	@Override
-	public List<Reimbursement> resolved(User u) {
-		return reim.resolved(u);
-	}
-
-	@Override
-	public void resolve(int id, String status, int resolver) {
-		reim.resolve(id, status, resolver);
-	}
-
-	@Override
-	public void requests(int userid) {
-		reim.requests(userid);
-	}
-
-	@Override
-	public void resolvedrequests() {
-		reim.resolvedrequests();
-	}
-
-	@Override
-	public void pendingrequests() {
-		reim.pendingrequests();
-	}
 
 	@Override
 	public List<Reimbursement> pendingHQL(User u) {
@@ -115,5 +81,40 @@ public class ReimbursementServicesImpl implements ReimbursementServices {
 	public List<Reimbursement> requestsHQL(User u) {
 		return man.requestsHQL(u);
 	}
-
 }
+	
+	/*@Override
+	public void submit(User u, Reimbursement r) {
+		reim.submit(u, r);
+	}
+
+	@Override
+	public List<Reimbursement> pending(User u) {
+		return reim.pending(u);
+	}
+
+	@Override
+	public List<Reimbursement> resolved(User u) {
+		return reim.resolved(u);
+	}
+
+	@Override
+	public void resolve(int id, String status, int resolver) {
+		reim.resolve(id, status, resolver);
+	}
+
+	@Override
+	public void requests(int userid) {
+		reim.requests(userid);
+	}
+
+	@Override
+	public void resolvedrequests() {
+		reim.resolvedrequests();
+	}
+
+	@Override
+	public void pendingrequests() {
+		reim.pendingrequests();
+	}
+}*/

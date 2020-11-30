@@ -1,15 +1,12 @@
 package com.revature.dao;
 
-import java.util.List;
-
 import com.revature.model.Reimbursement;
 import com.revature.model.Status;
 import com.revature.model.Type;
-import com.revature.model.User;
 
 public interface ReimburmentDao {
 
-	public void submit(User u, Reimbursement r);
+	/*public void submit(User u, Reimbursement r);
 
 	public List<Reimbursement> pending(User u);
 
@@ -21,7 +18,7 @@ public interface ReimburmentDao {
 
 	public void resolvedrequests();
 
-	public void pendingrequests();
+	public void pendingrequests();*/
 
 	public void insert(Reimbursement e);
 

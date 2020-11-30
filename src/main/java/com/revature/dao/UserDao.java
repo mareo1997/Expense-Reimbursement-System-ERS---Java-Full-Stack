@@ -7,22 +7,21 @@ import com.revature.model.User;
 
 public interface UserDao {
 
+	/*public void profile(User u);
+
+	public void allEmpl();*/
+
 	public void insert(User u);
 
 	public void insert(Role r);
 
-	public void profile(User u);
-
-	public User profileHQL(User u);
-
-	public User updateHQL(User u, String fname, String lname, String email, String username, String password,
-			String repassword);
-
-	public void allEmpl();
+	public User updateHQL(User u, String fname, String lname, String email, String username, String password, String repassword);
 
 	public List<User> allEmplHQL();
 
 	public Role roleHQL();
+	
+	public User profileHQL(User u);
 	
 	public User useridHQL(int i);
 

@@ -21,11 +21,6 @@ public class UserServicesImpl implements UserServices {
 	}
 
 	@Override
-	public void profile(User u) {
-		dao.profile(u);
-	}
-
-	@Override
 	public User profileHQL(User u) {
 		return dao.profileHQL(u);
 	}
@@ -34,11 +29,6 @@ public class UserServicesImpl implements UserServices {
 	public User updateHQL(User u, String fname, String lname, String email, String username, String password,
 			String repassword) {
 		return dao.updateHQL(u, fname, lname, email, username, password, repassword);
-	}
-
-	@Override
-	public void allEmpl() {
-		dao.allEmpl();
 	}
 
 	@Override
@@ -55,5 +45,15 @@ public class UserServicesImpl implements UserServices {
 	public User useridHQL(int i) {
 		return dao.useridHQL(i);
 	}
-
 }
+	/*@Override
+	public void profile(User u) {
+		dao.profile(u);
+	}
+	
+	@Override
+	public void allEmpl() {
+		dao.allEmpl();
+	}
+
+}*/

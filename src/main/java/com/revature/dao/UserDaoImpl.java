@@ -1,11 +1,5 @@
 package com.revature.dao;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -16,7 +10,6 @@ import org.hibernate.Transaction;
 
 import com.revature.model.Role;
 import com.revature.model.User;
-import com.revature.util.ConnectionUtil;
 import com.revature.util.HibernateUtil;
 
 /*
@@ -164,8 +157,8 @@ public class UserDaoImpl implements UserDao { // Applied log
 			return null;
 		}
 	}
-
-	public String sql, call;
+}
+/*	public String sql, call;
 	public PreparedStatement ps;
 	public ResultSet rs;
 
@@ -236,7 +229,4 @@ public class UserDaoImpl implements UserDao { // Applied log
 			e.printStackTrace();
 		}
 	}
-
-	
-
-}
+}*/

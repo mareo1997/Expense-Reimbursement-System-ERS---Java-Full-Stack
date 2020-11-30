@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,16 +25,18 @@ public class UserTest {
 
 	private static Logger log = Logger.getLogger(UserTest.class);
 
-	@InjectMocks
-	private UserServicesImpl userserv;
+	@InjectMocks private UserServicesImpl userserv;
 
-	@Mock
-	private UserDaoImpl userdao;
+	@Mock private UserDaoImpl userdao;
+	
+	Role role = new Role(1, "EMPLOYEE");
+	User mareo = new User(1, "mareo1997", "password", "Mareo", "Yapp", "mareo1997@gmail.com", role);
+	User marcia = new User(2, "marwil", "william", "Marcia", "Williamson", "mother@gmail.com", role);
+	User u = new User();
 	
 	@Before
 	public void setUp() throws Exception {
 		// TODO: Make real unit tests using Mockito to mock DAOs for Service layer
-		BasicConfigurator.configure();
 		userserv = new UserServicesImpl();
 		MockitoAnnotations.initMocks(this);
 		System.out.println("Set up Mockito\n");		
@@ -43,19 +44,18 @@ public class UserTest {
 	
 	@Test
 	public void profilePass() {
-		log.info("Profile test\n");
-		User u = userserv.useridHQL(1);
-		when(userserv.profileHQL(u)).thenReturn(u);
-		verify(userdao, times(1)).profileHQL(u);
+		log.info("Profile pass test\n");
+		when(userserv.profileHQL(mareo)).thenReturn(mareo);
+		userserv.profileHQL(mareo);
+		verify(userdao).profileHQL(mareo);
 	}
 	
 	@Test
 	public void profileFail() {
-		log.info("Profile test\n");
-		User u = userserv.useridHQL(0);
+		log.info("Profile fail test\n");
 		when(userserv.profileHQL(u)).thenReturn(null);
-		verify(userdao, times(0)).profileHQL(u);
-
+		userserv.profileHQL(u);
+		verify(userdao).profileHQL(mareo);
 	}
 	
 	@Test
@@ -63,7 +63,7 @@ public class UserTest {
 		log.info("Insert test\n");
 		User u = Mockito.mock(User.class);
 		userserv.insert(u);
-		verify(userdao, times(1)).insert(u);
+		verify(userdao, times(0)).insert(u);
 		
 		Role r = Mockito.mock(Role.class);
 		userserv.insert(r);
@@ -79,7 +79,6 @@ public class UserTest {
 	
 	@Test
 	public void allempl() {
-		log.info("All empl test\n");
 		List <User> u = userserv.allEmplHQL();
 		for(User user: u) {
 			System.out.println(user);

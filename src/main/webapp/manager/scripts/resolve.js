@@ -44,7 +44,7 @@ function sendResolve() {
 		if (this.readyState === 4 && this.status === 204) {
 			console.log("Failed");
 			let childDiv = document.getElementById("warningText")
-			childDiv.textContent = "Failed"
+			childDiv.textContent = "Could not resolve"
 		}
 	}
 

@@ -1,11 +1,5 @@
 package com.revature.dao;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -13,15 +7,11 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.postgresql.util.PSQLException;
 
 import com.revature.model.Reimbursement;
-import com.revature.model.Role;
 import com.revature.model.Status;
 import com.revature.model.Type;
-import com.revature.model.User;
 import com.revature.services.UserServicesImpl;
-import com.revature.util.ConnectionUtil;
 import com.revature.util.HibernateUtil;
 
 public class ReimbursmentDaoImpl implements ReimburmentDao {
@@ -37,11 +27,7 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 
 		Reimbursement reim = ses.get(Reimbursement.class, reimbursementid);
 
-		if (reim != null) {
-			return reim;
-		} else {
-			throw new NullPointerException();
-		}
+		return reim;
 	}
 
 	@Override
@@ -115,8 +101,8 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 		//HibernateUtil.closeSes();
 
 	}
-
-	public String sql, call;
+}
+/*	public String sql, call;
 	public PreparedStatement ps;
 	public ResultSet rs;
 
@@ -387,4 +373,4 @@ public class ReimbursmentDaoImpl implements ReimburmentDao {
 		}
 	}
 
-}
+}*/

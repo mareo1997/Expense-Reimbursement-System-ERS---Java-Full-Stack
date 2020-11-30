@@ -10,21 +10,8 @@ import com.revature.model.User;
 
 public interface ReimbursementServices {
 
-	public void submit(User u, Reimbursement r);
-
-	public List<Reimbursement> pending(User u);
-
-	public List<Reimbursement> resolved(User u);
-
-	public void resolve(int id, String status, int resolver);
-
-	public void requests(int userid);
 
 	public List<Reimbursement> requestsHQL(User u);
-
-	public void resolvedrequests();
-
-	public void pendingrequests();
 
 	public void insert(Reimbursement e);
 
@@ -49,5 +36,19 @@ public interface ReimbursementServices {
 	public Status statusHQL(int s);
 
 	public List<Reimbursement> pendingrequestsHQL();
-
+	
 }
+	/*public void submit(User u, Reimbursement r);
+
+	public List<Reimbursement> pending(User u);
+
+	public List<Reimbursement> resolved(User u);
+
+	public void resolve(int id, String status, int resolver);
+
+	public void requests(int userid);
+
+	public void resolvedrequests();
+
+	public void pendingrequests();
+}*/

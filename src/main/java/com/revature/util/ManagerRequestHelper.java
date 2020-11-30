@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.revature.model.Reimbursement;
 import com.revature.model.Status;
-import com.revature.model.Type;
 import com.revature.model.User;
 import com.revature.services.LoginService;
 import com.revature.services.ReimbursementServicesImpl;
@@ -71,32 +70,31 @@ public class ManagerRequestHelper {
 	public static void processResolve(HttpServletRequest req, HttpServletResponse res) throws IOException { /* Manager resolves a reim */
 		try {
 			BufferedReader reader = req.getReader();
-			System.out.println("reader " + reader);
 			StringBuilder s = new StringBuilder();
 
 			// we are just transferring our Reader data to our StringBuilder, line by line
 			String line = null;
 
 			while ((line = reader.readLine()) != null) {
-				System.out.println("line " + line);
 				s.append(line);
-				System.out.println("s " + s);
 				line = reader.readLine();
 			}
 
 			String body = s.toString();
-			System.out.println("body " + body);
 
 			ResolveTemplate attempt = om.readValue(body, ResolveTemplate.class);
 
 			int reimid = attempt.getReimid();
 			Reimbursement reim = reimserv.findReimHQL(reimid);
+
 			String username = attempt.getUsername();
 			User u = LoginService.authority(username);
+			System.out.println("got user cred");
 			int statusid = attempt.getStatus();
 			Status status = reimserv.statusHQL(statusid);
+			System.out.println("got status");
 			Timestamp resolved = new Timestamp(System.currentTimeMillis());
-
+			System.out.println("got time");
 			res.setContentType("application/json");
 			PrintWriter ps = res.getWriter();
 
@@ -110,11 +108,12 @@ public class ManagerRequestHelper {
 					ps.println(om.writeValueAsString(reim));
 				} else {
 					res.setStatus(204); // Connection was successful but no user found
+					ps.write(om.writeValueAsString("Could not resolve."));
 				}
 			} else {
 				log.warn("Not permitted\n");
-				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				ps.write(om.writeValueAsString("The requested action is not permitted."));
+				res.setStatus(204);
+				ps.write(om.writeValueAsString("Not permitted"));
 			}
 		} catch (NullPointerException e) {
 			res.setStatus(204);
@@ -251,8 +250,10 @@ public class ManagerRequestHelper {
 			ps.write(om.writeValueAsString("The requested action is not permitted."));
 		}
 	}
-	
-	public static void processType(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+}
+
+/*	public static void processType(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setContentType("application/json");
 		PrintWriter ps = res.getWriter();
 
@@ -297,5 +298,4 @@ public class ManagerRequestHelper {
 			ps.write(om.writeValueAsString("Invalid credentials"));
 		}
 	}
-
-}
+*/
