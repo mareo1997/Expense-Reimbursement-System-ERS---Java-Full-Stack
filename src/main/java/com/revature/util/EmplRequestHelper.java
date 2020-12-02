@@ -31,6 +31,10 @@ public class EmplRequestHelper { // Applied log, exceptions
 	public static ReimbursementServicesImpl reimserv = new ReimbursementServicesImpl();
 
 	public static void processReim(HttpServletRequest req, HttpServletResponse res) throws IOException { /* Worked, displayed, needs to be refined */
+
+		res.setContentType("application/json");
+		PrintWriter ps = res.getWriter();
+
 		try {
 			BufferedReader reader = req.getReader();
 			System.out.println("reader " + reader);
@@ -52,26 +56,31 @@ public class EmplRequestHelper { // Applied log, exceptions
 			ReimTemplate attempt = om.readValue(body, ReimTemplate.class);
 			String username = attempt.getUsername();
 			User u = LoginService.authority(username);
-			double amount = attempt.getAmount();
-			String description = attempt.getDescription();
-			Timestamp submit = new Timestamp(System.currentTimeMillis());
-			Status status = reimserv.statusHQL(1);
-			int t = attempt.getType();
-			Type type = reimserv.typeHQL(t);
 
-			Reimbursement reim = new Reimbursement(u, amount, description, submit, status, type);
-			reim = reimserv.submitHQL(reim);
+			if (u != null && u.getRole().getRoleid() == 1) {
 
-			res.setContentType("application/json");
-			PrintWriter ps = res.getWriter();
+				double amount = attempt.getAmount();
+				String description = attempt.getDescription();
+				Timestamp submit = new Timestamp(System.currentTimeMillis());
+				Status status = reimserv.statusHQL(1);
+				int t = attempt.getType();
+				Type type = reimserv.typeHQL(t);
 
-			if (reim != null) {
-				log.info("Submitted form");
-				res.setStatus(200);
-				System.out.println(reim);
-				ps.println(om.writeValueAsString(reim));
+				Reimbursement reim = new Reimbursement(u, amount, description, submit, status, type);
+				reim = reimserv.submitHQL(reim);
+
+				if (reim != null) {
+					log.info("Submitted form");
+					res.setStatus(200);
+					System.out.println(reim);
+					ps.println(om.writeValueAsString(reim));
+				} else {
+					res.setStatus(204); // Connection was successful but no user found
+				}
 			} else {
-				res.setStatus(204); // Connection was successful but no user found
+				log.warn("Not permitted\n");
+				res.setStatus(401);
+				ps.write(om.writeValueAsString("The requested action is not permitted."));
 			}
 		} catch (NullPointerException e) {
 			res.setStatus(204); // Connection was successful but no user found

@@ -38,13 +38,16 @@ public class UserDaoImpl implements UserDao { // Applied log
 	}
 
 	@Override
-	public void insert(User u) {
+	public User insert(User u) {
 		log.info("Attempting to insert user\n");
 		Session ses = HibernateUtil.getSession(); // capture the session
 		Transaction tx = ses.beginTransaction(); // perform an operation on DB
 
 		ses.save(u); // use the save() session method to perform an insert operation
 		tx.commit(); /*commit the transaction by utilizing the methods from the Transaction interface*/
+		
+		User user = u;
+		return user;
 	}
 
 	@Override
@@ -139,7 +142,6 @@ public class UserDaoImpl implements UserDao { // Applied log
 
 		ses.update(user);
 		tx.commit();
-		//HibernateUtil.closeSes();
 
 		return user;
 	}

@@ -12,10 +12,12 @@ import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.revature.model.Role;
 import com.revature.model.User;
 import com.revature.services.LoginService;
 import com.revature.services.UserServicesImpl;
 import com.revature.template.LoginTemplate;
+import com.revature.template.SignupTemplate;
 import com.revature.template.UpdateTemplate;
 
 public class UserRequestHelper {
@@ -174,5 +176,53 @@ public class UserRequestHelper {
 			log.warn(e);
 			res.setStatus(204);
 		}
+	}
+
+	public static void processSignup(HttpServletRequest req, HttpServletResponse res) throws IOException  {
+		res.setContentType("application/json");
+
+		try {
+			BufferedReader reader = req.getReader();
+			System.out.println("reader " + reader);
+			StringBuilder s = new StringBuilder();
+
+			// we are just transferring our Reader data to our StringBuilder, line by line
+			String line = null;
+
+			while ((line = reader.readLine()) != null) {
+				System.out.println("line " + line);
+				s.append(line);
+				System.out.println("s " + s);
+				line = reader.readLine();
+			}
+
+			String body = s.toString();
+			System.out.println("body " + body);
+
+			SignupTemplate attempt = om.readValue(body, SignupTemplate.class);
+			String firstname = attempt.getFirstname();
+			String lastname = attempt.getLastname();
+			String email = attempt.getEmail();
+			String username = attempt.getUsername();
+			String password = attempt.getPassword();
+			String repassword = attempt.getRepassword();
+
+			if (!(password.equals(repassword))) {
+				res.setStatus(202);
+			} else {
+				Role role = userserv.roleHQL();
+				User user = new User(username, password, firstname, lastname, email, role);
+				User u = userserv.insert(user);
+
+				if (u != null) {
+					res.setStatus(200);
+				} else {
+					res.setStatus(204);
+				}
+			}
+		} catch (NullPointerException e) {
+			log.warn(e);
+			res.setStatus(204);
+		}	
 	}
 }

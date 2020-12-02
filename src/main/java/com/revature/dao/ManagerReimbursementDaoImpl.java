@@ -20,20 +20,25 @@ public class ManagerReimbursementDaoImpl implements ManagerReimburmentDao {
 
 	@Override
 	public Reimbursement resolveHQL(Reimbursement reim, User resolver, Status status, Timestamp resolved) {
-		log.info("Attempting to resolve a request\n");
-		Session ses = HibernateUtil.getSession();
-		Transaction tx = ses.beginTransaction(); // perform an operation on DB
-		ses.evict(reim);
+		try {
+			log.info("Attempting to resolve a request\n");
 
-		reim.setResolve(resolver);
-		reim.setResolved(resolved);
-		reim.setStatus(status);
+			Session ses = HibernateUtil.getSession();
+			Transaction tx = ses.beginTransaction(); // perform an operation on DB
+			ses.evict(reim);
 
-		ses.update(reim);
-		tx.commit(); /* commit the transaction by utilizing the methods from the Transaction interface*/
+			reim.setResolve(resolver);
+			reim.setResolved(resolved);
+			reim.setStatus(status);
 
-		return reim;
+			ses.update(reim);
+			tx.commit(); //commit the transaction by utilizing the methods from the Transaction
 
+			return reim;
+		} catch (IllegalStateException e) {
+			log.warn(e + "\n");
+			return null;
+		}
 	}
 
 	@Override

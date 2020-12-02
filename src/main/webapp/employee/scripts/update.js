@@ -65,6 +65,13 @@ function update() {
 			let childDiv = document.getElementById("warningText")
 			childDiv.textContent = "Failed"
 		}
+
+		if (this.readyState === 4 && this.status === 500) {
+			console.log("Failed");
+			let childDiv = document.getElementById("warningText")
+			childDiv.textContent = "Duplicate username or email"
+		}
+
 	}
 
 	xhr.open("POST", "http://localhost:8080/project-1/update");

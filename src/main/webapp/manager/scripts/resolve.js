@@ -46,6 +46,18 @@ function sendResolve() {
 			let childDiv = document.getElementById("warningText")
 			childDiv.textContent = "Could not resolve"
 		}
+
+		if (this.readyState === 4 && this.status === 202) {
+			console.log("Failed");
+			let childDiv = document.getElementById("warningText")
+			childDiv.textContent = "Could not find reimbursement"
+		}
+
+		if (this.readyState === 4 && this.status === 401) {
+			console.log("Failed");
+			let childDiv = document.getElementById("warningText")
+            childDiv.textContent = "You are not authorized to do this";
+		}
 	}
 
 	xhr.open("POST", "http://localhost:8080/project-1/resolve");

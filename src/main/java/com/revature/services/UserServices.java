@@ -7,7 +7,7 @@ import com.revature.model.User;
 
 public interface UserServices {
 
-	public void insert(User u);
+	public User insert(User u);
 
 	public void insert(Role r);
 

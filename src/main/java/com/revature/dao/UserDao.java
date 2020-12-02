@@ -11,7 +11,7 @@ public interface UserDao {
 
 	public void allEmpl();*/
 
-	public void insert(User u);
+	public User insert(User u);
 
 	public void insert(Role r);
 

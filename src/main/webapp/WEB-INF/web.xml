@@ -31,6 +31,7 @@
 		<url-pattern>/requests</url-pattern>
 		<url-pattern>/resolvedrequests</url-pattern>
 		<url-pattern>/pendingrequests</url-pattern>
+		<url-pattern>/signup</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

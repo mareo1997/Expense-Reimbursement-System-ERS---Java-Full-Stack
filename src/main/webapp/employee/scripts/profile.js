@@ -38,7 +38,7 @@ function profile() {
         }
     }
 
-    xhr.open("GET", "http://localhost:8080/project-1/profile", true);
+    xhr.open("GET", "http://localhost:8080/project-1/profile");
     xhr.send();
 }
 

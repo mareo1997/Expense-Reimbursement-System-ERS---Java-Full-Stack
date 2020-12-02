@@ -18,14 +18,18 @@ public class EmplReimbursementDaoImpl implements EmplReimbursementDao {// Applie
 
 	@Override
 	public Reimbursement submitHQL(Reimbursement r) {
-		log.info("Attempting to submit " + r + "\n");
-		Session ses = HibernateUtil.getSession(); // capture the session
+		try {
+			log.info("Attempting to submit " + r + "\n");
+			Session ses = HibernateUtil.getSession(); // capture the session
 
-		Transaction tx = ses.beginTransaction();
-		ses.save(r);
-		tx.commit(); // commit the transaction by utilizing the methods from the Transaction interface
-		//HibernateUtil.closeSes();
-		return r;
+			Transaction tx = ses.beginTransaction();
+			ses.save(r);
+			tx.commit(); // commit the transaction by utilizing the methods from the Transaction
+			return r;
+		} catch (IllegalStateException e) {
+			log.warn(e + "\n");
+			return null;
+		}
 	}
 
 	@Override

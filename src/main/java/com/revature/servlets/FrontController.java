@@ -71,6 +71,10 @@ public class FrontController extends HttpServlet {
 			System.out.println("case " + URI);
 			UserRequestHelper.processUpdate(req, res);
 			break;
+		case "/project-1/signup":
+			System.out.println("case " + URI);
+			UserRequestHelper.processSignup(req, res);
+			break;
 
 		case "/project-1/reim": // DONE
 			System.out.println("case " + URI);

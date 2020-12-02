@@ -36,3 +36,9 @@ function sendLogin() {
 	xhr.open("POST", "http://localhost:8080/project-1/login");
     xhr.send(JSON.stringify(logintemplate));
 }
+
+function signup(){
+    console.log("signup() started")
+    console.log(sessionStorage.getItem('currentUser'))
+    window.location = "http://localhost:8080/project-1/signup.html"
+}

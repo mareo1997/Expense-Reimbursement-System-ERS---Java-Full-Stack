@@ -41,7 +41,20 @@ function findRequests() {
             console.log("Failed");
             let childDiv = document.getElementById("warningText");
             childDiv.textContent = "No pending requests found";
+		}
+		
+		if (this.readyState === 4 && this.status === 202) {
+            console.log("Failed");
+            let childDiv = document.getElementById("warningText");
+            childDiv.textContent = "Could not find employee";
+		}
+		
+		if (this.readyState === 4 && this.status === 401) {
+            console.log("Failed");
+            let childDiv = document.getElementById("warningText");
+            childDiv.textContent = "You are not authorized to do this";
         }
+
     }
 
     xhr.open("POST", "http://localhost:8080/project-1/requests");
