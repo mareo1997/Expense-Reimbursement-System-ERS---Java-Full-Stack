@@ -27,27 +27,24 @@ public class UserRequestHelper {
 
 	public static void processLogin(HttpServletRequest req, HttpServletResponse res) throws IOException{ //Worked
 		BufferedReader reader = req.getReader();
-		System.out.println("reader "+reader);
 		StringBuilder s = new StringBuilder();
 
 		// we are just transferring our Reader data to our StringBuilder, line by line
 		String line = null;
 		
 		while((line=reader.readLine()) != null) {
-			System.out.println("line "+line);
 			s.append(line);
-			System.out.println("s "+s);
 			line = reader.readLine();
 		}
 
 		String body = s.toString();
-		System.out.println("body "+body);
 		
 		LoginTemplate attempt = om.readValue(body, LoginTemplate.class);
 		String username = attempt.getUsername();
 		String password = attempt.getPassword();
 
 		log.info("Username attempted " + username);
+		System.out.println(username+" "+password);
 
 		User login = LoginService.confirm(username, password);
 		
@@ -96,7 +93,9 @@ public class UserRequestHelper {
 			
 			if (session != null) {//System.out.println("logged in");
 				String username = (String) session.getAttribute("username");
+				System.out.println(username);
 				User u = LoginService.authority(username);
+				System.out.println(u);
 				u = userserv.profileHQL(u);
 				
 				if (u != null) {//System.out.println("user found");
@@ -114,13 +113,13 @@ public class UserRequestHelper {
 			} else {
 				log.warn("Not logged in\n");
 				res.setStatus(HttpServletResponse.SC_FORBIDDEN);
-				ps.write(om.writeValueAsString("The requested action is not permitted."));
+				System.out.println("The requested action is not permitted.1");
 			}
 
 		} catch (NullPointerException e) {
 			log.warn(e);
 			res.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			ps.write(om.writeValueAsString("The requested action is not permitted."));
+			System.out.println("The requested action is not permitted.2");
 		}
 	}
 	

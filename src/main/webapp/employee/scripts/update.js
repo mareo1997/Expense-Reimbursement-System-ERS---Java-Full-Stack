@@ -2,10 +2,10 @@ let welcome = document.getElementById('welcome');
 let userString = sessionStorage.getItem('currentUser');
 let currentUser = JSON.parse(userString);
 
-let firstname = document.getElementById('firstname');
-let lastname = document.getElementById('lastname');
-let email = document.getElementById('email');
-let username = document.getElementById('username');
+let f = document.getElementById('firstname');
+let l = document.getElementById('lastname');
+let e = document.getElementById('email');
+let u = document.getElementById('username');
 
 if (userString === null) {
 	window.location = "http://localhost:8080/project-1/index.html"
@@ -13,10 +13,10 @@ if (userString === null) {
 	console.log(currentUser);
 	if (currentUser != null) {
 		welcome.innerHTML = "Welcome to Updates " + currentUser.username;
-		firstname.value = currentUser.firstname;
-		lastname.value = currentUser.lastname;
-		username.value = currentUser.username;
-		email.value = currentUser.email;
+		f.value = currentUser.firstname;
+		l.value = currentUser.lastname;
+		u.value = currentUser.username;
+		e.value = currentUser.email;
 	}
 }
 
@@ -57,7 +57,7 @@ function update() {
 		console.log("Processing")
 		if (this.readyState === 4 && this.status === 200) {
 			console.log("Success");
-			profile();
+			sendLogin();
 		}
 
 		if (this.readyState === 4 && this.status === 204) {
@@ -77,3 +77,39 @@ function update() {
 	xhr.open("POST", "http://localhost:8080/project-1/update");
 	xhr.send(JSON.stringify(updatetemplate));
 }
+
+function sendLogin() {
+	console.log("sendLogin() started")
+	let loginForm = document.loginForm;
+	let username = document.getElementById('username').value;
+	let password = document.getElementById('password').value;
+	console.log("Username: " + username + " Password: " + password);
+
+	const logintemplate = {
+		username: username,
+		password: password
+	}
+
+	//This begins AJAX workflow
+	let xhr = new XMLHttpRequest();
+
+	// setting up a callback function for when ready state changed (ready stat starts from 0 to 4)
+	// this call back is called everytime readyState changes
+	xhr.onreadystatechange = function() {
+		console.log("Processing")
+		if (this.readyState === 4 && this.status === 200) {
+			console.log("Employee");
+			profile();
+		}
+        
+		if (this.readyState === 4 && this.status === 204) {
+			console.log("Failed");
+			alert("Failed to log in! Username or password is incorrect");
+        }
+        
+	};
+
+	xhr.open("POST", "http://localhost:8080/project-1/login");
+    xhr.send(JSON.stringify(logintemplate));
+}
+
