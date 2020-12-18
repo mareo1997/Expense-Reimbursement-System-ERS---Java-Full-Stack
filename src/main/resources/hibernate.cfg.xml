@@ -15,9 +15,9 @@
 <hibernate-configuration>
 	<session-factory>
 		<!-- JDBC props -->
-		<property name="hibernate.connection.url">jdbc:postgresql://database-1.cmwalx0cdgly.us-east-2.rds.amazonaws.com/Hibernate</property>
-		<property name="hibernate.connection.username">postgres</property>
-		<property name="hibernate.connection.password">password</property>
+		<property name="hibernate.connection.url">${Hibernate}</property>
+		<property name="hibernate.connection.username">${DB_USERNAME}</property>
+		<property name="hibernate.connection.password">${DB_PASSWORD}</property>
 
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 		<property name="hibernate.connection.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
